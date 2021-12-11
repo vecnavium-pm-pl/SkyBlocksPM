@@ -26,6 +26,7 @@
 - [ ] Starting Skyblock items (chest or in inventory)
 - [ ] Private Island chat with chat format (Not officially decided yet)
 - [ ] Island Members
+- [ ] Settings (Such as Interact, Pickup, Place Blocks  and much more.)
 
 And possibly few more that isn't listed as it's in development.
 

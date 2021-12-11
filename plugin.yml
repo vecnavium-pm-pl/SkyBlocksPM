@@ -1,0 +1,6 @@
+---
+name: SkyblocksPM
+version: 1.0.0
+main: Vecnavium\SkyblocksPM\Main
+api: 4.0.0
+...

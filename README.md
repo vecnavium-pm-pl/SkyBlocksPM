@@ -27,6 +27,7 @@
 - [ ] Private Island chat with chat format (Not officially decided yet)
 - [ ] Island Members
 - [ ] Settings (Such as Interact, Pickup, Place Blocks  and much more.)
+- [ ] SQLITe3 & MYSQL(Maybe) Storage
 
 And possibly few more that isn't listed as it's in development.
 

@@ -10,7 +10,7 @@
 
 # NOTICE
 
-This plugin has not abandoned during the making of the SkyBlocksPM Project. There has been some slight complicaions which is making the project slow down on release 
+This plugin has not been abandoned during the making of the SkyBlocksPM Project. There has been some slight complicaions which is making the project slow down on release 
 so please be patient this project will be moving again soon. Hasting me will not speed up the process in any way
 
 

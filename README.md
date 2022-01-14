@@ -8,6 +8,12 @@
     <a href="https://discord.gg/6M9tGyWPjr"><img src="https://img.shields.io/discord/837701868649709568?label=discord&color=7289DA&logo=discord" alt="Discord" /></a>
 </p>
 
+# NOTICE
+
+This plugin has not abandoned during the making of the SkyBlocksPM Project. There has been some slight complicaions which is making the project slow down on release 
+so please be patient this project will be moving again soon. Hasting me will not speed up the process in any way
+
+
 # Features 
 
 - Currently in development.

@@ -1,0 +1,31 @@
+name: SkyBlocksPM
+api: 4.0.0
+author: Vecnavium
+main: Vecnavium\SkyBlocksPM\SkyBlocksPM
+version: 1.0.0
+
+permissions:
+  skyblockspm.command:
+    default: true
+    description: Core command for SkyBlocks
+  skyblockspm.create:
+    default: true
+    description: Create your own SkyBlock island
+  skyblockspm.delete:
+    default: true
+    description: Delete a users SkyBlock Island
+  skyblockspm.deleteothers:
+    default: op
+    description: with this permission the user can delete other players one islands
+  skyblockspm.tp:
+    default: true
+    description: Teleport to a users SkyBlock Island
+  skyblockspm.visit:
+    default: true
+    description: Visit a players SkyBlock island
+  skyblockspm.invite:
+    default: true
+    description: Invites the player to your SkyBlock island
+  skyblockspm.accept:
+    default: true
+    description: Accept the incoming invite to a SkyBlock island

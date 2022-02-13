@@ -1,0 +1,33 @@
+#==========================================#
+#Config messages for SkyBlocksPM
+#==========================================#
+
+# Use & instead of double S for a quicker colorizing of texts
+
+prefix: '&l&4[SkyBlocksPM]'
+
+# seperator seperates the message from the prefix
+# Format looks like:
+# {prefix} {seperator} {message}
+# the spaces are automatically added so you dont have to worry about that too :))
+seperator: '&e=> &b'
+
+messages:
+  skyblock-creating: 'SkyBlock is currently creating...'
+  player-not-online: 'The player you have specified is currently not online or doesnt exist.'
+  have-sb: 'You already own a SkyBlock Island'
+  no-sb: 'You do not have a SkyBlock Island to use the command.'
+  not-registered: 'The player you have specified does not exist.'
+  no-island: 'The specified player does not own an island.'
+  no-sb-go: 'You do not own a SkyBlock island'
+  no-perms-delete: "You do not have the permission to delete other SkyBlock islands."
+  deleted-sb: "You have successfully deleted {NAME}'s SkyBlock Island."
+  invite-get: "You have recieved an invittation from {INVITER} to accept run /sb accept"
+  invite-expired: 'The invite that was pending has expired.'
+  invite-pending: 'You already have a pending invite.'
+  invite-sent: "You have successfully sent an invite to {PLAYER}."
+  invite-accepted: '{PLAYER} has joined your SkyBlock.'
+  member-limit: 'You have reached the member limit for your SkyBlock'
+  create: "You have successfully created your SkyBlock."
+  visit: "You are currently visiting {NAME}'s Island.."
+  delete: 'Deleting your SkyBlock Island..'

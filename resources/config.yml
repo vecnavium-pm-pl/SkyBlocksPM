@@ -1,0 +1,30 @@
+#==========================================#
+#Main Config File for SkyBlocksPM
+#==========================================#
+database:
+  # The database type. "sqlite" is the current database type supported.
+  type: sqlite
+
+  # Edit these settings only if you choose "sqlite".
+  sqlite:
+    # The file name of the database in the plugin data folder.
+    # You can also put an absolute path here.
+    file: skyblockspm.sql
+
+settings:
+  autoinv:
+    enabled: true
+    drop-when-full: true
+  autoxp: true
+  invite-timeout: 30
+  max-members: 5
+  damage:
+    default: true
+    player: false
+    lava: true
+    drown: true
+    fall: false
+    projectile: false
+    fire: true
+    void: false
+    hunger: true

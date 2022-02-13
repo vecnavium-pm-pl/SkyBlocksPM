@@ -1,0 +1,6 @@
+#==========================================#
+#Forms Config File for SkyBlocksPM
+#==========================================#
+visit:
+  title: '&l&4[SkyBlocksPM] Visit Menu'
+  buttons: '&l&4{NAME} SkyBlocksPM'

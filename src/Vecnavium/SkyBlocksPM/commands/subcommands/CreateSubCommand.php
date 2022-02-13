@@ -11,7 +11,6 @@ use pocketmine\block\VanillaBlocks;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\player\PlayerChunkLoader;
-use pocketmine\scheduler\ClosureTask;
 use pocketmine\world\Position;
 use Ramsey\Uuid\Uuid;
 
@@ -37,7 +36,7 @@ class CreateSubCommand extends BaseSubCommand
         $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('skyblock-creating'));
         $id = Uuid::uuid4()->toString();
         $player->setSkyBlock($id);
-        SkyBlocksPM::getInstance()->getGenerator()->generateWorld($id);
+        SkyBlocksPM::getInstance()->getGenerator()->generateIsland($sender, $id);
         $world = SkyBlocksPM::getInstance()->getServer()->getWorldManager()->getWorldByName($id);
         $chunkX = $world->getSpawnLocation()->getX() >> 4;
         $chunkZ = $world->getSpawnLocation()->getZ() >> 4;

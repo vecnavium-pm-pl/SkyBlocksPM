@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\commands;
 
+use Vecnavium\SkyBlocksPM\commands\subcommands\SetWorldCommand;
 use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseCommand;
 use Vecnavium\SkyBlocksPM\commands\subcommands\AcceptSubCommand;
 use Vecnavium\SkyBlocksPM\commands\subcommands\CreateSubCommand;
@@ -22,6 +23,7 @@ class SkyBlockCommand extends BaseCommand
         $this->registerSubCommand(new AcceptSubCommand('accept', 'Accept the incoming invite to a SkyBlock island'));
         $this->registerSubCommand(new CreateSubCommand('create', 'Create your own SkyBlock island'));
         $this->registerSubCommand(new DeleteSubCommand('delete', 'Delete a users SkyBlock Island'));
+        $this->registerSubCommand(new SetWorldCommand('setworld', 'Sets the current world as the SkyBlock World which will be copied to newer worlds upon Island creation'));
         $this->registerSubCommand(new TpSubCommand('tp', 'Teleport to a users SkyBlock Island'));
         $this->registerSubCommand(new InviteSubCommand('invite', 'Invites the player to your SkyBlock island'));
         $this->registerSubCommand(new VisitSubCommand('visit', 'Visit a players SkyBlock island'));

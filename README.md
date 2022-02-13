@@ -41,4 +41,4 @@ Feel free to contact me in the [Support Discord Server](https://discord.gg/jWFB5
 
 # Credits 
 
-- [Cosmicnebula200](https://github.com/cosmicnebula200) for making this entire project possible and existing.
+- [Cosmicnebula200](https://github.com/cosmicnebula200) for making this entire project possible.

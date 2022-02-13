@@ -38,3 +38,7 @@ Have other suggestions? Let me know in the [Support Discord](https://discord.gg/
 Have a suggestion?
 
 Feel free to contact me in the [Support Discord Server](https://discord.gg/jWFB56RqUN) and suggest the suggestion you have in mind for this plugin!
+
+# Credits 
+
+- @cosmicnebula200 for making this entire project possible and existing.

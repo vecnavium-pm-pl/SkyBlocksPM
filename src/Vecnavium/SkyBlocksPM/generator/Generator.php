@@ -41,7 +41,7 @@ class Generator
         /** @var SplFileInfo $file */
         foreach ($files as $file)
         {
-            if (!is_file((string)$file))
+            if (!is_file($file))
                 continue;
             $filePath = $file->getPath() . DIRECTORY_SEPARATOR . $file->getBasename();
             $localPath = substr($filePath, strlen(SkyBlocksPM::getInstance()->getServer()->getDataPath() . 'worlds' . DIRECTORY_SEPARATOR . $world->getFolderName()));

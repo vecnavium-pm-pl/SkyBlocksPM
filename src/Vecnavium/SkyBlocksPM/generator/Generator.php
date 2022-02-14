@@ -48,7 +48,7 @@ class Generator
             $zip->addFile($filePath, $localPath);
         }
 
-        !$file->isFile()
+        $zip->close();
     }
 
     /**

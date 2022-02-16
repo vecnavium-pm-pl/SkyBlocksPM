@@ -8,6 +8,9 @@ permissions:
   skyblockspm.command:
     default: true
     description: Core command for SkyBlocks
+  skyblockspm.setworld:
+    default: op
+    description: With this permission user can set the world which wil be copied for newer islands
   skyblockspm.create:
     default: true
     description: Create your own SkyBlock island

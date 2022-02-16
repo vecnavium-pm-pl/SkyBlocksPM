@@ -12,7 +12,13 @@
 
 # Features 
 
-- Currently in development.
+- [x] Custom Island support
+- [x] SQLITe3 Storage
+- [x] Configurable messages
+- [x] Island Settings
+- [x] Island Members
+- [x] Configurable visit UI
+- [x] Island visit support
 
 
 # Planned features
@@ -20,16 +26,10 @@
 - [ ] Easy API usage & access
 - [ ] Soreboard support. (Maybe, slight chance)
 - [ ] UI Support (Such as creating, modifying isalnds and etc)
-- [ ] Multi-lang support
-- [ ] Multiple Island choices
-- [ ] Custom Island support
-- [ ] Ability to disable void from the skyblock worlds
-- [ ] Locking & Unlocking islands
 - [ ] Starting Skyblock items (chest or in inventory)
 - [ ] Private Island chat with chat format (Not officially decided yet)
-- [ ] Island Members
 - [ ] Settings (Such as Interact, Pickup, Place Blocks  and much more.)
-- [ ] SQLITe3 & MYSQL(Maybe) Storage
+- [ ] MYSQL(Maybe) Storage
 
 And possibly few more that isn't listed as it's in development.
 

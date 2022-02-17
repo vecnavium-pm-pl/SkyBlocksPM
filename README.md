@@ -1,5 +1,4 @@
 <p align="center">
-    <a href="https://github.com/vecnavium-pm-pl/SkyBlocksPM"><img src="https://github.com/vecnavium-pm-pl/SkyBlocksPM/blob/stable/icon.png"></img></a><br>
     <b>A SkyBlocks plugin for PocketMine-MP, with many features to offer.
 </p>
 

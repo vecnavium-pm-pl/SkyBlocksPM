@@ -20,6 +20,12 @@
 - [x] Configurable visit UI
 - [x] Island visit support
 
+# Setup 
+
+1. Once you have installed the plugin onto the server before you go on creating SkyBlock islands you must setworld.
+2. To setworld teleport to the world with your SkyBlocks Island you have built and run /sb setworld
+3. And you should be good to go after that. There is extra options and configurations that can be done within the plugin.
+
 
 # Planned features
 

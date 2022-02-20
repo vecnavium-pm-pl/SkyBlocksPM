@@ -146,8 +146,6 @@ class SkyBlock
             'y' => $this->spawn->getY(),
             'z' => $this->spawn->getZ()
         ];
-        var_dump(json_encode($spawn, JSON_PRETTY_PRINT));
-        var_dump(json_encode($this->settings, JSON_PRETTY_PRINT));
         SkyBlocksPM::getInstance()->getDataBase()->executeChange('skyblockspm.sb.update', [
             'uuid' => $this->uuid,
             'name' => $this->name,

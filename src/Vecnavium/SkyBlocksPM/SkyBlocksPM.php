@@ -54,6 +54,8 @@ class SkyBlocksPM extends PluginBase
         $this->SkyBlockManager = new SkyBlockManager();
         $this->inviteManager = new InviteManager();
         $this->getServer()->getCommandMap()->register('SkyBlocksPM', new SkyBlockCommand($this, 'skyblock', 'The core command for SkyBlocks', ['sb']));
+        @mkdir($this->getDataFolder() . "cache");
+        @mkdir($this->getDataFolder() . "cache/island");
     }
 
     public function onDisable(): void

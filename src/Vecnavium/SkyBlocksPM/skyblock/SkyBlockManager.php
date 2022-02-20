@@ -41,6 +41,9 @@ class SkyBlockManager
 
     public function unloadSkyBlock(string $uuid)
     {
+        $skyblock = $this->getSkyBlockByUuid($uuid);
+        if (!$skyblock instanceof SkyBlock)
+            return;
         foreach ($this->getSkyBlockByUuid($uuid)->getMembers() as $member)
         {
             if (SkyBlocksPM::getInstance()->getPlayerManager()->getPlayerByPrefix($member) instanceof Player)

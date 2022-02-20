@@ -29,7 +29,7 @@ class SkyBlockManager
                 if (count($rows) == 0)
                     return;
                 $row = $rows[0];
-                if (isset($this->SkyBlocks['name']))
+                if(isset($this->SkyBlocks[$row['uuid']]))
                     return;
                 $spawn = (array)json_decode($row['spawn']);
                 $this->SkyBlocks[$row['uuid']] = new SkyBlock($row['uuid'], $row['name'], $row['leader'], explode(',', $row['members']), $row['world'], (array)json_decode($row['settings']), new Vector3($spawn["x"], $spawn["y"], $spawn['z']));

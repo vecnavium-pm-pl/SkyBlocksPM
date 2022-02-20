@@ -39,7 +39,7 @@ class Player
 
     public function setSkyBlock(string $skyblock): void
     {
-        $this->skyblock = $skyblock;
+        $this->skyblocks = $skyblock;
         $this->save();
     }
 

@@ -94,7 +94,7 @@ class SkyBlockManager
     {
         foreach ($this->SkyBlocks as $SkyBlock)
         {
-            if ($SkyBlock->getWorld() == $world->getDisplayName())
+            if ($SkyBlock->getWorld() == $world->getFolderName())
                 return $SkyBlock;
         }
         return null;

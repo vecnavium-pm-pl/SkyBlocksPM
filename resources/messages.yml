@@ -31,3 +31,4 @@ messages:
   create: "You have successfully created your SkyBlock."
   visit: "You are currently visiting {NAME}'s Island.."
   delete: 'Deleting your SkyBlock Island..'
+  default-world: "You can not set the default world of the server as a skyblock world"

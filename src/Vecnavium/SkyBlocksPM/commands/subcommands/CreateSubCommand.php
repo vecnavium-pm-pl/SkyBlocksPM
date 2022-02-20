@@ -43,7 +43,6 @@ class CreateSubCommand extends BaseSubCommand
         $world->requestChunkPopulation($chunkX, $chunkZ, new PlayerChunkLoader($world->getSpawnLocation()))->onCompletion(
             function () use ($world, $sender, $id, $player, $args){
                 $spawnLocation = $world->getSpawnLocation();
-                $world->setBlock($spawnLocation, VanillaBlocks::BEDROCK());
                 $sender->teleport(Position::fromObject($spawnLocation->up(), $world));
                 SkyBlocksPM::getInstance()->getSkyBlockManager()->createSkyBlock($id, $player, $args['name'], $world);
             }, function () {

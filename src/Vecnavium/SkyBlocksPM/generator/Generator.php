@@ -24,19 +24,19 @@ class Generator
     public function setIslandWorld(Player $player): void
     {
         $world = $player->getWorld();
-
         $world->setSpawnLocation($player->getPosition());
-
         $worldPath = SkyBlocksPM::getInstance()->getServer()->getDataPath() . "worlds" . DIRECTORY_SEPARATOR . $world->getFolderName();
-        $zip = new ZipArchive();
-        $islandZip = SkyBlocksPM::getInstance()->getDataFolder() . "island.zip";
 
-        if (is_file($islandZip))
-            unlink($islandZip);
-
-        $zip->open($islandZip, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+        if ($world->getDisplayName() === SkyBlocksPM::getInstance()->getServer()->getWorldManager()->getDefaultWorld()->getDisplayName())
+        {
+            $player->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('default-world'));
+            return;
+        }
 
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(realpath($worldPath)), RecursiveIteratorIterator::LEAVES_ONLY);
+
+        $player->teleport(SkyBlocksPM::getInstance()->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
+        SkyBlocksPM::getInstance()->getServer()->getWorldManager()->unloadWorld($world);
 
         /** @var SplFileInfo $file */
         foreach ($files as $file)
@@ -45,10 +45,10 @@ class Generator
                 continue;
             $filePath = $file->getPath() . DIRECTORY_SEPARATOR . $file->getBasename();
             $localPath = substr($filePath, strlen(SkyBlocksPM::getInstance()->getServer()->getDataPath() . 'worlds' . DIRECTORY_SEPARATOR . $world->getFolderName()));
-            $zip->addFile($filePath, $localPath);
+            @mkdir(SkyBlocksPM::getInstance()->getDataFolder() . "cache/island/db");
+            copy($filePath, SkyBlocksPM::getInstance()->getDataFolder() . "cache/island/" . $localPath);
         }
 
-        $zip->close();
     }
 
     /**
@@ -59,20 +59,25 @@ class Generator
      */
     public function generateIsland(Player $player, string $folderName)
     {
-        $zip = SkyBlocksPM::getInstance()->getDataFolder() . 'island.zip';
+        $path = SkyBlocksPM::getInstance()->getDataFolder() . "cache/island";
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(realpath($path)), RecursiveIteratorIterator::LEAVES_ONLY);
 
-        if (!is_file($zip))
-        {
-            $player->sendMessage("Default islands is not selected yet, please use the command '/is setworld' to set the default island world");
-            return;
-        }
-
-        $zipArchive = new ZipArchive();
-        $zipArchive->open($zip);
         $path = SkyBlocksPM::getInstance()->getServer()->getDataPath() . "worlds" . DIRECTORY_SEPARATOR . $folderName;
         @mkdir($path);
-        $zipArchive->extractTo($path);
-        $zipArchive->close();
+        @mkdir($path . "/db");
+
+        /** @var SplFileInfo $file */
+        foreach ($files as $file)
+        {
+            $filePath = $file->getPath() . DIRECTORY_SEPARATOR . $file->getBasename();
+            $localPath = substr($filePath, strlen(SkyBlocksPM::getInstance()->getDataFolder() . 'cache/island'));
+            if ($file->isDir())
+            {
+                @mkdir($path . $localPath);
+                continue;
+            }
+            copy($filePath,  $path . DIRECTORY_SEPARATOR . $localPath);
+        }
 
         SkyBlocksPM::getInstance()->getServer()->getWorldManager()->loadWorld($folderName);
         $world = SkyBlocksPM::getInstance()->getServer()->getWorldManager()->getWorldByName($folderName);

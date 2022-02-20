@@ -72,6 +72,8 @@ class SkyBlockManager
                 'z' => $spawn->getZ()
             ])
         ]);
+        $skyBlockPlayer = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayerByPrefix($player->getName());
+        $skyBlockPlayer->setSkyBlock($uuid);
         $SkyBlock->save();
     }
 

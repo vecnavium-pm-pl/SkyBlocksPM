@@ -48,7 +48,7 @@ class VisitSubCommand extends BaseSubCommand
         $skyblocks = [];
         foreach (SkyBlocksPM::getInstance()->getServer()->getOnlinePlayers() as $player)
         {
-            $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlock(SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($player)->getSkyBlock());
+            $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByUuid(SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($player)->getSkyBlock());
             if  ($skyblock instanceof SkyBlock)
                 $skyblocks[] = $skyblock;
         }

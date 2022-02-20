@@ -54,10 +54,11 @@ class Generator
     /**
      * @param Player $player
      * @param string $folderName
+     * @param string $name
      *
      * Thanks SkyWars by GamakCZ
      */
-    public function generateIsland(Player $player, string $folderName)
+    public function generateIsland(Player $player, string $folderName, string $name)
     {
         $path = SkyBlocksPM::getInstance()->getDataFolder() . "cache/island";
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(realpath($path)), RecursiveIteratorIterator::LEAVES_ONLY);
@@ -82,6 +83,7 @@ class Generator
         SkyBlocksPM::getInstance()->getServer()->getWorldManager()->loadWorld($folderName);
         $world = SkyBlocksPM::getInstance()->getServer()->getWorldManager()->getWorldByName($folderName);
         $player->teleport(Position::fromObject($world->getSpawnLocation(), $world));
+        SkyBlocksPM::getInstance()->getSkyBlockManager()->createSkyBlock($world->getFolderName(), SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($player), "", $world);
     }
 
 }

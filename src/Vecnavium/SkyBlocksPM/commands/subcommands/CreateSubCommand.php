@@ -36,19 +36,7 @@ class CreateSubCommand extends BaseSubCommand
         $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('skyblock-creating'));
         $id = Uuid::uuid4()->toString();
         $player->setSkyBlock($id);
-        SkyBlocksPM::getInstance()->getGenerator()->generateIsland($sender, $id);
-        $world = SkyBlocksPM::getInstance()->getServer()->getWorldManager()->getWorldByName($id);
-        $chunkX = $world->getSpawnLocation()->getX() >> 4;
-        $chunkZ = $world->getSpawnLocation()->getZ() >> 4;
-        $world->requestChunkPopulation($chunkX, $chunkZ, new PlayerChunkLoader($world->getSpawnLocation()))->onCompletion(
-            function () use ($world, $sender, $id, $player, $args){
-                $spawnLocation = $world->getSpawnLocation();
-                $sender->teleport(Position::fromObject($spawnLocation->up(), $world));
-                SkyBlocksPM::getInstance()->getSkyBlockManager()->createSkyBlock($id, $player, $args['name'], $world);
-            }, function () {
-
-            }
-        );
+        SkyBlocksPM::getInstance()->getGenerator()->generateIsland($sender, $id, $args['name']);
     }
 
 }

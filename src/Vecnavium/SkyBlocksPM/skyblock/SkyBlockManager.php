@@ -57,7 +57,7 @@ class SkyBlockManager
     {
         $spawn = $world->getSpawnLocation();
         $SkyBlock = new SkyBlock($uuid, $name, $player->getName(), [$player->getName()], $world->getFolderName(), ['visit' => true, 'pvp' => false], $spawn);
-        $this->SkyBlocks[$name] = $SkyBlock;
+        $this->SkyBlocks[$uuid] = $SkyBlock;
         $this->worlds[] = $world->getFolderName();
         SkyBlocksPM::getInstance()->getDataBase()->executeInsert('skyblockspm.sb.create', [
             'uuid' => $uuid,

@@ -17,6 +17,7 @@
 - [x] Island Members
 - [x] Configurable visit UI
 - [x] Island visit support
+- [x] Starting Skyblock Chests (The chests will have the same contents from the ones which were present while using the `/is setworld` command)
 
 # Setup 
 
@@ -30,7 +31,6 @@
 - [ ] Easy API usage & access
 - [ ] Soreboard support. (Maybe, slight chance)
 - [ ] UI Support (Such as creating, modifying isalnds and etc)
-- [ ] Starting Skyblock items (chest or in inventory)
 - [ ] Private Island chat with chat format (Not officially decided yet)
 - [ ] Settings (Such as Interact, Pickup, Place Blocks  and much more.)
 - [ ] MYSQL(Maybe) Storage

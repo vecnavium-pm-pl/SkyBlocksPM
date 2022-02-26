@@ -15,6 +15,8 @@ use Vecnavium\SkyBlocksPM\player\PlayerManager;
 use pocketmine\plugin\PluginBase;
 use Vecnavium\SkyBlocksPM\libs\poggit\libasynql\DataConnector;
 use Vecnavium\SkyBlocksPM\libs\poggit\libasynql\libasynql;
+use Vecnavium\SkyBlocksPM\player\Player;
+use pocketmine\player\Player as P;
 
 class SkyBlocksPM extends PluginBase
 {
@@ -33,6 +35,8 @@ class SkyBlocksPM extends PluginBase
     private InviteManager $inviteManager;
     /** @var SkyBlocksPM */
     private static self $instance;
+    /** @var P[] */
+    private array $chat;
 
     protected function onLoad(): void
     {
@@ -46,6 +50,7 @@ class SkyBlocksPM extends PluginBase
         $this->saveDefaultConfig();
         $this->saveResource('messages.yml');
         $this->saveResource('forms.yml');
+        $this->chat = [];
         $this->initDataBase();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
         $this->generator = new Generator();
@@ -71,6 +76,24 @@ class SkyBlocksPM extends PluginBase
         $db->executeGeneric('skyblockspm.sb.init');
         $db->waitAll();
         $this->dataConnector = $db;
+    }
+
+    /**
+     * @return P[]
+     */
+    public function getChat(): array
+    {
+        return $this->chat;
+    }
+
+    public function addPlayerToChat(P $player): void
+    {
+        $this->chat[] = $player->getName();
+    }
+
+    public function removePlayerFromChat(P $player): void
+    {
+        unset($this->chat[array_search($player->getName(), $this->chat)]);
     }
 
     /**

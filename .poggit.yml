@@ -1,7 +1,7 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/vecnavium-pm-pl/SkyBlocksPM
 build-by-default: true
 branches:
-- dev
+- stable
 projects:
   SkyBlocksPM:
     path: ""

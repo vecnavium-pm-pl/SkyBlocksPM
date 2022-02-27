@@ -33,6 +33,11 @@ class CreateSubCommand extends BaseSubCommand
             $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('have-sb'));
             return;
         }
+        if (count(array_diff(scandir(SkyBlocksPM::getInstance()->getDataFolder() . 'cache/island'), ['..', "."])) == 0)
+        {
+            $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage("no-default-island"));
+            return;
+        }
         $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('skyblock-creating'));
         $id = Uuid::uuid4()->toString();
         $player->setSkyBlock($id);

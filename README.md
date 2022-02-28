@@ -17,7 +17,7 @@
 - [x] Island Members
 - [x] Configurable visit UI
 - [x] Island visit support
-- [x] Starting Skyblock Chests (The chests will have the same contents from the ones which were present while using the `/is setworld` command)
+- [x] Starting Skyblock Chests (The chests will have the same contents from the ones which were present and as well as NPCs while using the `/is setworld` command)
 
 # Setup 
 

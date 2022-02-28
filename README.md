@@ -28,7 +28,6 @@
 
 # Planned features
 
-- [ ] Easy API usage & access
 - [ ] Soreboard support. (Maybe, slight chance)
 - [ ] UI Support (Such as creating, modifying isalnds and etc)
 - [ ] Private Island chat with chat format (Not officially decided yet)

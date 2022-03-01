@@ -2,7 +2,7 @@ name: SkyBlocksPM
 api: 4.0.0
 author: Vecnavium
 main: Vecnavium\SkyBlocksPM\SkyBlocksPM
-version: 1.0.1
+version: 1.0.2
 
 permissions:
   skyblockspm.command:

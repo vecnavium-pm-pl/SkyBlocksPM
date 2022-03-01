@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\commands;
 
+use Vecnavium\SkyBlocksPM\commands\subcommands\ChatSubCommand;
 use Vecnavium\SkyBlocksPM\commands\subcommands\SetWorldCommand;
 use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseCommand;
 use Vecnavium\SkyBlocksPM\commands\subcommands\AcceptSubCommand;

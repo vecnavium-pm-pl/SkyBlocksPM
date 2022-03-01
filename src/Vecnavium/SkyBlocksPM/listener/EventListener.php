@@ -18,6 +18,7 @@ use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\item\Food;
 use pocketmine\player\Player as P;
 use pocketmine\scheduler\ClosureTask;
+use pocketmine\event\player\PlayerChatEvent;
 
 class EventListener implements Listener
 {

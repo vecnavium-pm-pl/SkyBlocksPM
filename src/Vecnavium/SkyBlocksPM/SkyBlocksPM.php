@@ -74,14 +74,6 @@ class SkyBlocksPM extends PluginBase
     }
 
     /**
-     * @return DataConnector
-     */
-    public function getDataBase(): DataConnector
-    {
-        return $this->dataConnector;
-    }
-
-    /**
      * @return Generator
      */
     public function getGenerator(): Generator

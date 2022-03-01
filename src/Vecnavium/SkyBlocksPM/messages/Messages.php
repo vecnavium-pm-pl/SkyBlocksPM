@@ -27,4 +27,9 @@ class Messages
         return  TextFormat::colorize("{$this->messages->get('prefix')} {$this->messages->get('seperator')} $message");
     }
 
+    public function getMessageConfig(): Config
+    {
+        return $this->messages;
+    }
+
 }

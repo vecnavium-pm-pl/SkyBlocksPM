@@ -8,9 +8,6 @@ permissions:
   skyblockspm.command:
     default: true
     description: Core command for SkyBlocks
-  skyblockspm.chat:
-    default: true
-    description: Ability to chat with other players on the island
   skyblockspm.setworld:
     default: op
     description: With this permission user can set the world which wil be copied for newer islands

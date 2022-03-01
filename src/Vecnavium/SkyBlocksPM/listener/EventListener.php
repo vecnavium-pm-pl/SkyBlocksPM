@@ -133,25 +133,4 @@ class EventListener implements Listener
             $event->cancel();
     }
 
-    public function onChat(PlayerChatEvent $event): void
-    {
-        if (!in_array($event->getPlayer(), SkyBlocksPM::getInstance()->getChat()))
-            return;
-        $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByUuid(SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($event->getPlayer())->getSkyBlock());
-        if (!$skyblock instanceof SkyBlock)
-        {
-            SkyBlocksPM::getInstance()->removePlayerFromChat($event->getPlayer());
-            $event->getPlayer()->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage("toggle-chat"));
-            return;
-        }
-        foreach ($skyblock->getMembers() as $member)
-        {
-            $m = SkyBlocksPM::getInstance()->getServer()->getPlayerByPrefix($member);
-            if (!$m instanceof P)
-                continue;
-            $m->sendMessage(str_replace(["{PLAYER}", "{MSG}"], [$event->getPlayer()->getName(), $event->getMessage()], SkyBlocksPM::getInstance()->getMessages()->getMessageConfig()->get("skyblocks-chat", "&d[SkyBlocksPM] &e[{PLAYER}] &6=> {MSG}")));
-        }
-        $event->cancel();
-    }
-
 }

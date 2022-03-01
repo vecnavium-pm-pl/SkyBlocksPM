@@ -28,7 +28,6 @@ class SkyBlockCommand extends BaseCommand
         $this->registerSubCommand(new TpSubCommand('tp', 'Teleport to a users SkyBlock Island'));
         $this->registerSubCommand(new InviteSubCommand('invite', 'Invites the player to your SkyBlock island'));
         $this->registerSubCommand(new VisitSubCommand('visit', 'Visit a players SkyBlock island'));
-        $this->registerSubCommand(new ChatSubCommand('chat', 'Chat with your fellow members'));
     }
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void

@@ -72,6 +72,14 @@ class SkyBlocksPM extends PluginBase
         $db->waitAll();
         $this->dataConnector = $db;
     }
+    
+        /**
+     * @return DataConnector
+     */
+    public function getDataBase(): DataConnector
+    {
+        return $this->dataConnector;
+    }
 
     /**
      * @return Generator

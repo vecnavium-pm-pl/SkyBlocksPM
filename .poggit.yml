@@ -2,6 +2,8 @@
 build-by-default: true
 branches:
 - stable
+- dev
+- sbchat
 projects:
   SkyBlocksPM:
     path: ""

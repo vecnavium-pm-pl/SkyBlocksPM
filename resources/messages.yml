@@ -19,7 +19,7 @@ messages:
   no-sb: 'You do not have a SkyBlock Island to use the command.'
   not-registered: 'The player you have specified does not exist.'
   no-island: 'The specified player does not own an island.'
-  no-default-island: "The default island has not been set, please ask the server staff to use '/is setworld' command to set the island world"
+  no-default-island: "The default island has not been set, please ask the server staff to use '/sb setworld' command to set the island world"
   no-sb-go: 'You do not own a SkyBlock island'
   no-perms-delete: "You do not have the permission to delete other SkyBlock islands."
   deleted-sb: "You have successfully deleted {NAME}'s SkyBlock Island."

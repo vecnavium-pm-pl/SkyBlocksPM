@@ -56,6 +56,7 @@ class SkyBlocksPM extends PluginBase
         $this->getServer()->getCommandMap()->register('SkyBlocksPM', new SkyBlockCommand($this, 'skyblock', 'The core command for SkyBlocks', ['sb', 'is']));
         @mkdir($this->getDataFolder() . "cache");
         @mkdir($this->getDataFolder() . "cache/island");
+        $this->checkUpdate();
     }
 
     public function onDisable(): void
@@ -72,6 +73,12 @@ class SkyBlocksPM extends PluginBase
         $db->waitAll();
         $this->dataConnector = $db;
     }
+
+    public function checkUpdate(bool $isRetry = false): void {
+
+        $this->getServer()->getAsyncPool()->submitTask(new CheckUpdateTask($this->getDescription()->getName(), $this->getDescription()->getVersion()));
+    }
+
     
         /**
      * @return DataConnector

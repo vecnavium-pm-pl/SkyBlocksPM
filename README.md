@@ -11,7 +11,7 @@
 # Features 
 
 - [x] Custom Island support
-- [x] SQLITe3 Storage
+- [x] SQLITe3 Storage & MYSQL
 - [x] Configurable messages
 - [x] Island Settings
 - [x] Island Members
@@ -32,7 +32,7 @@
 - [ ] UI Support (Such as creating, modifying isalnds and etc)
 - [ ] Private Island chat with chat format (Not officially decided yet)
 - [ ] Settings (Such as Interact, Pickup, Place Blocks  and much more.)
-- [ ] MYSQL(Maybe) Storage
+- [x] MYSQL(Maybe) Storage
 
 And possibly few more that isn't listed as it's in development.
 

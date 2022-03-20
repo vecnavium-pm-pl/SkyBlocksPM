@@ -67,7 +67,7 @@ class SkyBlocksPM extends PluginBase
 
     public function initDataBase(): void
     {
-        $db = libasynql::create($this, $this->getConfig()->get('database'), ['sqlite' => 'sqlite.sql']);
+        $db = libasynql::create($this, $this->getConfig()->get('database'), ['mysql' => 'mysql.sql', 'sqlite' => 'sqlite.sql']);
         $db->executeGeneric('skyblockspm.player.init');
         $db->executeGeneric('skyblockspm.sb.init');
         $db->waitAll();

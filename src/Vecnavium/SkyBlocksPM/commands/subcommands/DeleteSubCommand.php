@@ -39,7 +39,7 @@ class DeleteSubCommand extends BaseSubCommand
             $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('no-island'));
             return;
         }
-        $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlock($skyblockPlayer->getSkyBlock());
+        $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByUuid($skyblockPlayer->getSkyBlock());
         foreach ($skyblock->getMembers() as $member)
         {
             $player = SkyBlocksPM::getInstance()->getServer()->getPlayerByPrefix($member);

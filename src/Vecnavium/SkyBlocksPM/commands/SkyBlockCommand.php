@@ -21,6 +21,7 @@ class SkyBlockCommand extends BaseCommand
     public function prepare(): void
     {
         $this->setPermission('skyblockspm.command');
+        $this->registerSubCommand(new ChatSubCommand('chat', 'Chat with your island members'));
         $this->registerSubCommand(new AcceptSubCommand('accept', 'Accept the incoming invite to a SkyBlock island'));
         $this->registerSubCommand(new CreateSubCommand('create', 'Create your own SkyBlock island'));
         $this->registerSubCommand(new DeleteSubCommand('delete', 'Delete a users SkyBlock Island'));
@@ -28,6 +29,7 @@ class SkyBlockCommand extends BaseCommand
         $this->registerSubCommand(new TpSubCommand('tp', 'Teleport to a users SkyBlock Island'));
         $this->registerSubCommand(new InviteSubCommand('invite', 'Invites the player to your SkyBlock island'));
         $this->registerSubCommand(new VisitSubCommand('visit', 'Visit a players SkyBlock island'));
+
     }
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void

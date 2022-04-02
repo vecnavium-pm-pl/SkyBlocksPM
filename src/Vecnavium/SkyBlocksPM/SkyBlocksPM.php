@@ -12,6 +12,7 @@ use Vecnavium\SkyBlocksPM\listener\EventListener;
 use Vecnavium\SkyBlocksPM\messages\Messages;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlockManager;
 use Vecnavium\SkyBlocksPM\player\PlayerManager;
+use cVecnavium\SkyBlocksPM\player\Player;
 use pocketmine\plugin\PluginBase;
 use Vecnavium\SkyBlocksPM\libs\poggit\libasynql\DataConnector;
 use Vecnavium\SkyBlocksPM\libs\poggit\libasynql\libasynql;
@@ -33,6 +34,8 @@ class SkyBlocksPM extends PluginBase
     private InviteManager $inviteManager;
     /** @var SkyBlocksPM */
     private static self $instance;
+    /** @var P[] */
+    private array $chat;
 
     protected function onLoad(): void
     {
@@ -57,6 +60,7 @@ class SkyBlocksPM extends PluginBase
         @mkdir($this->getDataFolder() . "cache");
         @mkdir($this->getDataFolder() . "cache/island");
         $this->checkUpdate();
+        $this->chat = [];
     }
 
     public function onDisable(): void
@@ -72,6 +76,21 @@ class SkyBlocksPM extends PluginBase
         $db->executeGeneric('skyblockspm.sb.init');
         $db->waitAll();
         $this->dataConnector = $db;
+    }
+
+    public function getChat(): array
+    {
+        return $this->chat;
+    }
+
+    public function addPlayerToChat(P $player): void
+    {
+        $this->chat[] = $player;
+    }
+
+    public function removePlayerFromChat(P $player): void
+    {
+        unset($this->chat[array_search($player->getName(), $this->chat)]);
     }
 
     public function checkUpdate(bool $isRetry = false): void {

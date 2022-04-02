@@ -12,13 +12,14 @@ use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\item\Food;
 use pocketmine\player\Player as P;
 use pocketmine\scheduler\ClosureTask;
-use pocketmine\event\player\PlayerChatEvent;
+use pocketmine\utils\TextFormat;
 
 class EventListener implements Listener
 {
@@ -131,6 +132,27 @@ class EventListener implements Listener
         };
         if (SkyBlocksPM::getInstance()->getConfig()->getNested("settings.damage.$type", true))
             $event->cancel();
+    }
+
+    public function onChat(PlayerChatEvent $event): void
+    {
+        if (!in_array($event->getPlayer(), SkyBlocksPM::getInstance()->getChat()))
+            return;
+        $oneBlock = SkyBlocksPM::getInstance()->getOneBlockManager()->getOneBlockByUuid(SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($event->getPlayer())->getOneBlock());
+        if (!$oneBlock instanceof OneBlock)
+        {
+            SkyBlocksPM::getInstance()->removePlayerFromChat($event->getPlayer());
+            $event->getPlayer()->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage("toggle-chat"));
+            return;
+        }
+        foreach ($oneBlock->getMembers() as $member)
+        {
+            $m = SkyBlocksPM::getInstance()->getServer()->getPlayerByPrefix($member);
+            if (!$m instanceof P)
+                continue;
+            $m->sendMessage(str_replace(["{PLAYER}", "{MSG}"], [$event->getPlayer()->getName(), $event->getMessage()], TextFormat::colorize(SkyBlocksPM::getInstance()->getMessages()->getMessageConfig()->get("skyblock-chat", "&d[SkyBlocksPM] &e[{PLAYER}] &6=> {MSG}"))));
+        }
+        $event->cancel();
     }
 
 }

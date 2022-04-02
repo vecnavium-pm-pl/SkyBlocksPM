@@ -32,3 +32,6 @@ permissions:
   skyblockspm.accept:
     default: true
     description: Accept the incoming invite to a SkyBlock island
+    skyblockspm.chat:
+      default: true
+      description: SkyBlocks Island Chat

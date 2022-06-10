@@ -53,7 +53,7 @@ class SkyBlockManager
         unset($this->SkyBlocks[$uuid]);
     }
 
-    public function createSkyBlock(string $uuid, Player $player, string $name, World $world): void
+    public static function createSkyBlock(string $uuid, Player $player, string $name, World $world): void
     {
         $spawn = $world->getSpawnLocation();
         $SkyBlock = new SkyBlock($uuid, $name, $player->getName(), [$player->getName()], $world->getFolderName(), ['visit' => true, 'pvp' => false], $spawn);

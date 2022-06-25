@@ -51,7 +51,9 @@ class PlayerManager
 
     public function getPlayer(P $player): Player
     {
-        return $this->players[$player->getName()];
+        if ( isset($this->players[$player->getName()]) ) return $this->players[$player->getName()];
+        $this->loadPlayer($player); // It should load eventually, right?
+        return $this->getPlayer($player);
     }
 
     public function getPlayerByPrefix(string $name): ?Player

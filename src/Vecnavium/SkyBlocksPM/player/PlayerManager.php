@@ -15,6 +15,7 @@ class PlayerManager
 
     public function loadPlayer(P $player)
     {
+        if(!isset($this->players[$player->getName()])) return;
         SkyBlocksPM::getInstance()->getDataBase()->executeSelect(
             'skyblockspm.player.load',
             [

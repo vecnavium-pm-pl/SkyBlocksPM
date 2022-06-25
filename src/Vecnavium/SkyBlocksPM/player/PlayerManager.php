@@ -34,6 +34,7 @@ class PlayerManager
 
     public function unloadPlayer(P $player)
     {
+        if(!isset($this->players[$player->getName()])) return;
         SkyBlocksPM::getInstance()->getSkyBlockManager()->unloadSkyBlock($this->getPlayer($player)->getSkyBlock());
         unset($this->players[$player->getName()]);
     }
@@ -51,9 +52,7 @@ class PlayerManager
 
     public function getPlayer(P $player): Player
     {
-        if ( isset($this->players[$player->getName()]) ) return $this->players[$player->getName()];
-        $this->loadPlayer($player); // It should load eventually, right?
-        return $this->getPlayer($player);
+        return $this->players[$player->getName()];
     }
 
     public function getPlayerByPrefix(string $name): ?Player

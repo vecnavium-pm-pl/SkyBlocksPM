@@ -28,7 +28,7 @@ class PlayerManager
                 }
                 $name = $player->getName();
                 $this->players[$name] = new Player($rows[0]['uuid'], $rows[0]['name'], $rows[0]['skyblock']);
-                if ($name !== $row[0]['name'])
+                if ($name !== $rows[0]['name'])
                     $this->getPlayer($player)->setName($name);
                 SkyBlocksPM::getInstance()->getSkyBlockManager()->loadSkyblock($rows[0]['skyblock']);
             }

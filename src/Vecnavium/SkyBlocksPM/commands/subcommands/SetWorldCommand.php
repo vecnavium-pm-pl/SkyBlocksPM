@@ -19,8 +19,8 @@ class SetWorldCommand extends BaseSubCommand
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
-        if (!$sender instanceof Player)
-            return;
+        if (!$sender instanceof Player) return;
+
         SkyBlocksPM::getInstance()->getGenerator()->setIslandWorld($sender);
     }
 

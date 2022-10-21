@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM;
 
+use pocketmine\player\Player as P;
 use Vecnavium\SkyBlocksPM\commands\SkyBlockCommand;
 use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\PacketHooker;
 use Vecnavium\SkyBlocksPM\generator\Generator;
@@ -12,27 +13,20 @@ use Vecnavium\SkyBlocksPM\listener\EventListener;
 use Vecnavium\SkyBlocksPM\messages\Messages;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlockManager;
 use Vecnavium\SkyBlocksPM\player\PlayerManager;
-use cVecnavium\SkyBlocksPM\player\Player;
 use pocketmine\plugin\PluginBase;
 use Vecnavium\SkyBlocksPM\libs\poggit\libasynql\DataConnector;
 use Vecnavium\SkyBlocksPM\libs\poggit\libasynql\libasynql;
+use function array_search;
 
 class SkyBlocksPM extends PluginBase
 {
 
-    /** @var DataConnector */
     private DataConnector $dataConnector;
-    /** @var Generator */
     private Generator $generator;
-    /** @var Messages */
     private Messages $messages;
-    /** @var PlayerManager */
     private PlayerManager $playerManager;
-    /** @var SkyBlockManager */
     private SkyBlockManager $SkyBlockManager;
-    /** @var InviteManager */
     private InviteManager $inviteManager;
-    /** @var SkyBlocksPM */
     private static self $instance;
     /** @var P[] */
     private array $chat;
@@ -85,7 +79,7 @@ class SkyBlocksPM extends PluginBase
 
     public function addPlayerToChat(P $player): void
     {
-        $this->chat[] = $player;
+        $this->chat[] = $player->getName();
     }
 
     public function removePlayerFromChat(P $player): void
@@ -93,8 +87,8 @@ class SkyBlocksPM extends PluginBase
         unset($this->chat[array_search($player->getName(), $this->chat)]);
     }
 
-    public function checkUpdate(bool $isRetry = false): void {
-
+    public function checkUpdate(): void
+    {
         $this->getServer()->getAsyncPool()->submitTask(new CheckUpdateTask($this->getDescription()->getName(), $this->getDescription()->getVersion()));
     }
 

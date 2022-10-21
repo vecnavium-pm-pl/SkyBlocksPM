@@ -14,7 +14,6 @@ class SkyBlockManager
 
     /**@var SkyBlock[]*/
     private array $SkyBlocks = [];
-    /** @var array */
     private array $worlds = [];
 
     public function loadSkyblock(string $uuid): void
@@ -26,11 +25,9 @@ class SkyBlockManager
             ],
             function (array $rows): void
             {
-                if (count($rows) == 0)
-                    return;
+                if (count($rows) == 0) return;
                 $row = $rows[0];
-                if(isset($this->SkyBlocks[$row['uuid']]))
-                    return;
+                if(isset($this->SkyBlocks[$row['uuid']])) return;
                 $spawn = (array)json_decode($row['spawn']);
                 $this->SkyBlocks[$row['uuid']] = new SkyBlock($row['uuid'], $row['name'], $row['leader'], explode(',', $row['members']), $row['world'], (array)json_decode($row['settings']), new Vector3($spawn["x"], $spawn["y"], $spawn['z']));
                 SkyBlocksPM::getInstance()->getServer()->getWorldManager()->loadWorld($row['world']);
@@ -86,8 +83,7 @@ class SkyBlockManager
     {
         foreach ($this->SkyBlocks as $SkyBlock)
         {
-            if ($SkyBlock->getName() == $name)
-                return $SkyBlock;
+            if ($SkyBlock->getName() == $name) return $SkyBlock;
         }
         return null;
     }
@@ -96,16 +92,14 @@ class SkyBlockManager
     {
         foreach ($this->SkyBlocks as $SkyBlock)
         {
-            if ($SkyBlock->getWorld() == $world->getFolderName())
-                return $SkyBlock;
+            if ($SkyBlock->getWorld() == $world->getFolderName()) return $SkyBlock;
         }
         return null;
     }
 
     public function isSkyBlockWorld(string $world): bool
     {
-        if (in_array($world, $this->worlds))
-            return true;
+        if (in_array($world, $this->worlds)) return true;
         return false;
     }
 

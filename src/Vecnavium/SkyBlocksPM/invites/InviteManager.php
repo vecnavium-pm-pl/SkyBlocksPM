@@ -21,8 +21,7 @@ class InviteManager
     {
         foreach ($this->invites as $invite)
         {
-            if ($invite->getInviter()->getName() == $name)
-                return $invite;
+            if ($invite->getInviter()->getName() == $name) return $invite;
         }
         return null;
     }
@@ -32,16 +31,14 @@ class InviteManager
         foreach ($this->invites as $invite)
         {
             if ($invite->getInviter() instanceof Player)
-                if ($invite->getInviter()->getName() == $player->getName())
-                    return false;
+                if ($invite->getInviter()->getName() == $player->getName()) return false;
         }
         return true;
     }
 
     public function cancelInvite(string $id)
     {
-        if (!isset($this->invites[$id]))
-            return;
+        if (!isset($this->invites[$id])) return;
         $this->invites[$id]->cancel();
         unset($this->invites[$id]);
     }

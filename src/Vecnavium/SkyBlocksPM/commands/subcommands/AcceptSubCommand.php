@@ -23,19 +23,17 @@ class AcceptSubCommand extends BaseSubCommand
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
         $invite = SkyBlocksPM::getInstance()->getInviteManager()->getPlayerInvites($args['name']);
-        if (!$invite instanceof Invite)
-            return;
 
-        if (!$invite->handleInvite())
-            return;
+        if (!$invite instanceof Invite) return;
+        if (!$invite->handleInvite()) return;
 
         $player = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayerByPrefix($sender->getName());
         $inviter = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($invite->getInviter());
         $player->setSkyBlock($inviter->getSkyBlock());
-        $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlock($player->getSkyBlock());
+        $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByUuid($inviter->getSkyBlock());
         $members = $skyblock->getMembers();
-        $skyblock->setMembers($members);
         array_push($members, $sender->getName());
+        $skyblock->setMembers($members);
         foreach ($skyblock->getMembers() as $member)
         {
             $mbr = SkyBlocksPM::getInstance()->getServer()->getPlayerByPrefix($member);

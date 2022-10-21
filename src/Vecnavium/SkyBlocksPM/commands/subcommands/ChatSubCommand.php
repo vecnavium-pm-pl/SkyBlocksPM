@@ -17,8 +17,8 @@ class ChatSubCommand extends BaseSubCommand
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
-        if (!$sender instanceof P)
-            return;
+        if (!$sender instanceof P) return;
+
         if (!in_array($sender->getName(), SkyBlocksPM::getInstance()->getChat()))
             SkyBlocksPM::getInstance()->addPlayerToChat($sender);
         else

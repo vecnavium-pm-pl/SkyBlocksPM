@@ -20,8 +20,8 @@ class TpSubCommand extends BaseSubCommand
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
-        if (!$sender instanceof Player)
-            return;
+        if (!$sender instanceof Player) return;
+
         $skyblock = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($sender)->getSkyblock();
         if ($skyblock == '')
         {

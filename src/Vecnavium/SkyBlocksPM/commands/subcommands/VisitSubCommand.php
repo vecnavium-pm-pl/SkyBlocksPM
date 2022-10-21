@@ -14,6 +14,7 @@ use pocketmine\player\Player as P;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
+use function in_array;
 
 class VisitSubCommand extends BaseSubCommand
 {
@@ -26,8 +27,8 @@ class VisitSubCommand extends BaseSubCommand
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
-        if (!($sender instanceof P))
-            return;
+        if (!($sender instanceof P)) return;
+
         if (isset($args['name']))
         {
             $p = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayerByPrefix($args['name']);
@@ -49,23 +50,26 @@ class VisitSubCommand extends BaseSubCommand
         foreach (SkyBlocksPM::getInstance()->getServer()->getOnlinePlayers() as $player)
         {
             $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByUuid(SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($player)->getSkyBlock());
-            if  ($skyblock instanceof SkyBlock)
-                $skyblocks[] = $skyblock;
+            if ($skyblock instanceof SkyBlock)
+                if(!in_array($skyblock->getUuid(), $skyblocks))
+                    $skyblocks[] = $skyblock->getUuid();
         }
         $form = new SimpleForm(function (P $player, ?int $data) use ($skyblocks) {
-            if (!isset($skyblocks[$data]))
-                return;
-            $skyblock = $skyblocks[$data];
+            if($data === null) return;
+            if (!isset($skyblocks[$data])) return;
+
+            $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByUuid($skyblocks[$data]);
             $player->teleport(SkyBlocksPM::getInstance()->getServer()->getWorldManager()->getWorldByName($skyblock->getWorld())->getSpawnLocation());
             $player->teleport($skyblock->getSpawn());
         });
         $formConfig = new Config(SkyBlocksPM::getInstance()->getDataFolder() . "forms.yml", Config::YAML);
         $form->setTitle(TextFormat::colorize($formConfig->getNested('visit.title')));
-        foreach ($skyblocks as $skyblock)
+        foreach ($skyblocks as $uuid)
         {
+            $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByUuid($uuid);
             $form->addButton(TextFormat::colorize(str_replace('{NAME}', $skyblock->getLeader() , $formConfig->getNested('visit.buttons', '&l&a{NAME} SkyBlock'))));
         }
-        $form->sendToPlayer($sender);
+        $sender->sendForm($form);
     }
 
 }

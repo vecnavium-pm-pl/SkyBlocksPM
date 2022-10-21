@@ -41,8 +41,8 @@ class Generator
         /** @var SplFileInfo $file */
         foreach ($files as $file)
         {
-            if (!$file->isFile())
-                continue;
+            if (!$file->isFile()) continue;
+
             $filePath = $file->getPath() . DIRECTORY_SEPARATOR . $file->getBasename();
             $localPath = substr($filePath, strlen(SkyBlocksPM::getInstance()->getServer()->getDataPath() . 'worlds' . DIRECTORY_SEPARATOR . $world->getFolderName()));
             @mkdir(SkyBlocksPM::getInstance()->getDataFolder() . "cache/island/db");

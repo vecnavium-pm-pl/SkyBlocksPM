@@ -7,7 +7,6 @@ namespace Vecnavium\SkyBlocksPM;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 use pocketmine\utils\Internet;
-use function is_array;
 use function json_decode;
 use function version_compare;
 use function vsprintf;
@@ -27,9 +26,8 @@ class CheckUpdateTask extends AsyncTask{
         if($json !== null){
             $releases = json_decode($json->getBody(), true);
             foreach($releases as $release){
-                if(version_compare($highestVersion, $release["version"], ">=")){
-                    continue;
-                }
+                if(version_compare($highestVersion, $release["version"], ">=")) continue;
+
                 $highestVersion = $release["version"];
                 $artifactUrl = $release["artifact_url"];
                 $api = $release["api"][0]["from"] . " - " . $release["api"][0]["to"];
@@ -42,9 +40,7 @@ class CheckUpdateTask extends AsyncTask{
 
     public function onCompletion() : void{
         $plugin = Server::getInstance()->getPluginManager()->getPlugin($this->pluginName);
-        if($plugin === null){
-            return;
-        }
+        if($plugin === null) return;
 
         [$highestVersion, $artifactUrl, $api, $err] = $this->getResult();
         if($err !== null){

@@ -11,7 +11,6 @@ use pocketmine\utils\TextFormat;
 class Messages
 {
 
-    /**@var Config*/
     private Config $messages;
 
     public function __construct()

@@ -10,7 +10,7 @@ use pocketmine\player\Player as P;
 class PlayerManager
 {
 
-    /**@var Player[]*/
+    /** @var Player[] */
     private array $players = [];
 
     public function loadPlayer(P $player)
@@ -38,7 +38,8 @@ class PlayerManager
     public function unloadPlayer(P $player)
     {
         SkyBlocksPM::getInstance()->getSkyBlockManager()->unloadSkyBlock($this->getPlayer($player)->getSkyBlock());
-        unset($this->players[$player->getName()]);
+        if(isset($this->players[$player->getName()]))
+            unset($this->players[$player->getName()]);
     }
 
     public function createPlayer(P $player): void
@@ -59,7 +60,7 @@ class PlayerManager
 
     public function getPlayerByPrefix(string $name): ?Player
     {
-        return $this->players[$name]?? null;
+        return $this->players[$name] ?? null;
     }
 
 }

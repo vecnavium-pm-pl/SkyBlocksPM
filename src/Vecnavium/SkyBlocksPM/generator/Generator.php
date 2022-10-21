@@ -41,8 +41,8 @@ class Generator
         /** @var SplFileInfo $file */
         foreach ($files as $file)
         {
-            if (!$file->isFile())
-                continue;
+            if (!$file->isFile()) continue;
+
             $filePath = $file->getPath() . DIRECTORY_SEPARATOR . $file->getBasename();
             $localPath = substr($filePath, strlen(SkyBlocksPM::getInstance()->getServer()->getDataPath() . 'worlds' . DIRECTORY_SEPARATOR . $world->getFolderName()));
             @mkdir(SkyBlocksPM::getInstance()->getDataFolder() . "cache/island/db");
@@ -60,6 +60,7 @@ class Generator
      */
     public function generateIsland(Player $player, string $folderName, string $name)
     {
+        $folderName = "{$player->getName()}-$folderName";
         $path = SkyBlocksPM::getInstance()->getDataFolder() . "cache/island";
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(realpath($path)), RecursiveIteratorIterator::LEAVES_ONLY);
 
@@ -83,7 +84,7 @@ class Generator
         SkyBlocksPM::getInstance()->getServer()->getWorldManager()->loadWorld($folderName);
         $world = SkyBlocksPM::getInstance()->getServer()->getWorldManager()->getWorldByName($folderName);
         $player->teleport(Position::fromObject($world->getSpawnLocation(), $world));
-        SkyBlocksPM::getInstance()->getSkyBlockManager()->createSkyBlock($world->getFolderName(), SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($player), "", $world);
+        SkyBlocksPM::getInstance()->getSkyBlockManager()->createSkyBlock($world->getFolderName(), SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($player), $name, $world);
     }
 
 }

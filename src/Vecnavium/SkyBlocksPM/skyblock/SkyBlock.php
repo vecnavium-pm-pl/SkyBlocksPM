@@ -10,13 +10,8 @@ use pocketmine\math\Vector3;
 class SkyBlock
 {
 
-    /**@var string*/
     private string $uuid, $name, $leader, $world;
-    /**@var array*/
-    private array $members;
-    /** @var array */
-    private array $settings;
-    /**@var Vector3*/
+    private array $members, $settings;
     private Vector3 $spawn;
 
     public function __construct(string $uuid, string $name, string $leader, array $members, string $world, array $settings, Vector3 $spawn)

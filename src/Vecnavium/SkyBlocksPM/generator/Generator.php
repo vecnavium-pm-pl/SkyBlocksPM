@@ -60,6 +60,7 @@ class Generator
      */
     public function generateIsland(Player $player, string $folderName, string $name)
     {
+        $folderName = "{$player->getName()}-$folderName";
         $path = SkyBlocksPM::getInstance()->getDataFolder() . "cache/island";
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(realpath($path)), RecursiveIteratorIterator::LEAVES_ONLY);
 

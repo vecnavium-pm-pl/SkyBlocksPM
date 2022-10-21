@@ -21,8 +21,8 @@ class SkyBlockCommand extends BaseCommand
     public function prepare(): void
     {
         $this->setPermission('skyblockspm.command');
-        $this->registerSubCommand(new ChatSubCommand('chat', 'Chat with your island members'));
         $this->registerSubCommand(new AcceptSubCommand('accept', 'Accept the incoming invite to a SkyBlock island'));
+        $this->registerSubCommand(new ChatSubCommand('chat', 'Chat with your island members'));
         $this->registerSubCommand(new CreateSubCommand('create', 'Create your own SkyBlock island'));
         $this->registerSubCommand(new DeleteSubCommand('delete', 'Delete a users SkyBlock Island'));
         $this->registerSubCommand(new SetWorldCommand('setworld', 'Sets the current world as the SkyBlock World which will be copied to newer worlds upon Island creation'));

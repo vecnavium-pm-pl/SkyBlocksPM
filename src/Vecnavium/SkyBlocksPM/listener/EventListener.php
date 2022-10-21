@@ -133,7 +133,7 @@ class EventListener implements Listener
 
     public function onChat(PlayerChatEvent $event): void
     {
-        if (!in_array($event->getPlayer(), SkyBlocksPM::getInstance()->getChat())) return;
+        if (!in_array($event->getPlayer()->getName(), SkyBlocksPM::getInstance()->getChat())) return;
 
         $skyBlock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByUuid(SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($event->getPlayer())->getSkyBlock());
         if (!$skyBlock instanceof SkyBlock)

@@ -25,8 +25,8 @@ class CreateSubCommand extends BaseSubCommand
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
-        if (!$sender instanceof Player)
-            return;
+        if (!$sender instanceof Player) return;
+
         $player = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($sender);
         if ($player->getSkyBlock() !== '')
         {

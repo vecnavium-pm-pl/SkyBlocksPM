@@ -7,7 +7,6 @@ namespace Vecnavium\SkyBlocksPM\listener;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\player\Player;
-use pocketmine\block\VanillaBlocks;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\entity\EntityDamageEvent;
@@ -18,7 +17,6 @@ use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\item\Food;
 use pocketmine\player\Player as P;
-use pocketmine\scheduler\ClosureTask;
 use pocketmine\utils\TextFormat;
 
 class EventListener implements Listener
@@ -50,8 +48,8 @@ class EventListener implements Listener
      */
     public function onBreak(BlockBreakEvent $event): void
     {
-        if (!SkyBlocksPM::getInstance()->getSkyBlockManager()->isSkyBlockWorld($event->getPlayer()->getWorld()->getFolderName()))
-            return;
+        if (!SkyBlocksPM::getInstance()->getSkyBlockManager()->isSkyBlockWorld($event->getPlayer()->getWorld()->getFolderName())) return;
+
         $block = $event->getBlock();
         $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByWorld($block->getPosition()->getWorld());
         if (!in_array($event->getPlayer()->getName(), $skyblock->getMembers())) {
@@ -82,8 +80,8 @@ class EventListener implements Listener
      */
     public function onPlace(BlockPlaceEvent $event): void
     {
-        if (!SkyBlocksPM::getInstance()->getSkyBlockManager()->isSkyBlockWorld($event->getPlayer()->getWorld()->getFolderName()))
-            return;
+        if (!SkyBlocksPM::getInstance()->getSkyBlockManager()->isSkyBlockWorld($event->getPlayer()->getWorld()->getFolderName())) return;
+
         $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByWorld($event->getBlock()->getPosition()->getWorld());
         if (!in_array($event->getPlayer()->getName(), $skyblock->getMembers()))
         {
@@ -115,10 +113,9 @@ class EventListener implements Listener
     public function onPlayerDamage(EntityDamageEvent $event): void
     {
         $entity = $event->getEntity();
-        if (!$entity instanceof P)
-            return;
-        if (!SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByWorld($entity->getWorld()) instanceof SkyBlock)
-            return;
+        if (!$entity instanceof P) return;
+        if (!SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByWorld($entity->getWorld()) instanceof SkyBlock) return;
+
         $type = match ($event->getCause()) {
             EntityDamageEvent::CAUSE_ENTITY_ATTACK => 'player',
             EntityDamageEvent::CAUSE_LAVA => 'lava',
@@ -136,20 +133,19 @@ class EventListener implements Listener
 
     public function onChat(PlayerChatEvent $event): void
     {
-        if (!in_array($event->getPlayer(), SkyBlocksPM::getInstance()->getChat()))
-            return;
-        $oneBlock = SkyBlocksPM::getInstance()->getOneBlockManager()->getOneBlockByUuid(SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($event->getPlayer())->getOneBlock());
-        if (!$oneBlock instanceof OneBlock)
+        if (!in_array($event->getPlayer()->getName(), SkyBlocksPM::getInstance()->getChat())) return;
+
+        $skyBlock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByUuid(SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($event->getPlayer())->getSkyBlock());
+        if (!$skyBlock instanceof SkyBlock)
         {
             SkyBlocksPM::getInstance()->removePlayerFromChat($event->getPlayer());
             $event->getPlayer()->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage("toggle-chat"));
             return;
         }
-        foreach ($oneBlock->getMembers() as $member)
+        foreach ($skyBlock->getMembers() as $member)
         {
             $m = SkyBlocksPM::getInstance()->getServer()->getPlayerByPrefix($member);
-            if (!$m instanceof P)
-                continue;
+            if (!$m instanceof P) continue;
             $m->sendMessage(str_replace(["{PLAYER}", "{MSG}"], [$event->getPlayer()->getName(), $event->getMessage()], TextFormat::colorize(SkyBlocksPM::getInstance()->getMessages()->getMessageConfig()->get("skyblock-chat", "&d[SkyBlocksPM] &e[{PLAYER}] &6=> {MSG}"))));
         }
         $event->cancel();

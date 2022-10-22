@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS skyblockspm_player
 (
     uuid VARCHAR(32) PRIMARY KEY,
     name VARCHAR(32),
-    skyblock STRING DEFAULT ''
-    );
+    skyblock TEXT DEFAULT ''
+);
 -- # }
 
 -- # { load
@@ -47,11 +47,11 @@ CREATE TABLE IF NOT EXISTS skyblockspm_sb
     uuid VARCHAR(32) PRIMARY KEY,
     name VARCHAR(32),
     leader VARCHAR(32),
-    members STRING,
-    world STRING,
-    settings STRING,
-    spawn STRING
-    );
+    members TEXT,
+    world TEXT,
+    settings TEXT,
+    spawn TEXT
+);
 -- # }
 
 -- # { load
@@ -77,7 +77,7 @@ VALUES (:uuid, :name, :leader, :members, :world, :settings, :spawn);
 -- #   :uuid string
 DELETE
 FROM skyblockspm_sb
-WHERE uuid=:uuid
+WHERE uuid=:uuid;
 -- # }
 
 -- # { update

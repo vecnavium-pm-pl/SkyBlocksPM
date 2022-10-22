@@ -24,8 +24,8 @@ class InviteSubCommand extends BaseSubCommand
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
-        if (!$sender instanceof Player)
-            return;
+        if (!$sender instanceof Player) return;
+
         if (!SkyBlocksPM::getInstance()->getInviteManager()->canInvite($sender))
         {
             $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('invite-pending'));
@@ -33,7 +33,7 @@ class InviteSubCommand extends BaseSubCommand
         }
         $player = SkyBlocksPM::getInstance()->getServer()->getPlayerByPrefix($args['name']);
         $skyblockPlayer = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayerByPrefix($sender->getName());
-        $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlock($skyblockPlayer->getSkyBlock());
+        $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByUuid($skyblockPlayer->getSkyBlock());
         if (!$skyblock instanceof SkyBlock)
         {
             $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('no-sb'));
@@ -49,8 +49,8 @@ class InviteSubCommand extends BaseSubCommand
             SkyBlocksPM::getInstance()->getMessages()->getMessage('player-not-online');
             return;
         }
-        if ($sender === $player)
-            return;
+        if ($sender === $player) return;
+
         $id =  Uuid::uuid4()->toString();
         SkyBlocksPM::getInstance()->getInviteManager()->addInvite($id, $sender, $player);
         $player->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('invite-get', [

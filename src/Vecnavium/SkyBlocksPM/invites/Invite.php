@@ -10,7 +10,6 @@ use pocketmine\player\Player;
 class Invite
 {
 
-    /** @var Player|null */
     private ?Player $inviter, $receiver;
 
     public function __construct(Player $inviter, Player $receiver)
@@ -41,12 +40,12 @@ class Invite
 
     public function handleInvite(): bool
     {
-        if (!$this->inviter instanceof Player)
-            return false;
+        if (!$this->inviter instanceof Player) return false;
+
         $inviter = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayerByPrefix($this->inviter->getName());
         $receiver = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayerByPrefix($this->receiver->getName());
-        if ($inviter->getSkyBlock() == '' || $receiver->getSkyBlock() !== '')
-            return false;
+
+        if ($inviter->getSkyBlock() == '' || $receiver->getSkyBlock() !== '') return false;
         return true;
     }
 

@@ -2,7 +2,7 @@ name: SkyBlocksPM
 api: 4.0.0
 author: Vecnavium
 main: Vecnavium\SkyBlocksPM\SkyBlocksPM
-version: 1.0.7
+version: 1.0.8
 
 permissions:
   skyblockspm.command:
@@ -32,6 +32,6 @@ permissions:
   skyblockspm.accept:
     default: true
     description: Accept the incoming invite to a SkyBlock island
-    skyblockspm.chat:
-      default: true
-      description: SkyBlocks Island Chat
+  skyblockspm.chat:
+    default: true
+    description: SkyBlocks Island Chat

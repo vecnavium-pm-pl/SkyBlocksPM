@@ -9,7 +9,6 @@ use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 class Player
 {
 
-    /**@var string*/
     private string $uuid, $name, $skyblocks;
 
     public function __construct(string $uuid, string $name, string $skyblocks)

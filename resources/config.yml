@@ -32,8 +32,6 @@ settings:
   max-members: 5
   damage:
     default: true
-    # This should be false if you want the PvP Island setting to work.
-    player: true
     lava: true
     drown: true
     fall: false

@@ -38,7 +38,7 @@ class PlayerManager {
     }
 
     public function unloadPlayer(P $player) {
-        $this->plugin->getSkyBlockManager()->unloadSkyBlock($this->getPlayer($player)->getSkyBlock());
+        $this->plugin->getSkyBlockManager()->unloadSkyBlock($this->getPlayerByPrefix($player->getName())->getSkyBlock());
         if(isset($this->players[$player->getName()]))
             unset($this->players[$player->getName()]);
     }
@@ -61,4 +61,19 @@ class PlayerManager {
         return $this->players[$name] ?? null;
     }
 
+    /**
+     * This is used for Skyblock members that are offline when the Skyblock is deleted by the leader.
+     *
+     * @param string $name
+     * @param string $skyblock
+     * @return void
+     */
+    public function deleteSkyBlockOffline(string $name, string $skyblock = ''): void{
+        $this->plugin->getDataBase()->executeGeneric(
+            'skyblockspm.sb.delete_offline', [
+                'name' => $name,
+                'skyblock' => $skyblock
+            ]
+        );
+    }
 }

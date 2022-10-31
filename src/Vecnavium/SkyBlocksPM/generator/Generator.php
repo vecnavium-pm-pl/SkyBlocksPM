@@ -10,7 +10,6 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
 use Vecnavium\SkyblocksPM\SkyBlocksPM;
-use ZipArchive;
 
 class Generator {
 
@@ -60,7 +59,7 @@ class Generator {
      *
      * Thanks SkyWars by GamakCZ
      */
-    public function generateIsland(Player $player, string $folderName, string $name) {
+    public function generateIsland(Player $player, string $folderName, string $name): void{
         $path = $this->plugin->getDataFolder() . "cache/island";
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(realpath($path)), RecursiveIteratorIterator::LEAVES_ONLY);
 
@@ -82,7 +81,7 @@ class Generator {
         $this->plugin->getServer()->getWorldManager()->loadWorld($folderName);
         $world = $this->plugin->getServer()->getWorldManager()->getWorldByName($folderName);
         $player->teleport(Position::fromObject($world->getSpawnLocation(), $world));
-        $this->plugin->getSkyBlockManager()->createSkyBlock($world->getFolderName(), $this->plugin->getPlayerManager()->getPlayer($player), $name, $world);
+        $this->plugin->getSkyBlockManager()->createSkyBlock($world->getFolderName(), $this->plugin->getPlayerManager()->getPlayerByPrefix($player->getName()), $name, $world);
     }
 
 }

@@ -27,7 +27,7 @@ class CreateSubCommand extends BaseSubCommand {
         
         if (!$sender instanceof Player) return;
 
-        $player = $plugin->getPlayerManager()->getPlayer($sender);
+        $player = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
         if ($player->getSkyBlock() !== '') {
             $sender->sendMessage($plugin->getMessages()->getMessage('have-sb'));
             return;

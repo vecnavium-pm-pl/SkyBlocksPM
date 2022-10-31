@@ -133,7 +133,7 @@ class SkyBlocksPM extends PluginBase {
         return $this->inviteManager;
     }
 
-    public function checkConfigs(bool $rename = true) {
+    public function checkConfigs() {
         $messagesCfg = new Config($this->getDataFolder() . "messages.yml", Config::YAML);
         if(version_compare($messagesCfg->get("version", "0"), self::MSG_VER, "<>")) {
             $this->getLogger()->error("Your message files are outdated. SkyBlocksPM will automatically create a new config.");

@@ -9,10 +9,12 @@ use pocketmine\utils\TextFormat;
 use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseSubCommand;
 use Vecnavium\SkyBlocksPM\libs\jojoe77777\FormAPI\CustomForm;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
+use Vecnavium\SkyBlocksPM\skyblock\SkyblockSettingTypes;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use Vecnavium\SkyBlocksPM\player\Player;
 use pocketmine\player\Player as P;
 use pocketmine\command\CommandSender;
+use function array_shift;
 
 class SettingsSubCommand extends BaseSubCommand {
 
@@ -26,7 +28,7 @@ class SettingsSubCommand extends BaseSubCommand {
         
         if (!$sender instanceof P) return;
 
-        $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($sender);
+        $skyblockPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
         if (!$skyblockPlayer instanceof Player) return;
 
         if ($skyblockPlayer->getSkyBlock() == '') {
@@ -42,16 +44,16 @@ class SettingsSubCommand extends BaseSubCommand {
 
             $settingsForm = new CustomForm(function(P $player, $data) use ($plugin, $skyblock){
                 if($data === null) return;
+                array_shift($data);
 
-                // $data[0] will always be NULL because of the label and how it gets handled
                 $newSettings = [];
-                $newSettings['visit'] = (bool)$data[1];
-                $newSettings['pvp'] = (bool)$data[2];
-                $newSettings['interact_chest'] = (bool)$data[3];
-                $newSettings['interact_door'] = (bool)$data[4];
-                $newSettings['pickup'] = (bool)$data[5];
-                $newSettings['break'] = (bool)$data[6];
-                $newSettings['place'] = (bool)$data[7];
+                $newSettings[SkyblockSettingTypes::SETTING_VISIT] = (bool)$data[0];
+                $newSettings[SkyblockSettingTypes::SETTING_PVP] = (bool)$data[1];
+                $newSettings[SkyblockSettingTypes::SETTING_INTERACT_CHEST] = (bool)$data[2];
+                $newSettings[SkyblockSettingTypes::SETTING_INTERACT_DOOR] = (bool)$data[3];
+                $newSettings[SkyblockSettingTypes::SETTING_PICKUP] = (bool)$data[4];
+                $newSettings[SkyblockSettingTypes::SETTING_BREAK] = (bool)$data[5];
+                $newSettings[SkyblockSettingTypes::SETTING_PLACE] = (bool)$data[6];
 
                 $skyblock->updateSettings($newSettings);
                 $player->sendMessage($plugin->getMessages()->getMessage('updated-settings'));
@@ -60,13 +62,13 @@ class SettingsSubCommand extends BaseSubCommand {
             $settingsForm->setTitle(TextFormat::colorize($formConfig->getNested('settings.title')));
             $settingsForm->addLabel(TextFormat::colorize($formConfig->getNested('settings.text')));
 
-            $settingsForm->addToggle("Open for Visiting", $skyblock->getSetting('visit'));
-            $settingsForm->addToggle("PvP", $skyblock->getSetting('pvp'));
-            $settingsForm->addToggle("Open Chests", $skyblock->getSetting('interact_chest'));
-            $settingsForm->addToggle("Open Doors", $skyblock->getSetting('interact_door'));
-            $settingsForm->addToggle("Pickup Items", $skyblock->getSetting('pickup'));
-            $settingsForm->addToggle("Break Blocks", $skyblock->getSetting('break'));
-            $settingsForm->addToggle("Place Blocks", $skyblock->getSetting('place'));
+            $settingsForm->addToggle("Open for Visiting", $skyblock->getSetting(SkyblockSettingTypes::SETTING_VISIT));
+            $settingsForm->addToggle("PvP", $skyblock->getSetting(SkyblockSettingTypes::SETTING_PVP));
+            $settingsForm->addToggle("Open Chests", $skyblock->getSetting(SkyblockSettingTypes::SETTING_INTERACT_CHEST));
+            $settingsForm->addToggle("Open Doors", $skyblock->getSetting(SkyblockSettingTypes::SETTING_INTERACT_DOOR));
+            $settingsForm->addToggle("Pickup Items", $skyblock->getSetting(SkyblockSettingTypes::SETTING_PICKUP));
+            $settingsForm->addToggle("Break Blocks", $skyblock->getSetting(SkyblockSettingTypes::SETTING_BREAK));
+            $settingsForm->addToggle("Place Blocks", $skyblock->getSetting(SkyblockSettingTypes::SETTING_PLACE));
 
             $sender->sendForm($settingsForm);
         }

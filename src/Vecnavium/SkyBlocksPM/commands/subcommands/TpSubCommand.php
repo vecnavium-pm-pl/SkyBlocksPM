@@ -22,7 +22,7 @@ class TpSubCommand extends BaseSubCommand {
         
         if (!$sender instanceof Player) return;
 
-        $skyblock = $plugin->getPlayerManager()->getPlayer($sender)->getSkyblock();
+        $skyblock = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName())->getSkyblock();
         if ($skyblock == '') {
             $sender->sendMessage($plugin->getMessages()->getMessage('no-sb-go'));
             return;

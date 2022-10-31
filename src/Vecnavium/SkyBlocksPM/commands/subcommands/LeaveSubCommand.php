@@ -24,7 +24,7 @@ class LeaveSubCommand extends BaseSubCommand {
         
         if (!$sender instanceof P) return;
 
-        $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($sender);
+        $skyblockPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
         if (!$skyblockPlayer instanceof Player) return;
 
         if ($skyblockPlayer->getSkyBlock() == '') {

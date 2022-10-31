@@ -38,15 +38,22 @@ class DeleteSubCommand extends BaseSubCommand {
         }
         $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($skyblockPlayer->getSkyBlock());
         foreach ($skyblock->getMembers() as $member) {
-            $player = $plugin->getServer()->getPlayerByPrefix($member);
-            if ($player instanceof P)
+            $player = $plugin->getServer()->getPlayerExact($member);
+            if ($player instanceof P) {
                 $player->teleport($plugin->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
-            $plugin->getPlayerManager()->getPlayerByPrefix($member)->setSkyBlock('');
+            }
+            if(($mPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($member)) instanceof Player) {
+                $mPlayer->setSkyBlock('');
+            } else {
+                // Hacky but it works.
+                $plugin->getPlayerManager()->deleteSkyBlockOffline($member);
+            }
         }
         $plugin->getSkyBlockManager()->deleteSkyBlock($skyblock->getName());
         $world = $plugin->getServer()->getWorldManager()->getWorldByName($skyblock->getWorld());
-        foreach ($world->getPlayers() as $p)
+        foreach ($world->getPlayers() as $p) {
             $p->teleport($plugin->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
+        }
         if ($world->isLoaded()) {
             $folderName = $world->getFolderName();
             $plugin->getServer()->getWorldManager()->unloadWorld($world);
@@ -57,12 +64,13 @@ class DeleteSubCommand extends BaseSubCommand {
         ]));
     }
 
-    public function deleteWorld(string $path, string $previousPath = ''): void {
+    public function deleteWorld(string $path): void {
         foreach (array_diff(scandir($path . DIRECTORY_SEPARATOR), ['..', '.']) as $file) {
-            if (is_dir($path . DIRECTORY_SEPARATOR . $file))
-                $this->deleteWorld($path. DIRECTORY_SEPARATOR . $file. DIRECTORY_SEPARATOR);
-            else
+            if (is_dir($path . DIRECTORY_SEPARATOR . $file)) {
+                $this->deleteWorld($path . DIRECTORY_SEPARATOR . $file . DIRECTORY_SEPARATOR);
+            } else {
                 unlink($path . DIRECTORY_SEPARATOR . $file);
+            }
         }
         rmdir($path);
     }

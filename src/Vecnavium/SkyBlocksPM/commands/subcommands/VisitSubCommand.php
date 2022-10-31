@@ -13,6 +13,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\player\Player as P;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
+use Vecnavium\SkyBlocksPM\skyblock\SkyblockSettingTypes;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use function in_array;
 
@@ -40,7 +41,7 @@ class VisitSubCommand extends BaseSubCommand {
                 $sender->sendMessage($plugin->getMessages()->getMessage('no-island'));
                 return;
             }
-            if(!$skyblock->getSettings()['visit']) {
+            if(!$skyblock->getSetting(SkyblockSettingTypes::SETTING_VISIT)) {
                 $sender->sendMessage($plugin->getMessages()->getMessage('island-not-open'));
                 return;
             }
@@ -49,11 +50,11 @@ class VisitSubCommand extends BaseSubCommand {
         }
         $skyblocks = [];
         foreach ($plugin->getServer()->getOnlinePlayers() as $player) {
-            $sbPlayer = $plugin->getPlayerManager()->getPlayer($player);
+            $sbPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($player->getName());
             if(!$sbPlayer instanceof Player) continue;
             $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($sbPlayer->getSkyBlock());
             if ($skyblock instanceof SkyBlock)
-                if(!in_array($skyblock->getUuid(), $skyblocks) && $skyblock->getSettings()['visit'])
+                if(!in_array($skyblock->getUuid(), $skyblocks) && $skyblock->getSetting(SkyblockSettingTypes::SETTING_VISIT))
                     $skyblocks[] = $skyblock->getUuid();
         }
         $form = new SimpleForm(function (P $player, ?int $data) use ($plugin, $skyblocks) {

@@ -31,7 +31,7 @@ class AcceptSubCommand extends BaseSubCommand {
         $plugin->getInviteManager()->cancelInvite($invite->getId());
 
         $player = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
-        $inviter = $plugin->getPlayerManager()->getPlayer($invite->getInviter());
+        $inviter = $plugin->getPlayerManager()->getPlayerByPrefix($invite->getInviter()->getName());
         if($player instanceof Player && $inviter instanceof Player) {
             $player->setSkyBlock($inviter->getSkyBlock());
             $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($inviter->getSkyBlock());

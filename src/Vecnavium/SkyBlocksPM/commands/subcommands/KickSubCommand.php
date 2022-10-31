@@ -28,7 +28,7 @@ class KickSubCommand extends BaseSubCommand {
         if (!$sender instanceof P) return;
 
         $toKickPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($args['name']);
-        $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($sender);
+        $skyblockPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
         if (!$toKickPlayer instanceof Player) {
             $sender->sendMessage($plugin->getMessages()->getMessage('not-registered'));
             return;

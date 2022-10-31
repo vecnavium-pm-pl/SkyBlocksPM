@@ -13,55 +13,52 @@ use pocketmine\player\Player;
 use pocketmine\scheduler\ClosureTask;
 use Ramsey\Uuid\Uuid;
 
-class InviteSubCommand extends BaseSubCommand
-{
+class InviteSubCommand extends BaseSubCommand {
 
-    protected function prepare(): void
-    {
+    protected function prepare(): void {
         $this->setPermission('skyblockspm.invite');
         $this->registerArgument(0, new RawStringArgument('name'));
     }
 
-    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
-    {
+    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
+        /** @var SkyBlocksPM $plugin */
+        $plugin = $this->getOwningPlugin();
+        
         if (!$sender instanceof Player) return;
 
-        if (!SkyBlocksPM::getInstance()->getInviteManager()->canInvite($sender))
-        {
-            $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('invite-pending'));
+        if (!$plugin->getInviteManager()->canInvite($sender)) {
+            $sender->sendMessage($plugin->getMessages()->getMessage('invite-pending'));
             return;
         }
-        $player = SkyBlocksPM::getInstance()->getServer()->getPlayerByPrefix($args['name']);
-        $skyblockPlayer = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayerByPrefix($sender->getName());
-        $skyblock = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByUuid($skyblockPlayer->getSkyBlock());
-        if (!$skyblock instanceof SkyBlock)
-        {
-            $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('no-sb'));
+        $player = $plugin->getServer()->getPlayerByPrefix($args['name']);
+        $skyblockPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
+        $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($skyblockPlayer->getSkyBlock());
+        if (!$skyblock instanceof SkyBlock) {
+            $sender->sendMessage($plugin->getMessages()->getMessage('no-sb'));
             return;
         }
-        if (count($skyblock->getMembers()) >= SkyBlocksPM::getInstance()->getConfig()->getNested('settings.max-members'))
-        {
-            $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('member-limit'));
+        if (count($skyblock->getMembers()) >= $plugin->getConfig()->getNested('settings.max-members')) {
+            $sender->sendMessage($plugin->getMessages()->getMessage('member-limit'));
             return;
         }
-        if (!$player instanceof Player)
-        {
-            SkyBlocksPM::getInstance()->getMessages()->getMessage('player-not-online');
+        if (!$player instanceof Player) {
+            $plugin->getMessages()->getMessage('player-not-online');
             return;
         }
         if ($sender === $player) return;
 
         $id =  Uuid::uuid4()->toString();
-        SkyBlocksPM::getInstance()->getInviteManager()->addInvite($id, $sender, $player);
-        $player->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('invite-get', [
+        $plugin->getInviteManager()->addInvite($id, $sender, $player);
+        $player->sendMessage($plugin->getMessages()->getMessage('invite-get', [
             "{INVITER}" => $sender->getName()
         ]));
-        $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('invite-sent', [
+        $sender->sendMessage($plugin->getMessages()->getMessage('invite-sent', [
             "{PLAYER}" => $player->getName()
         ]));
-        SkyBlocksPM::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($id): void {
-            SkyBlocksPM::getInstance()->getInviteManager()->cancelInvite($id);
-        }), SkyBlocksPM::getInstance()->getConfig()->getNested('settings.invite-timeout', 30) * 20);
+        $plugin->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($plugin, $id): void {
+            if($plugin->getInviteManager()->isInviteValid($id))
+                $plugin->getInviteManager()->cancelInvite($id, true);
+        }), $plugin->getConfig()->getNested('settings.invite-timeout', 30) * 20);
     }
 
 }

@@ -1,6 +1,14 @@
+# DO NOT CHANGE THIS VALUE
+version: "1"
+
 #==========================================#
 #Forms Config File for SkyBlocksPM
 #==========================================#
+
 visit:
   title: "&l&4[SkyBlocksPM] Visit Menu"
   buttons: "&l&4{NAME} SkyBlocksPM"
+
+settings:
+  title: "&l&4[SkyBlocksPM] Settings"
+  text: "&l&4Here you can edit the settings for your Island."

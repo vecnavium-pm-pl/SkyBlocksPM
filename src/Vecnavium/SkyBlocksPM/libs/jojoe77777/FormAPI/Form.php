@@ -1,14 +1,14 @@
 <?php
 
-namespace Vecnavium\SkyBlocksPM\libs;
+declare(strict_types = 1);
+
+namespace Vecnavium\SkyBlocksPM\libs\jojoe77777\FormAPI;
 
 use pocketmine\form\Form as IForm;
 use pocketmine\player\Player;
 
-class Form implements IForm
-{
+abstract class Form implements IForm{
 
-    /** @var array */
     protected array $data = [];
     /** @var callable|null */
     private $callable;
@@ -52,5 +52,4 @@ class Form implements IForm
     public function jsonSerialize(){
         return $this->data;
     }
-
 }

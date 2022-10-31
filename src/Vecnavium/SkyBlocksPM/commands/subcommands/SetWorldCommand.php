@@ -9,19 +9,19 @@ use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseSubCommand;
 use pocketmine\player\Player;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
-class SetWorldCommand extends BaseSubCommand
-{
+class SetWorldCommand extends BaseSubCommand {
 
-    protected function prepare(): void
-    {
+    protected function prepare(): void {
         $this->setPermission('skyblockspm.setworld');
     }
 
-    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
-    {
+    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
+        /** @var SkyBlocksPM $plugin */
+        $plugin = $this->getOwningPlugin();
+        
         if (!$sender instanceof Player) return;
 
-        SkyBlocksPM::getInstance()->getGenerator()->setIslandWorld($sender);
+        $plugin->getGenerator()->setIslandWorld($sender);
     }
 
 }

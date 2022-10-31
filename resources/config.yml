@@ -33,7 +33,6 @@ settings:
   max-members: 5
   damage:
     default: true
-    player: false
     lava: true
     drown: true
     fall: false

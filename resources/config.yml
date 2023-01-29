@@ -1,7 +1,6 @@
 #==========================================#
 #Main Config File for SkyBlocksPM
 #==========================================#
-
 database:
   # The database type. "sqlite" and "mysql" are supported.
   type: sqlite
@@ -33,7 +32,6 @@ settings:
   max-members: 5
   damage:
     default: true
-    player: false
     lava: true
     drown: true
     fall: false

@@ -7,15 +7,13 @@ namespace Vecnavium\SkyBlocksPM\skyblock;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use pocketmine\math\Vector3;
 
-class SkyBlock
-{
+class SkyBlock {
 
     private string $uuid, $name, $leader, $world;
     private array $members, $settings;
     private Vector3 $spawn;
 
-    public function __construct(string $uuid, string $name, string $leader, array $members, string $world, array $settings, Vector3 $spawn)
-    {
+    public function __construct(string $uuid, string $name, string $leader, array $members, string $world, array $settings, Vector3 $spawn) {
         $this->uuid = $uuid;
         $this->name = $name;
         $this->leader = $leader;
@@ -28,24 +26,21 @@ class SkyBlock
     /**
      * @return string
      */
-    public function getUuid(): string
-    {
+    public function getUuid(): string {
         return $this->uuid;
     }
 
     /**
      * @return string
      */
-    public function getName(): string
-    {
+    public function getName(): string {
         return $this->name;
     }
 
     /**
      * @param string $name
      */
-    public function setName(string $name): void
-    {
+    public function setName(string $name): void {
         $this->name = $name;
         $this->save();
     }
@@ -53,16 +48,14 @@ class SkyBlock
     /**
      * @return string
      */
-    public function getLeader(): string
-    {
+    public function getLeader(): string {
         return $this->leader;
     }
 
     /**
      * @param string $leader
      */
-    public function setLeader(string $leader): void
-    {
+    public function setLeader(string $leader): void {
         $this->leader = $leader;
         $this->save();
     }
@@ -70,16 +63,14 @@ class SkyBlock
     /**
      * @return array
      */
-    public function getMembers(): array
-    {
+    public function getMembers(): array {
         return $this->members;
     }
 
     /**
      * @param array $members
      */
-    public function setMembers(array $members): void
-    {
+    public function setMembers(array $members): void {
         $this->members = $members;
         $this->save();
     }
@@ -87,16 +78,14 @@ class SkyBlock
     /**
      * @return string
      */
-    public function getWorld(): string
-    {
+    public function getWorld(): string {
         return $this->world;
     }
 
     /**
      * @param string $world
      */
-    public function setWorld(string $world): void
-    {
+    public function setWorld(string $world): void {
         $this->world = $world;
         $this->save();
     }
@@ -104,38 +93,38 @@ class SkyBlock
     /**
      * @return array
      */
-    public function getSettings(): array
-    {
+    public function getSettings(): array {
         return $this->settings;
+    }
+
+    public function getSetting(string $setting): bool {
+        return isset($this->settings[$setting]) && $this->settings[$setting];
     }
 
     /**
      * @param array $settings
      */
-    public function updateSettings(array $settings): void
-    {
+    public function updateSettings(array $settings): void {
         $this->settings = $settings;
+        $this->save();
     }
 
     /**
      * @return Vector3
      */
-    public function getSpawn(): Vector3
-    {
+    public function getSpawn(): Vector3 {
         return $this->spawn;
     }
 
     /**
      * @param Vector3 $spawn
      */
-    public function setSpawn(Vector3 $spawn): void
-    {
+    public function setSpawn(Vector3 $spawn): void {
         $this->spawn = $spawn;
         $this->save();
     }
 
-    public function save(): void
-    {
+    public function save(): void {
         $spawn = [
             'x' => $this->spawn->getX(),
             'y' => $this->spawn->getY(),
@@ -151,5 +140,4 @@ class SkyBlock
             'spawn' => json_encode($spawn)
         ]);
     }
-
 }

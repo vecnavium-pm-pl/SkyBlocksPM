@@ -6,13 +6,11 @@ namespace Vecnavium\SkyBlocksPM\player;
 
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
-class Player
-{
+class Player {
 
     private string $uuid, $name, $skyblocks;
 
-    public function __construct(string $uuid, string $name, string $skyblocks)
-    {
+    public function __construct(string $uuid, string $name, string $skyblocks) {
         $this->uuid = $uuid;
         $this->name = $name;
         $this->skyblocks = $skyblocks;
@@ -21,35 +19,29 @@ class Player
     /**
      * @return string
      */
-    public function getUuid(): string
-    {
+    public function getUuid(): string {
         return $this->uuid;
     }
 
-    public function getName(): string
-    {
+    public function getName(): string {
         return $this->name;
     }
     
-    public function setName(string $name): void
-    {
+    public function setName(string $name): void {
         $this->name = $name;
         $this->save();
     }
 
-    public function getSkyBlock(): string
-    {
+    public function getSkyBlock(): string {
         return $this->skyblocks;
     }
 
-    public function setSkyBlock(string $skyblock): void
-    {
+    public function setSkyBlock(string $skyblock): void {
         $this->skyblocks = $skyblock;
         $this->save();
     }
 
-    public function save(): void
-    {
+    public function save(): void {
         SkyBlocksPM::getInstance()->getDataBase()->executeChange('skyblockspm.player.update', [
             'uuid' => $this->uuid,
             'name' => $this->name,
@@ -57,5 +49,4 @@ class Player
         ]);
         SkyBlocksPM::getInstance()->getDataBase()->waitAll();
     }
-
 }

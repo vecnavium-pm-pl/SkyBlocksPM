@@ -14,34 +14,32 @@ use pocketmine\player\PlayerChunkLoader;
 use pocketmine\world\Position;
 use Ramsey\Uuid\Uuid;
 
-class CreateSubCommand extends BaseSubCommand
-{
+class CreateSubCommand extends BaseSubCommand {
 
-    protected function prepare(): void
-    {
+    protected function prepare(): void {
         $this->setPermission('skyblockspm.create');
         $this->registerArgument(0, new RawStringArgument('name'));
     }
 
-    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
-    {
+    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
+        /** @var SkyBlocksPM $plugin */
+        $plugin = $this->getOwningPlugin();
+        
         if (!$sender instanceof Player) return;
 
-        $player = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($sender);
-        if ($player->getSkyBlock() !== '')
-        {
-            $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('have-sb'));
+        $player = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
+        if ($player->getSkyBlock() !== '') {
+            $sender->sendMessage($plugin->getMessages()->getMessage('have-sb'));
             return;
         }
-        if (count(array_diff(scandir(SkyBlocksPM::getInstance()->getDataFolder() . 'cache/island'), ['..', "."])) == 0)
-        {
-            $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage("no-default-island"));
+        if (count(array_diff(scandir($plugin->getDataFolder() . 'cache/island'), ['..', "."])) == 0) {
+            $sender->sendMessage($plugin->getMessages()->getMessage("no-default-island"));
             return;
         }
-        $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('skyblock-creating'));
+        $sender->sendMessage($plugin->getMessages()->getMessage('skyblock-creating'));
         $id = Uuid::uuid4()->toString();
         $player->setSkyBlock($id);
-        SkyBlocksPM::getInstance()->getGenerator()->generateIsland($sender, $id, $args['name']);
+        $plugin->getGenerator()->generateIsland($sender, $id, $args['name']);
     }
 
 }

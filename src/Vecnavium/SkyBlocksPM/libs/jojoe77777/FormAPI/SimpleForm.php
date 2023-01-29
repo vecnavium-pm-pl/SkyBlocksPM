@@ -1,19 +1,24 @@
 <?php
 
-namespace Vecnavium\SkyBlocksPM\libs;
+declare(strict_types = 1);
 
+namespace Vecnavium\SkyBlocksPM\libs\jojoe77777\FormAPI;
+
+use jojoe77777\FormAPI\Form;
 use pocketmine\form\FormValidationException;
+use function count;
+use function gettype;
+use function is_int;
 
-class SimpleForm extends Form
-{
+class SimpleForm extends Form {
 
     const IMAGE_TYPE_PATH = 0;
     const IMAGE_TYPE_URL = 1;
 
     /** @var string */
-    private string $content = "";
+    private $content = "";
 
-    private array $labelMap = [];
+    private $labelMap = [];
 
     /**
      * @param callable|null $callable
@@ -71,7 +76,7 @@ class SimpleForm extends Form
      * @param string $text
      * @param int $imageType
      * @param string $imagePath
-     * @param string|null $label
+     * @param string $label
      */
     public function addButton(string $text, int $imageType = -1, string $imagePath = "", ?string $label = null) : void {
         $content = ["text" => $text];

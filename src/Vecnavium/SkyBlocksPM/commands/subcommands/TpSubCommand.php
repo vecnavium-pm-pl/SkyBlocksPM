@@ -10,25 +10,24 @@ use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
 
-class TpSubCommand extends BaseSubCommand
-{
+class TpSubCommand extends BaseSubCommand {
 
-    protected function prepare(): void
-    {
+    protected function prepare(): void {
         $this->setPermission('skyblockspm.tp');
     }
 
-    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
-    {
+    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
+        /** @var SkyBlocksPM $plugin */
+        $plugin = $this->getOwningPlugin();
+        
         if (!$sender instanceof Player) return;
 
-        $skyblock = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($sender)->getSkyblock();
-        if ($skyblock == '')
-        {
-            $sender->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('no-sb-go'));
+        $skyblock = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName())->getSkyblock();
+        if ($skyblock == '') {
+            $sender->sendMessage($plugin->getMessages()->getMessage('no-sb-go'));
             return;
         }
-        $spawn = SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByUuid($skyblock)->getSpawn();
-        $sender->teleport(Position::fromObject($spawn->up(), SkyBlocksPM::getInstance()->getServer()->getWorldManager()->getWorldByName(SkyBlocksPM::getInstance()->getSkyBlockManager()->getSkyBlockByUuid($skyblock)->getWorld())));
+        $spawn = $plugin->getSkyBlockManager()->getSkyBlockByUuid($skyblock)->getSpawn();
+        $sender->teleport(Position::fromObject($spawn->up(), $plugin->getServer()->getWorldManager()->getWorldByName($plugin->getSkyBlockManager()->getSkyBlockByUuid($skyblock)->getWorld())));
     }
 }

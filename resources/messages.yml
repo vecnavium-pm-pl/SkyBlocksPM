@@ -1,3 +1,6 @@
+# DO NOT CHANGE THIS VALUE.
+version: "1"
+
 #==========================================#
 #Config messages for SkyBlocksPM
 #==========================================#
@@ -6,11 +9,11 @@
 
 prefix: "&l&4[SkyBlocksPM]"
 
-# seperator seperates the message from the prefix
+# separator separates the message from the prefix
 # Format looks like:
-# {prefix} {seperator} {message}
+# {prefix} {separator} {message}
 # the spaces are automatically added so you dont have to worry about that too :))
-seperator: "&e=>&b"
+separator: "&e=>&b"
 
 messages:
   skyblock-creating: "SkyBlock is currently creating..."
@@ -20,7 +23,7 @@ messages:
   not-registered: "The player you have specified does not exist."
   no-island: "The specified player does not own an island."
   no-default-island: "The default island has not been set, please ask the server staff to use the '/sb setworld' command to set the island world"
-  no-sb-go: 'You do not own a SkyBlock island'
+  no-sb-go: "You do not own a SkyBlock island"
   no-perms-delete: "You do not have the permission to delete other SkyBlock islands."
   deleted-sb: "You have successfully deleted {NAME}'s SkyBlock Island."
   invite-get: "You have received an invitation from {INVITER}, to accept run '/sb accept {INVITER}'"
@@ -34,5 +37,13 @@ messages:
   delete: "Deleting your SkyBlock Island.."
   default-world: "You can not set the default world of the server as a skyblock world"
   toggle-chat: "Toggled Island chat"
+  no-leave: "You can not leave your own Island."
+  member-left: "{PLAYER} has left your SkyBlock."
+  member-kicked: "{PLAYER} was kicked from your SkyBlock."
+  no-edit: "You can not edit this SkyBlock Island."
+  updated-settings: "Successfully updated your Island settings."
+  island-not-open: "That player's Island is not open for visiting."
+  no-kick: "You can not kick people from this Island."
+  not-member: "That player is not a member on your Island."
 
   skyblock-chat: "&f[SkyBlocksPM] &e[{PLAYER}] &6=> {MSG}"

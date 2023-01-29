@@ -2,7 +2,7 @@ name: SkyBlocksPM
 api: 4.0.0
 author: Vecnavium
 main: Vecnavium\SkyBlocksPM\SkyBlocksPM
-version: 1.0.8
+version: 1.0.9
 
 permissions:
   skyblockspm.command:
@@ -35,3 +35,12 @@ permissions:
   skyblockspm.chat:
     default: true
     description: SkyBlocks Island Chat
+  skyblockspm.leave:
+    default: true
+    description: Leave a Skyblock Island
+  skyblockspm.settings:
+    default: true
+    description: Edit SkyBlock Settings
+  skyblockspm.kick:
+    default: true
+    description: Kick Island Members

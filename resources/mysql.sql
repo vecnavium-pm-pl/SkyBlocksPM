@@ -79,6 +79,13 @@ DELETE
 FROM skyblockspm_sb
 WHERE uuid=:uuid;
 -- # }
+-- # { delete_offline
+-- #   :name string
+-- #   :skyblock string
+UPDATE skyblockspm_player
+SET skyblock=:skyblock
+WHERE name=:name;
+-- # }
 
 -- # { update
 -- #    :uuid string

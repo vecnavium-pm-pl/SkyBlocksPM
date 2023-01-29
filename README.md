@@ -11,13 +11,14 @@
 # Features 
 
 - [x] Custom Island support
-- [x] SQLITe3 Storage & MYSQL
+- [x] SQLITe3 & MYSQL Storage
 - [x] Configurable messages
 - [x] Island Settings
 - [x] Island Members
 - [x] Configurable visit UI
 - [x] Island visit support
 - [x] Starting Skyblock Chests (The chests will have the same contents from the ones which were present and as well as NPCs while using the `/is setworld` command)
+- [x] Settings (Such as Interact, Pickup, Place Blocks, etc.)
 
 # Setup 
 
@@ -28,11 +29,9 @@
 
 # Planned features
 
-- [ ] Soreboard support. (Maybe, slight chance)
+- [ ] Scoreboard support. (Maybe, slight chance)
 - [ ] UI Support (Such as creating, modifying isalnds and etc)
 - [ ] Private Island chat with chat format (Not officially decided yet)
-- [ ] Settings (Such as Interact, Pickup, Place Blocks  and much more.)
-- [x] MYSQL(Maybe) Storage
 
 And possibly few more that isn't listed as it's in development.
 

@@ -1,5 +1,11 @@
 <p align="center">
     <b>A SkyBlocks plugin for PocketMine-MP, with many features to offer.
+  
+  <p align="center">
+SkyBlocksPM developed by: KressentHosting  
+
+<p align="center">Website: https://kressenthosting.com
+  
 </p>
 
 <p align="center">

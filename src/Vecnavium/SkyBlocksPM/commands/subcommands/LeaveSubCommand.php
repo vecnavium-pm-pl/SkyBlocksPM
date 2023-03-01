@@ -42,7 +42,7 @@ class LeaveSubCommand extends BaseSubCommand {
             unset($members[array_search($sender->getName(), $members)]);
             $skyblock->setMembers($members);
             foreach ($skyblock->getMembers() as $member) {
-                $mbr = $plugin->getServer()->getPlayerByPrefix($member);
+                $mbr = $plugin->getServer()->getPlayerExact($member);
                 if ($mbr instanceof P)
                     $mbr->sendMessage($plugin->getMessages()->getMessage('member-left', [
                         "{PLAYER}" => $sender->getName()

@@ -38,7 +38,7 @@ class SkyBlockManager {
         );
     }
 
-    public function unloadSkyBlock(string $uuid) {
+    public function unloadSkyBlock(string $uuid): void{
         $skyblock = $this->getSkyBlockByUuid($uuid);
         if (!$skyblock instanceof SkyBlock)
             return;

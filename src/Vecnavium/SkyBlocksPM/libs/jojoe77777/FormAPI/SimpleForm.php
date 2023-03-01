@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Vecnavium\SkyBlocksPM\libs\jojoe77777\FormAPI;
 
-use jojoe77777\FormAPI\Form;
 use pocketmine\form\FormValidationException;
 use function count;
 use function gettype;

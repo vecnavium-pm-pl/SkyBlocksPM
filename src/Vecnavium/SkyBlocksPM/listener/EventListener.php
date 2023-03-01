@@ -24,7 +24,6 @@ use pocketmine\item\Food;
 use pocketmine\player\Player as P;
 use pocketmine\utils\TextFormat;
 use function in_array;
-use function var_dump;
 
 class EventListener implements Listener {
 
@@ -92,7 +91,7 @@ class EventListener implements Listener {
      * @return void
      */
     public function onPlace(BlockPlaceEvent $event): void {
-        $skyblock = $this->plugin->getSkyBlockManager()->getSkyBlockByWorld($event->getBlock()->getPosition()->getWorld());
+        $skyblock = $this->plugin->getSkyBlockManager()->getSkyBlockByWorld($event->getPlayer()->getPosition()->getWorld());
         if(!$skyblock instanceof SkyBlock) return;
 
         if (!in_array($event->getPlayer()->getName(), $skyblock->getMembers()) && !$skyblock->getSetting(SkyblockSettingTypes::SETTING_PLACE)) {
@@ -163,7 +162,7 @@ class EventListener implements Listener {
             return;
         }
         foreach ($skyBlock->getMembers() as $member) {
-            $m = $this->plugin->getServer()->getPlayerByPrefix($member);
+            $m = $this->plugin->getServer()->getPlayerExact($member);
             if (!$m instanceof P) continue;
             $m->sendMessage(str_replace(['{PLAYER}', '{MSG}'], [$player->getName(), $event->getMessage()], TextFormat::colorize($this->plugin->getMessages()->getMessageConfig()->get('skyblock-chat', '&d[SkyBlocksPM] &e[{PLAYER}] &6=> {MSG}'))));
         }

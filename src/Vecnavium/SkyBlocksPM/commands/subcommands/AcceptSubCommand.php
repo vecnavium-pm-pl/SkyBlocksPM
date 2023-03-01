@@ -36,7 +36,7 @@ class AcceptSubCommand extends BaseSubCommand {
             $player->setSkyBlock($inviter->getSkyBlock());
             $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($inviter->getSkyBlock());
             $members = $skyblock->getMembers();
-            array_push($members, $sender->getName());
+            $members[] = $sender->getName();
             $skyblock->setMembers($members);
             foreach ($skyblock->getMembers() as $member) {
                 $mbr = $plugin->getServer()->getPlayerByPrefix($member);

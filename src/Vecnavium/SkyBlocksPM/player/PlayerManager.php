@@ -17,7 +17,7 @@ class PlayerManager {
         $this->plugin = $plugin;
     }
 
-    public function loadPlayer(P $player) {
+    public function loadPlayer(P $player): void{
         $this->plugin->getDataBase()->executeSelect(
             'skyblockspm.player.load',
             [
@@ -37,7 +37,7 @@ class PlayerManager {
         );
     }
 
-    public function unloadPlayer(P $player) {
+    public function unloadPlayer(P $player): void{
         $this->plugin->getSkyBlockManager()->unloadSkyBlock($this->getPlayerByPrefix($player->getName())->getSkyBlock());
         if(isset($this->players[$player->getName()]))
             unset($this->players[$player->getName()]);

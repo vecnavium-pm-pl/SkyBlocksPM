@@ -30,7 +30,7 @@ class InviteSubCommand extends BaseSubCommand {
             $sender->sendMessage($plugin->getMessages()->getMessage('invite-pending'));
             return;
         }
-        $player = $plugin->getServer()->getPlayerByPrefix($args['name']);
+        $player = $plugin->getServer()->getPlayerExact($args['name']);
         $skyblockPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
         $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($skyblockPlayer->getSkyBlock());
         if (!$skyblock instanceof SkyBlock) {

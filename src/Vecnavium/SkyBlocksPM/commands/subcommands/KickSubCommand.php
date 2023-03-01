@@ -54,7 +54,7 @@ class KickSubCommand extends BaseSubCommand {
             unset($members[array_search($toKickPlayer->getName(), $members)]);
             $skyblock->setMembers($members);
             foreach ($skyblock->getMembers() as $member) {
-                $mbr = $plugin->getServer()->getPlayerByPrefix($member);
+                $mbr = $plugin->getServer()->getPlayerExact($member);
                 if ($mbr instanceof P)
                     $mbr->sendMessage($plugin->getMessages()->getMessage('member-kicked', [
                         "{PLAYER}" => $toKickPlayer->getName()

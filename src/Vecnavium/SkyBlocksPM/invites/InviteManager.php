@@ -30,14 +30,14 @@ class InviteManager {
         return true;
     }
 
-    public function cancelInvite(string $id, bool $sendMessage = false) {
+    public function cancelInvite(string $id, bool $sendMessage = false): void{
         if (!isset($this->invites[$id])) return;
         if($sendMessage)
             $this->invites[$id]->cancel();
         unset($this->invites[$id]);
     }
 
-    public function isInviteValid(string $id){
+    public function isInviteValid(string $id): bool{
         return isset($this->invites[$id]);
     }
 }

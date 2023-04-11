@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\args\RawStringArgument;
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseSubCommand;
+use CortexPE\Commando\args\RawStringArgument;
+use CortexPE\Commando\BaseSubCommand;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use Vecnavium\SkyBlocksPM\player\Player;
@@ -27,8 +27,8 @@ class KickSubCommand extends BaseSubCommand {
         
         if (!$sender instanceof P) return;
 
-        $toKickPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($args['name']);
-        $skyblockPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
+        $toKickPlayer = $plugin->getPlayerManager()->getPlayer($args['name']);
+        $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($sender->getName());
         if (!$toKickPlayer instanceof Player) {
             $sender->sendMessage($plugin->getMessages()->getMessage('not-registered'));
             return;
@@ -55,10 +55,11 @@ class KickSubCommand extends BaseSubCommand {
             $skyblock->setMembers($members);
             foreach ($skyblock->getMembers() as $member) {
                 $mbr = $plugin->getServer()->getPlayerExact($member);
-                if ($mbr instanceof P)
+                if ($mbr instanceof P) {
                     $mbr->sendMessage($plugin->getMessages()->getMessage('member-kicked', [
                         "{PLAYER}" => $toKickPlayer->getName()
                     ]));
+                }
             }
         }
     }

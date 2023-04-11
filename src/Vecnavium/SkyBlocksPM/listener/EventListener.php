@@ -38,7 +38,7 @@ class EventListener implements Listener {
      * @return void
      */
     public function onJoin(PlayerJoinEvent $event): void {
-        $player = $this->plugin->getPlayerManager()->getPlayerByPrefix($event->getPlayer()->getName());
+        $player = $this->plugin->getPlayerManager()->getPlayer($event->getPlayer()->getName());
         if (!$player instanceof Player) {
             $this->plugin->getPlayerManager()->loadPlayer($event->getPlayer());
         }
@@ -155,7 +155,7 @@ class EventListener implements Listener {
         $player = $event->getPlayer();
         if (!in_array($player->getName(), $this->plugin->getChat())) return;
 
-        $skyBlock = $this->plugin->getSkyBlockManager()->getSkyBlockByUuid($this->plugin->getPlayerManager()->getPlayerByPrefix($player->getName())->getSkyBlock());
+        $skyBlock = $this->plugin->getSkyBlockManager()->getSkyBlockByUuid($this->plugin->getPlayerManager()->getPlayer($player->getName())->getSkyBlock());
         if (!$skyBlock instanceof SkyBlock) {
             $this->plugin->removePlayerFromChat($player);
             $player->sendMessage($this->plugin->getMessages()->getMessage('toggle-chat'));

@@ -11,11 +11,8 @@ class PlayerManager {
 
     /** @var Player[] */
     private array $players = [];
-    private SkyBlocksPM $plugin;
     
-    public function __construct(SkyBlocksPM $plugin) {
-        $this->plugin = $plugin;
-    }
+    public function __construct(private SkyBlocksPM $plugin) {}
 
     public function loadPlayer(P $player): void{
         $this->plugin->getDataBase()->executeSelect(
@@ -30,17 +27,19 @@ class PlayerManager {
                 }
                 $name = $player->getName();
                 $this->players[$name] = new Player($rows[0]['uuid'], $rows[0]['name'], $rows[0]['skyblock']);
-                if ($name !== $rows[0]['name'])
-                    $this->getPlayer($player)->setName($name);
+                if ($name !== $rows[0]['name']) {
+                    $this->getPlayer($name)->setName($name);
+                }
                 $this->plugin->getSkyBlockManager()->loadSkyblock($rows[0]['skyblock']);
             }
         );
     }
 
     public function unloadPlayer(P $player): void{
-        $this->plugin->getSkyBlockManager()->unloadSkyBlock($this->getPlayerByPrefix($player->getName())->getSkyBlock());
-        if(isset($this->players[$player->getName()]))
+        $this->plugin->getSkyBlockManager()->unloadSkyBlock($this->getPlayer($player->getName())->getSkyBlock());
+        if(isset($this->players[$player->getName()])) {
             unset($this->players[$player->getName()]);
+        }
     }
 
     public function createPlayer(P $player): void {
@@ -53,11 +52,7 @@ class PlayerManager {
         $this->players[$player->getName()] = new Player($player->getUniqueId()->toString(), $player->getName(), '');
     }
 
-    public function getPlayer(P $player): ?Player {
-        return $this->players[$player->getName()] ?? null;
-    }
-
-    public function getPlayerByPrefix(string $name): ?Player {
+    public function getPlayer(string $name): ?Player {
         return $this->players[$name] ?? null;
     }
 

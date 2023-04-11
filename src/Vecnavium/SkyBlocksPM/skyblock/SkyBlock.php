@@ -9,19 +9,15 @@ use pocketmine\math\Vector3;
 
 class SkyBlock {
 
-    private string $uuid, $name, $leader, $world;
-    private array $members, $settings;
-    private Vector3 $spawn;
-
-    public function __construct(string $uuid, string $name, string $leader, array $members, string $world, array $settings, Vector3 $spawn) {
-        $this->uuid = $uuid;
-        $this->name = $name;
-        $this->leader = $leader;
-        $this->members = $members;
-        $this->world = $world;
-        $this->settings = $settings;
-        $this->spawn = $spawn;
-    }
+    public function __construct(
+        private string $uuid,
+        private string $name,
+        private string $leader,
+        private array $members,
+        private string $world,
+        private array $settings,
+        private Vector3 $spawn
+    ) {}
 
     /**
      * @return string

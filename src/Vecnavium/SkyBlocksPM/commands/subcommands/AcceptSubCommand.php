@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\args\RawStringArgument;
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseSubCommand;
+use CortexPE\Commando\args\RawStringArgument;
+use CortexPE\Commando\BaseSubCommand;
 use Vecnavium\SkyBlocksPM\player\Player;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use Vecnavium\SkyBlocksPM\invites\Invite;
@@ -30,8 +30,8 @@ class AcceptSubCommand extends BaseSubCommand {
 
         $plugin->getInviteManager()->cancelInvite($invite->getId());
 
-        $player = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
-        $inviter = $plugin->getPlayerManager()->getPlayerByPrefix($invite->getInviter()->getName());
+        $player = $plugin->getPlayerManager()->getPlayer($sender->getName());
+        $inviter = $plugin->getPlayerManager()->getPlayer($invite->getInviter()->getName());
         if($player instanceof Player && $inviter instanceof Player) {
             $player->setSkyBlock($inviter->getSkyBlock());
             $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($inviter->getSkyBlock());
@@ -39,7 +39,7 @@ class AcceptSubCommand extends BaseSubCommand {
             $members[] = $sender->getName();
             $skyblock->setMembers($members);
             foreach ($skyblock->getMembers() as $member) {
-                $mbr = $plugin->getServer()->getPlayerByPrefix($member);
+                $mbr = $plugin->getServer()->getPlayerExact($member);
                 if ($mbr instanceof P)
                     $mbr->sendMessage($plugin->getMessages()->getMessage('invite-accepted', [
                         "{PLAYER}" => $sender->getName()

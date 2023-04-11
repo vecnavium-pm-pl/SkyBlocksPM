@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseSubCommand;
+use CortexPE\Commando\BaseSubCommand;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use Vecnavium\SkyBlocksPM\player\Player;
@@ -24,7 +24,7 @@ class LeaveSubCommand extends BaseSubCommand {
         
         if (!$sender instanceof P) return;
 
-        $skyblockPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
+        $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($sender->getName());
         if (!$skyblockPlayer instanceof Player) return;
 
         if ($skyblockPlayer->getSkyBlock() == '') {
@@ -43,10 +43,11 @@ class LeaveSubCommand extends BaseSubCommand {
             $skyblock->setMembers($members);
             foreach ($skyblock->getMembers() as $member) {
                 $mbr = $plugin->getServer()->getPlayerExact($member);
-                if ($mbr instanceof P)
+                if ($mbr instanceof P) {
                     $mbr->sendMessage($plugin->getMessages()->getMessage('member-left', [
                         "{PLAYER}" => $sender->getName()
                     ]));
+                }
             }
         }
     }

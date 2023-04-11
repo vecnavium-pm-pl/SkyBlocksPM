@@ -2,10 +2,11 @@
 
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseSubCommand;
+use CortexPE\Commando\BaseSubCommand;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use pocketmine\player\Player as P;
 use pocketmine\command\CommandSender;
+use function in_array;
 
 class ChatSubCommand extends BaseSubCommand {
 
@@ -19,10 +20,9 @@ class ChatSubCommand extends BaseSubCommand {
         
         if (!$sender instanceof P) return;
 
-        if (!in_array($sender->getName(), $plugin->getChat()))
-            $plugin->addPlayerToChat($sender);
-        else
-            $plugin->removePlayerFromChat($sender);
+        $chatStatus = in_array($sender->getName(), $plugin->getChat());
+        $plugin->setPlayerChat($sender, !$chatStatus);
+
         $sender->sendMessage($plugin->getMessages()->getMessage("toggle-chat"));
     }
 

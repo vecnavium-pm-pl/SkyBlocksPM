@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\args\RawStringArgument;
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseSubCommand;
+use CortexPE\Commando\args\RawStringArgument;
+use CortexPE\Commando\BaseSubCommand;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use pocketmine\command\CommandSender;
@@ -31,7 +31,7 @@ class InviteSubCommand extends BaseSubCommand {
             return;
         }
         $player = $plugin->getServer()->getPlayerExact($args['name']);
-        $skyblockPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
+        $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($sender->getName());
         $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($skyblockPlayer->getSkyBlock());
         if (!$skyblock instanceof SkyBlock) {
             $sender->sendMessage($plugin->getMessages()->getMessage('no-sb'));

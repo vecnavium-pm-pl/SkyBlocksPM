@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\commands;
 
+use CortexPE\Commando\BaseCommand;
 use Vecnavium\SkyBlocksPM\commands\subcommands\ChatSubCommand;
 use Vecnavium\SkyBlocksPM\commands\subcommands\KickSubCommand;
 use Vecnavium\SkyBlocksPM\commands\subcommands\LeaveSubCommand;
 use Vecnavium\SkyBlocksPM\commands\subcommands\SettingsSubCommand;
 use Vecnavium\SkyBlocksPM\commands\subcommands\SetWorldCommand;
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseCommand;
 use Vecnavium\SkyBlocksPM\commands\subcommands\AcceptSubCommand;
 use Vecnavium\SkyBlocksPM\commands\subcommands\CreateSubCommand;
 use Vecnavium\SkyBlocksPM\commands\subcommands\DeleteSubCommand;
@@ -35,7 +35,5 @@ class SkyBlockCommand extends BaseCommand {
         $this->registerSubCommand(new VisitSubCommand('visit', 'Visit a players SkyBlock Island'));
     }
 
-    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
-    }
-
+    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {}
 }

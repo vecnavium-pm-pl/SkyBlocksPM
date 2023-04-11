@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM;
 
-use pocketmine\player\Player as P;
+use CortexPE\Commando\PacketHooker;
+use pocketmine\player\Player;
 use pocketmine\utils\Config;
+use pocketmine\utils\SingletonTrait;
 use Vecnavium\SkyBlocksPM\commands\SkyBlockCommand;
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\PacketHooker;
 use Vecnavium\SkyBlocksPM\generator\Generator;
 use Vecnavium\SkyBlocksPM\invites\InviteManager;
 use Vecnavium\SkyBlocksPM\listener\EventListener;
@@ -23,6 +24,8 @@ use function version_compare;
 
 class SkyBlocksPM extends PluginBase {
 
+    use SingletonTrait;
+
     const MSG_VER = "1";
     const FORM_VER = "1";
 
@@ -32,17 +35,16 @@ class SkyBlocksPM extends PluginBase {
     private PlayerManager $playerManager;
     private SkyBlockManager $SkyBlockManager;
     private InviteManager $inviteManager;
-    private static self $instance;
-    /** @var P[] */
+
+    /** @var Player[] */
     private array $chat;
 
-    protected function onLoad(): void {
-        self::$instance = $this;
-    }
-
     public function onEnable(): void {
-        if (!PacketHooker::isRegistered())
+        self::setInstance($this);
+
+        if (!PacketHooker::isRegistered()) {
             PacketHooker::register($this);
+        }
         $this->saveDefaultConfig();
         $this->saveResource('messages.yml');
         $this->saveResource('forms.yml');
@@ -78,12 +80,9 @@ class SkyBlocksPM extends PluginBase {
         return $this->chat;
     }
 
-    public function addPlayerToChat(P $player): void {
-        $this->chat[] = $player->getName();
-    }
-
-    public function removePlayerFromChat(P $player): void {
-        unset($this->chat[array_search($player->getName(), $this->chat)]);
+    public function setPlayerChat(Player $player, bool $status){
+        if($status) $this->chat[] = $player->getName();
+        else unset($this->chat[array_search($player->getName(), $this->chat)]);
     }
 
     public function checkUpdate(): void {
@@ -150,12 +149,5 @@ class SkyBlocksPM extends PluginBase {
             $this->saveResource('forms.yml');
             $formsCfg->reload();
         }
-    }
-
-    /**
-     * @return self
-    */
-    public static function getInstance(): self {
-        return self::$instance;
     }
 }

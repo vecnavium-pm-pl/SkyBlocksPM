@@ -81,7 +81,7 @@ class Generator {
         $this->plugin->getServer()->getWorldManager()->loadWorld($folderName);
         $world = $this->plugin->getServer()->getWorldManager()->getWorldByName($folderName);
         $player->teleport(Position::fromObject($world->getSpawnLocation(), $world));
-        $this->plugin->getSkyBlockManager()->createSkyBlock($world->getFolderName(), $this->plugin->getPlayerManager()->getPlayerByPrefix($player->getName()), $name, $world);
+        $this->plugin->getSkyBlockManager()->createSkyBlock($world->getFolderName(), $this->plugin->getPlayerManager()->getPlayer($player->getName()), $name, $world);
     }
 
 }

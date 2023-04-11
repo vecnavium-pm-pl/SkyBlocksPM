@@ -2,9 +2,12 @@
 build-by-default: true
 branches:
 - stable
-- dev
-- sbchat
 projects:
   SkyBlocksPM:
     path: ""
+    libs:
+      - src: CortexPE/Commando/Commando
+        version: ^3.1.0
+      - src: poggit/libasynql/libasynql
+        version: ^4.1.6
 ...

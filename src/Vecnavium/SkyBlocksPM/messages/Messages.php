@@ -18,13 +18,13 @@ class Messages {
 
     public function getMessage(string $msg, array $args = []): string {
         $message = $this->messages->getNested("messages.$msg");
-        foreach ($args as $key => $value)
+        foreach ($args as $key => $value) {
             $message = str_replace($key, $value, $message);
+        }
         return  TextFormat::colorize("{$this->messages->get('prefix')} {$this->messages->get('separator')} $message");
     }
 
     public function getMessageConfig(): Config {
         return $this->messages;
     }
-
 }

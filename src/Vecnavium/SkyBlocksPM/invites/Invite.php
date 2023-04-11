@@ -9,40 +9,39 @@ use pocketmine\player\Player;
 
 class Invite {
 
-    private string $id;
-    private ?Player $inviter, $receiver;
-
-    public function __construct(string $id, Player $inviter, Player $receiver) {
-        $this->id = $id;
-        $this->inviter = $inviter;
-        $this->receiver = $receiver;
-    }
+    public function __construct(
+        private string $id,
+        private Player $inviter,
+        private Player $receiver
+    ) {}
 
     public function getId(): string {
         return $this->id;
     }
 
-    public function getInviter(): ?Player {
+    public function getInviter(): Player {
         return $this->inviter;
     }
 
-    public function getReceiver(): ?Player {
+    public function getReceiver(): Player {
         return $this->receiver;
     }
 
     public function cancel(): void {
+        /** @var Player[] $players */
         $players = [$this->inviter, $this->receiver];
         foreach ($players as $player) {
-            if ($player instanceof Player)
+            if ($player->isConnected()) {
                 $player->sendMessage(SkyBlocksPM::getInstance()->getMessages()->getMessage('invite-expired'));
+            }
         }
     }
 
     public function handleInvite(): bool {
-        if (!$this->inviter instanceof Player) return false;
+        if (!$this->inviter->isConnected()) return false;
 
-        $inviter = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayerByPrefix($this->inviter->getName());
-        $receiver = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayerByPrefix($this->receiver->getName());
+        $inviter = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($this->inviter->getName());
+        $receiver = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($this->receiver->getName());
 
         if ($inviter->getSkyBlock() == '' || $receiver->getSkyBlock() !== '') return false;
         return true;

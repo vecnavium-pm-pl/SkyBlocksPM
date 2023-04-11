@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\args\RawStringArgument;
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseSubCommand;
+use CortexPE\Commando\args\RawStringArgument;
+use CortexPE\Commando\BaseSubCommand;
 use Vecnavium\SkyBlocksPM\libs\jojoe77777\FormAPI\SimpleForm;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\player\Player;
@@ -31,7 +31,7 @@ class VisitSubCommand extends BaseSubCommand {
         if (!($sender instanceof P)) return;
 
         if (isset($args['name'])) {
-            $p = $plugin->getPlayerManager()->getPlayerByPrefix($args['name']);
+            $p = $plugin->getPlayerManager()->getPlayer($args['name']);
             if (!$p instanceof Player) {
                 $sender->sendMessage($plugin->getMessages()->getMessage('not-registered'));
                 return;
@@ -50,12 +50,14 @@ class VisitSubCommand extends BaseSubCommand {
         }
         $skyblocks = [];
         foreach ($plugin->getServer()->getOnlinePlayers() as $player) {
-            $sbPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($player->getName());
+            $sbPlayer = $plugin->getPlayerManager()->getPlayer($player->getName());
             if(!$sbPlayer instanceof Player) continue;
             $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($sbPlayer->getSkyBlock());
-            if ($skyblock instanceof SkyBlock)
-                if(!in_array($skyblock->getUuid(), $skyblocks) && $skyblock->getSetting(SkyblockSettingTypes::SETTING_VISIT))
+            if ($skyblock instanceof SkyBlock) {
+                if (!in_array($skyblock->getUuid(), $skyblocks) && $skyblock->getSetting(SkyblockSettingTypes::SETTING_VISIT)) {
                     $skyblocks[] = $skyblock->getUuid();
+                }
+            }
         }
         $form = new SimpleForm(function (P $player, ?int $data) use ($plugin, $skyblocks) {
             if($data === null) return;

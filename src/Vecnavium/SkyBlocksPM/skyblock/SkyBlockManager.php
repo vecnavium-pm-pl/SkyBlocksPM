@@ -43,7 +43,7 @@ class SkyBlockManager {
         if (!$skyblock instanceof SkyBlock)
             return;
         foreach ($this->getSkyBlockByUuid($uuid)->getMembers() as $member) {
-            if ($this->plugin->getPlayerManager()->getPlayerByPrefix($member) instanceof Player)
+            if ($this->plugin->getPlayerManager()->getPlayer($member) instanceof Player)
                 return;
         }
         $this->plugin->getServer()->getWorldManager()->unloadWorld($this->plugin->getServer()->getWorldManager()->getWorldByName($this->getSkyBlockByUuid($uuid)->getWorld()));
@@ -68,7 +68,7 @@ class SkyBlockManager {
                 'z' => $spawn->getZ()
             ])
         ]);
-        $skyBlockPlayer = $this->plugin->getPlayerManager()->getPlayerByPrefix($player->getName());
+        $skyBlockPlayer = $this->plugin->getPlayerManager()->getPlayer($player->getName());
         $skyBlockPlayer->setSkyBlock($uuid);
         $SkyBlock->save();
     }

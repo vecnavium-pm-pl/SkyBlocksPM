@@ -6,7 +6,7 @@ namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseSubCommand;
+use CortexPE\Commando\BaseSubCommand;
 use Vecnavium\SkyBlocksPM\libs\jojoe77777\FormAPI\CustomForm;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\skyblock\SkyblockSettingTypes;
@@ -28,7 +28,7 @@ class SettingsSubCommand extends BaseSubCommand {
         
         if (!$sender instanceof P) return;
 
-        $skyblockPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
+        $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($sender->getName());
         if (!$skyblockPlayer instanceof Player) return;
 
         if ($skyblockPlayer->getSkyBlock() == '') {

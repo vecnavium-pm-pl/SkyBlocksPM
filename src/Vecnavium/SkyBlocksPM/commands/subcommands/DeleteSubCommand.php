@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\args\RawStringArgument;
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseSubCommand;
+use CortexPE\Commando\args\RawStringArgument;
+use CortexPE\Commando\BaseSubCommand;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use Vecnavium\SkyBlocksPM\player\Player;
 use pocketmine\player\Player as P;
@@ -27,7 +27,7 @@ class DeleteSubCommand extends BaseSubCommand {
             $sender->sendMessage($plugin->getMessages()->getMessage('no-perms-delete'));
             return;
         }
-        $skyblockPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($name);
+        $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($name);
         if (!$skyblockPlayer instanceof Player) {
             $sender->sendMessage($plugin->getMessages()->getMessage('not-registered'));
             return;
@@ -42,7 +42,7 @@ class DeleteSubCommand extends BaseSubCommand {
             if ($player instanceof P) {
                 $player->teleport($plugin->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
             }
-            if(($mPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($member)) instanceof Player) {
+            if(($mPlayer = $plugin->getPlayerManager()->getPlayer($member)) instanceof Player) {
                 $mPlayer->setSkyBlock('');
             } else {
                 // Hacky but it works.

@@ -8,17 +8,12 @@ use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
 class Player {
 
-    private string $uuid, $name, $skyblocks;
+    public function __construct(
+        private string $uuid,
+        private string $name,
+        private string $skyblocks
+    ) {}
 
-    public function __construct(string $uuid, string $name, string $skyblocks) {
-        $this->uuid = $uuid;
-        $this->name = $name;
-        $this->skyblocks = $skyblocks;
-    }
-
-    /**
-     * @return string
-     */
     public function getUuid(): string {
         return $this->uuid;
     }

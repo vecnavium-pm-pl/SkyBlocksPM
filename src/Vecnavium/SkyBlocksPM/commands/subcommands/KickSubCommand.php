@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
-use CortexPE\Commando\args\RawStringArgument;
 use CortexPE\Commando\BaseSubCommand;
+use pocketmine\command\CommandSender;
+use pocketmine\player\Player as P;
+use Vecnavium\SkyBlocksPM\commands\args\PlayerArgument;
+use Vecnavium\SkyBlocksPM\player\Player;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
-use Vecnavium\SkyBlocksPM\player\Player;
-use pocketmine\player\Player as P;
-use pocketmine\command\CommandSender;
 use function array_search;
 use function in_array;
 
@@ -18,7 +18,7 @@ class KickSubCommand extends BaseSubCommand {
 
     protected function prepare(): void {
         $this->setPermission('skyblockspm.kick');
-        $this->registerArgument(0, new RawStringArgument('name', false));
+        $this->registerArgument(0, new PlayerArgument('player'));
     }
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
@@ -27,7 +27,7 @@ class KickSubCommand extends BaseSubCommand {
         
         if (!$sender instanceof P) return;
 
-        $toKickPlayer = $plugin->getPlayerManager()->getPlayer($args['name']);
+        $toKickPlayer = $plugin->getPlayerManager()->getPlayer(($args['player'] instanceof P ? $args['player']->getName() : $args['player']));
         $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($sender->getName());
         if (!$toKickPlayer instanceof Player) {
             $sender->sendMessage($plugin->getMessages()->getMessage('not-registered'));

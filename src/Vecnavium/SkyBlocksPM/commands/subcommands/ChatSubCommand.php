@@ -3,9 +3,9 @@
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
 use CortexPE\Commando\BaseSubCommand;
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
-use pocketmine\player\Player as P;
 use pocketmine\command\CommandSender;
+use pocketmine\player\Player as P;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use function in_array;
 
 class ChatSubCommand extends BaseSubCommand {

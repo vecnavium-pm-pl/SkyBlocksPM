@@ -6,10 +6,10 @@ namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
 use CortexPE\Commando\args\RawStringArgument;
 use CortexPE\Commando\BaseSubCommand;
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
-use Vecnavium\SkyBlocksPM\player\Player;
-use pocketmine\player\Player as P;
 use pocketmine\command\CommandSender;
+use pocketmine\player\Player as P;
+use Vecnavium\SkyBlocksPM\player\Player;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
 class DeleteSubCommand extends BaseSubCommand {
     

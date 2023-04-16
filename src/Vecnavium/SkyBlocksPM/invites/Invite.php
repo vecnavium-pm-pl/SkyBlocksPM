@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\invites;
 
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use pocketmine\player\Player;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
 class Invite {
 

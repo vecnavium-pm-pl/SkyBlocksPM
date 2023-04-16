@@ -6,13 +6,11 @@ namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
 use CortexPE\Commando\args\RawStringArgument;
 use CortexPE\Commando\BaseSubCommand;
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
-use pocketmine\block\VanillaBlocks;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\player\PlayerChunkLoader;
-use pocketmine\world\Position;
 use Ramsey\Uuid\Uuid;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
 class CreateSubCommand extends BaseSubCommand {
 

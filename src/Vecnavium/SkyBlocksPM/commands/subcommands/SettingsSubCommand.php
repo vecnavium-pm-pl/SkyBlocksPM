@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
+use CortexPE\Commando\BaseSubCommand;
+use pocketmine\command\CommandSender;
+use pocketmine\player\Player as P;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
-use CortexPE\Commando\BaseSubCommand;
 use Vecnavium\SkyBlocksPM\libs\jojoe77777\FormAPI\CustomForm;
+use Vecnavium\SkyBlocksPM\player\Player;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\skyblock\SkyblockSettingTypes;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
-use Vecnavium\SkyBlocksPM\player\Player;
-use pocketmine\player\Player as P;
-use pocketmine\command\CommandSender;
 use function array_shift;
 
 class SettingsSubCommand extends BaseSubCommand {

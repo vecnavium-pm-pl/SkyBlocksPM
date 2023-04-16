@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\player;
 
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use pocketmine\player\Player as P;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
 class PlayerManager {
 

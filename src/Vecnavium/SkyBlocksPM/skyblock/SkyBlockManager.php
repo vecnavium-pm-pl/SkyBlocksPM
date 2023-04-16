@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\skyblock;
 
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
-use Vecnavium\SkyBlocksPM\player\Player;
 use pocketmine\math\Vector3;
 use pocketmine\world\World;
+use Vecnavium\SkyBlocksPM\player\Player;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
 class SkyBlockManager {
 

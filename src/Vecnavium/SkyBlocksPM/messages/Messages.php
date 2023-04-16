@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\messages;
 
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
 class Messages {
 

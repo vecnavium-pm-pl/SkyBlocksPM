@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\skyblock;
 
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use pocketmine\math\Vector3;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
 class SkyBlock {
 

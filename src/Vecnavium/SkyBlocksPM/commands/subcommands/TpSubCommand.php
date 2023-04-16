@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
 use CortexPE\Commando\BaseSubCommand;
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
 class TpSubCommand extends BaseSubCommand {
 

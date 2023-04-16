@@ -6,15 +6,11 @@ namespace Vecnavium\SkyBlocksPM\listener;
 
 use pocketmine\block\Chest;
 use pocketmine\block\Door;
-use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\event\entity\EntityItemPickupEvent;
-use Vecnavium\SkyBlocksPM\skyblock\SkyblockSettingTypes;
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
-use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
-use Vecnavium\SkyBlocksPM\player\Player;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
+use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
+use pocketmine\event\entity\EntityItemPickupEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerInteractEvent;
@@ -23,6 +19,10 @@ use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\item\Food;
 use pocketmine\player\Player as P;
 use pocketmine\utils\TextFormat;
+use Vecnavium\SkyBlocksPM\player\Player;
+use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
+use Vecnavium\SkyBlocksPM\skyblock\SkyblockSettingTypes;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use function in_array;
 
 class EventListener implements Listener {

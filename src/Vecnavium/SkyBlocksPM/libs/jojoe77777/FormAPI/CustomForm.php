@@ -130,7 +130,7 @@ class CustomForm extends Form {
     /**
      * @param string $text
      * @param array $options
-     * @param int $default
+     * @param int|null $default
      * @param string|null $label
      */
     public function addDropdown(string $text, array $options, int $default = null, ?string $label = null) : void {
@@ -142,7 +142,7 @@ class CustomForm extends Form {
     /**
      * @param string $text
      * @param string $placeholder
-     * @param string $default
+     * @param string|null $default
      * @param string|null $label
      */
     public function addInput(string $text, string $placeholder = "", string $default = null, ?string $label = null) : void {

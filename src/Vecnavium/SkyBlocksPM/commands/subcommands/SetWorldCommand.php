@@ -15,6 +15,12 @@ class SetWorldCommand extends BaseSubCommand {
         $this->setPermission('skyblockspm.setworld');
     }
 
+    /**
+     * @param CommandSender $sender
+     * @param string $aliasUsed
+     * @param array<string,mixed> $args
+     * @return void
+     */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
         /** @var SkyBlocksPM $plugin */
         $plugin = $this->getOwningPlugin();

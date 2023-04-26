@@ -10,6 +10,7 @@ use pocketmine\player\Player as P;
 use Vecnavium\SkyBlocksPM\commands\args\PlayerArgument;
 use Vecnavium\SkyBlocksPM\invites\Invite;
 use Vecnavium\SkyBlocksPM\player\Player;
+use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
 class AcceptSubCommand extends BaseSubCommand {
@@ -19,11 +20,17 @@ class AcceptSubCommand extends BaseSubCommand {
         $this->registerArgument(0, new PlayerArgument('player'));
     }
 
+    /**
+     * @param CommandSender $sender
+     * @param string $aliasUsed
+     * @param array<string,mixed> $args
+     * @return void
+     */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
         /** @var SkyBlocksPM $plugin */
         $plugin = $this->getOwningPlugin();
         
-        $invite = $plugin->getInviteManager()->getPlayerInvites(($args['player'] instanceof P ? $args['player']->getName() : $args['player']));
+        $invite = $plugin->getInviteManager()->getPlayerInvites(($args['player'] instanceof P ? $args['player']->getName() : (string)$args['player']));
 
         if (!$invite instanceof Invite) return;
         if (!$invite->handleInvite()) return;
@@ -35,15 +42,18 @@ class AcceptSubCommand extends BaseSubCommand {
         if($player instanceof Player && $inviter instanceof Player) {
             $player->setSkyBlock($inviter->getSkyBlock());
             $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($inviter->getSkyBlock());
-            $members = $skyblock->getMembers();
-            $members[] = $sender->getName();
-            $skyblock->setMembers($members);
-            foreach ($skyblock->getMembers() as $member) {
-                $mbr = $plugin->getServer()->getPlayerExact($member);
-                if ($mbr instanceof P)
-                    $mbr->sendMessage($plugin->getMessages()->getMessage('invite-accepted', [
-                        "{PLAYER}" => $sender->getName()
-                    ]));
+            if($skyblock instanceof SkyBlock) {
+                $members = $skyblock->getMembers();
+                $members[] = $sender->getName();
+                $skyblock->setMembers($members);
+                foreach ($skyblock->getMembers() as $member) {
+                    $mbr = $plugin->getServer()->getPlayerExact($member);
+                    if ($mbr instanceof P) {
+                        $mbr->sendMessage($plugin->getMessages()->getMessage('invite-accepted', [
+                            "{PLAYER}" => $sender->getName()
+                        ]));
+                    }
+                }
             }
         }
     }

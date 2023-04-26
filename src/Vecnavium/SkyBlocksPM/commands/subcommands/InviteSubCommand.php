@@ -6,10 +6,11 @@ namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
 use CortexPE\Commando\BaseSubCommand;
 use pocketmine\command\CommandSender;
-use pocketmine\player\Player;
+use pocketmine\player\Player as P;
 use pocketmine\scheduler\ClosureTask;
 use Ramsey\Uuid\Uuid;
 use Vecnavium\SkyBlocksPM\commands\args\PlayerArgument;
+use Vecnavium\SkyBlocksPM\player\Player;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
@@ -20,11 +21,17 @@ class InviteSubCommand extends BaseSubCommand {
         $this->registerArgument(0, new PlayerArgument('player'));
     }
 
+    /**
+     * @param CommandSender $sender
+     * @param string $aliasUsed
+     * @param array<string,mixed> $args
+     * @return void
+     */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
         /** @var SkyBlocksPM $plugin */
         $plugin = $this->getOwningPlugin();
         
-        if (!$sender instanceof Player) return;
+        if (!$sender instanceof P) return;
 
         if (!$plugin->getInviteManager()->canInvite($sender)) {
             $sender->sendMessage($plugin->getMessages()->getMessage('invite-pending'));
@@ -32,6 +39,8 @@ class InviteSubCommand extends BaseSubCommand {
         }
         $player = $args['player'];
         $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($sender->getName());
+        if(!$skyblockPlayer instanceof Player) return;
+
         $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($skyblockPlayer->getSkyBlock());
         if (!$skyblock instanceof SkyBlock) {
             $sender->sendMessage($plugin->getMessages()->getMessage('no-sb'));
@@ -41,7 +50,7 @@ class InviteSubCommand extends BaseSubCommand {
             $sender->sendMessage($plugin->getMessages()->getMessage('member-limit'));
             return;
         }
-        if (!$player instanceof Player) {
+        if (!$player instanceof P) {
             $sender->sendMessage($plugin->getMessages()->getMessage('player-not-online'));
             return;
         }

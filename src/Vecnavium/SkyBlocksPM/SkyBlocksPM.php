@@ -36,7 +36,7 @@ class SkyBlocksPM extends PluginBase {
     private SkyBlockManager $SkyBlockManager;
     private InviteManager $inviteManager;
 
-    /** @var Player[] */
+    /** @var string[] */
     private array $chat;
 
     public function onEnable(): void {
@@ -76,13 +76,16 @@ class SkyBlocksPM extends PluginBase {
         $this->dataConnector = $db;
     }
 
+    /**
+     * @return string[]
+     */
     public function getChat(): array {
         return $this->chat;
     }
 
-    public function setPlayerChat(Player $player, bool $status){
+    public function setPlayerChat(Player $player, bool $status): void{
         if($status) $this->chat[] = $player->getName();
-        else unset($this->chat[array_search($player->getName(), $this->chat)]);
+        else unset($this->chat[array_search($player->getName(), $this->chat, true)]);
     }
 
     public function checkUpdate(): void {
@@ -132,9 +135,9 @@ class SkyBlocksPM extends PluginBase {
         return $this->inviteManager;
     }
 
-    public function checkConfigs() {
+    public function checkConfigs(): void {
         $messagesCfg = new Config($this->getDataFolder() . "messages.yml", Config::YAML);
-        if(version_compare($messagesCfg->get("version", "0"), self::MSG_VER, "<>")) {
+        if(version_compare((string)$messagesCfg->get("version", "0"), self::MSG_VER, "<>")) {
             $this->getLogger()->error("Your message files are outdated. SkyBlocksPM will automatically create a new config.");
             $this->getLogger()->error("The old message files can be found at 'messages.old.yml'");
             rename($this->getDataFolder() . "messages.yml", $this->getDataFolder() . "messages.old.yml");
@@ -142,7 +145,7 @@ class SkyBlocksPM extends PluginBase {
             $messagesCfg->reload();
         }
         $formsCfg = new Config($this->getDataFolder() . "forms.yml", Config::YAML);
-        if(version_compare($formsCfg->get("version", "0"), self::FORM_VER, "<>")) {
+        if(version_compare((string)$formsCfg->get("version", "0"), self::FORM_VER, "<>")) {
             $this->getLogger()->error("Your form message files are outdated. SkyBlocksPM will automatically create a new config.");
             $this->getLogger()->error("The old form message files can be found at 'forms.old.yml'");
             rename($this->getDataFolder() . "forms.yml", $this->getDataFolder() . "forms.old.yml");

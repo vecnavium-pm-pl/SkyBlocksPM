@@ -9,6 +9,15 @@ use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
 class SkyBlock {
 
+    /**
+     * @param string $uuid
+     * @param string $name
+     * @param string $leader
+     * @param string[] $members
+     * @param string $world
+     * @param array<string,bool> $settings
+     * @param Vector3 $spawn
+     */
     public function __construct(
         private string $uuid,
         private string $name,
@@ -57,14 +66,14 @@ class SkyBlock {
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getMembers(): array {
         return $this->members;
     }
 
     /**
-     * @param array $members
+     * @param string[] $members
      */
     public function setMembers(array $members): void {
         $this->members = $members;
@@ -87,18 +96,22 @@ class SkyBlock {
     }
 
     /**
-     * @return array
+     * @return array<string,bool>
      */
     public function getSettings(): array {
         return $this->settings;
     }
 
+    /**
+     * @param string $setting
+     * @return bool
+     */
     public function getSetting(string $setting): bool {
-        return isset($this->settings[$setting]) && $this->settings[$setting];
+        return (isset($this->settings[$setting]) && $this->settings[$setting]);
     }
 
     /**
-     * @param array $settings
+     * @param array<string,bool> $settings
      */
     public function updateSettings(array $settings): void {
         $this->settings = $settings;

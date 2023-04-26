@@ -15,14 +15,23 @@ class Invite {
         private Player $receiver
     ) {}
 
+    /**
+     * @return string
+     */
     public function getId(): string {
         return $this->id;
     }
 
+    /**
+     * @return Player
+     */
     public function getInviter(): Player {
         return $this->inviter;
     }
 
+    /**
+     * @return Player
+     */
     public function getReceiver(): Player {
         return $this->receiver;
     }
@@ -37,13 +46,16 @@ class Invite {
         }
     }
 
+    /**
+     * @return bool
+     */
     public function handleInvite(): bool {
         if (!$this->inviter->isConnected()) return false;
 
         $inviter = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($this->inviter->getName());
         $receiver = SkyBlocksPM::getInstance()->getPlayerManager()->getPlayer($this->receiver->getName());
 
-        if ($inviter->getSkyBlock() == '' || $receiver->getSkyBlock() !== '') return false;
+        if ($inviter?->getSkyBlock() == '' || $receiver?->getSkyBlock() !== '') return false;
         return true;
     }
 

@@ -22,6 +22,12 @@ class SettingsSubCommand extends BaseSubCommand {
         $this->setPermission('skyblockspm.settings');
     }
 
+    /**
+     * @param CommandSender $sender
+     * @param string $aliasUsed
+     * @param array<string,mixed> $args
+     * @return void
+     */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
         /** @var SkyBlocksPM $plugin */
         $plugin = $this->getOwningPlugin();
@@ -59,8 +65,8 @@ class SettingsSubCommand extends BaseSubCommand {
                 $player->sendMessage($plugin->getMessages()->getMessage('updated-settings'));
             });
             $formConfig = new Config($plugin->getDataFolder() . 'forms.yml', Config::YAML);
-            $settingsForm->setTitle(TextFormat::colorize($formConfig->getNested('settings.title')));
-            $settingsForm->addLabel(TextFormat::colorize($formConfig->getNested('settings.text')));
+            $settingsForm->setTitle(TextFormat::colorize((string)$formConfig->getNested('settings.title')));
+            $settingsForm->addLabel(TextFormat::colorize((string)$formConfig->getNested('settings.text')));
 
             $settingsForm->addToggle("Open for Visiting", $skyblock->getSetting(SkyblockSettingTypes::SETTING_VISIT));
             $settingsForm->addToggle("PvP", $skyblock->getSetting(SkyblockSettingTypes::SETTING_PVP));

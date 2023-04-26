@@ -15,6 +15,10 @@ class InviteManager {
         $this->invites[$id] = new Invite($id, $inviter, $receiver);
     }
 
+    /**
+     * @param string $name
+     * @return Invite|null
+     */
     public function getPlayerInvites(string $name): ?Invite {
         foreach ($this->invites as $invite) {
             if ($invite->getInviter()->getName() == $name) return $invite;
@@ -22,11 +26,13 @@ class InviteManager {
         return null;
     }
 
+    /**
+     * @param Player $player
+     * @return bool
+     */
     public function canInvite(Player $player): bool {
         foreach ($this->invites as $invite) {
-            if ($invite->getInviter() instanceof Player) {
-                if ($invite->getInviter()->getName() == $player->getName()) return false;
-            }
+            if ($invite->getInviter()->getName() == $player->getName()) return false;
         }
         return true;
     }
@@ -39,6 +45,10 @@ class InviteManager {
         unset($this->invites[$id]);
     }
 
+    /**
+     * @param string $id
+     * @return bool
+     */
     public function isInviteValid(string $id): bool{
         return isset($this->invites[$id]);
     }

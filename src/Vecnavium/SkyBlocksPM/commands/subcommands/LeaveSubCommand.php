@@ -18,6 +18,12 @@ class LeaveSubCommand extends BaseSubCommand {
         $this->setPermission('skyblockspm.leave');
     }
 
+    /**
+     * @param CommandSender $sender
+     * @param string $aliasUsed
+     * @param array<string,mixed> $args
+     * @return void
+     */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
         /** @var SkyBlocksPM $plugin */
         $plugin = $this->getOwningPlugin();
@@ -39,7 +45,7 @@ class LeaveSubCommand extends BaseSubCommand {
             }
             $skyblockPlayer->setSkyBlock('');
             $members = $skyblock->getMembers();
-            unset($members[array_search($sender->getName(), $members)]);
+            unset($members[array_search($sender->getName(), $members, true)]);
             $skyblock->setMembers($members);
             foreach ($skyblock->getMembers() as $member) {
                 $mbr = $plugin->getServer()->getPlayerExact($member);

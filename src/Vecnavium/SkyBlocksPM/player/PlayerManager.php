@@ -28,7 +28,7 @@ class PlayerManager {
                 $name = $player->getName();
                 $this->players[$name] = new Player($rows[0]['uuid'], $rows[0]['name'], $rows[0]['skyblock']);
                 if ($name !== $rows[0]['name']) {
-                    $this->getPlayer($name)->setName($name);
+                    $this->getPlayer($name)?->setName($name);
                 }
                 $this->plugin->getSkyBlockManager()->loadSkyblock($rows[0]['skyblock']);
             }
@@ -36,7 +36,12 @@ class PlayerManager {
     }
 
     public function unloadPlayer(P $player): void{
-        $this->plugin->getSkyBlockManager()->unloadSkyBlock($this->getPlayer($player->getName())->getSkyBlock());
+        $skyBlockPlayer = $this->getPlayer($player->getName());
+
+        if($skyBlockPlayer instanceof Player) {
+            $this->plugin->getSkyBlockManager()->unloadSkyBlock($skyBlockPlayer->getSkyBlock());
+        }
+
         if(isset($this->players[$player->getName()])) {
             unset($this->players[$player->getName()]);
         }
@@ -52,6 +57,11 @@ class PlayerManager {
         $this->players[$player->getName()] = new Player($player->getUniqueId()->toString(), $player->getName(), '');
     }
 
+    /**
+     * @param string $name
+     * @return Player|null
+     * @phpstan-return Player|null
+     */
     public function getPlayer(string $name): ?Player {
         return $this->players[$name] ?? null;
     }

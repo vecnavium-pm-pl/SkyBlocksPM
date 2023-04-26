@@ -14,19 +14,28 @@ class Player {
         private string $skyblocks
     ) {}
 
+    /**
+     * @return string
+     */
     public function getUuid(): string {
         return $this->uuid;
     }
 
+    /**
+     * @return string
+     */
     public function getName(): string {
         return $this->name;
     }
-    
+
     public function setName(string $name): void {
         $this->name = $name;
         $this->save();
     }
 
+    /**
+     * @return string
+     */
     public function getSkyBlock(): string {
         return $this->skyblocks;
     }

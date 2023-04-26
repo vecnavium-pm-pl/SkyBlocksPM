@@ -21,16 +21,24 @@ class KickSubCommand extends BaseSubCommand {
         $this->registerArgument(0, new PlayerArgument('player'));
     }
 
+    /**
+     * @param CommandSender $sender
+     * @param string $aliasUsed
+     * @param array<string,mixed> $args
+     * @return void
+     */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
         /** @var SkyBlocksPM $plugin */
         $plugin = $this->getOwningPlugin();
         
         if (!$sender instanceof P) return;
 
-        $toKickPlayer = $plugin->getPlayerManager()->getPlayer(($args['player'] instanceof P ? $args['player']->getName() : $args['player']));
+        $toKickPlayer = $plugin->getPlayerManager()->getPlayer(($args['player'] instanceof P ? $args['player']->getName() : (string)$args['player']));
         $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($sender->getName());
+        if(!$skyblockPlayer instanceof Player) return;
+
         if (!$toKickPlayer instanceof Player) {
-            $sender->sendMessage($plugin->getMessages()->getMessage('not-registered'));
+            $sender->sendMessage($plugin->getMessages()->getMessage('player-not-online'));
             return;
         }
         if ($skyblockPlayer->getSkyBlock() == '') {
@@ -45,13 +53,13 @@ class KickSubCommand extends BaseSubCommand {
             }
             $members = $skyblock->getMembers();
 
-            if(!in_array($toKickPlayer->getName(), $members)){
+            if(!in_array($toKickPlayer->getName(), $members, true)){
                 $sender->sendMessage($plugin->getMessages()->getMessage('not-member'));
                 return;
             }
             $toKickPlayer->setSkyBlock('');
             $members = $skyblock->getMembers();
-            unset($members[array_search($toKickPlayer->getName(), $members)]);
+            unset($members[array_search($toKickPlayer->getName(), $members, true)]);
             $skyblock->setMembers($members);
             foreach ($skyblock->getMembers() as $member) {
                 $mbr = $plugin->getServer()->getPlayerExact($member);

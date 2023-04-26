@@ -24,6 +24,12 @@ class VisitSubCommand extends BaseSubCommand {
         $this->registerArgument(0, new RawStringArgument('name', true));
     }
 
+    /**
+     * @param CommandSender $sender
+     * @param string $aliasUsed
+     * @param array<string,mixed> $args
+     * @return void
+     */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
         /** @var SkyBlocksPM $plugin */
         $plugin = $this->getOwningPlugin();
@@ -31,9 +37,9 @@ class VisitSubCommand extends BaseSubCommand {
         if (!($sender instanceof P)) return;
 
         if (isset($args['name'])) {
-            $p = $plugin->getPlayerManager()->getPlayer($args['name']);
+            $p = $plugin->getPlayerManager()->getPlayer((string)$args['name']);
             if (!$p instanceof Player) {
-                $sender->sendMessage($plugin->getMessages()->getMessage('not-registered'));
+                $sender->sendMessage($plugin->getMessages()->getMessage('player-not-online'));
                 return;
             }
             $skyblock = $plugin->getSkyBlockManager()->getSkyBlock($p->getSkyBlock());
@@ -45,7 +51,7 @@ class VisitSubCommand extends BaseSubCommand {
                 $sender->sendMessage($plugin->getMessages()->getMessage('island-not-open'));
                 return;
             }
-            $sender->teleport($plugin->getServer()->getWorldManager()->getWorldByName($skyblock->getWorld())->getSpawnLocation());
+
             $sender->teleport($skyblock->getSpawn());
         }
         $skyblocks = [];
@@ -54,7 +60,7 @@ class VisitSubCommand extends BaseSubCommand {
             if(!$sbPlayer instanceof Player) continue;
             $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($sbPlayer->getSkyBlock());
             if ($skyblock instanceof SkyBlock) {
-                if (!in_array($skyblock->getUuid(), $skyblocks) && $skyblock->getSetting(SkyblockSettingTypes::SETTING_VISIT)) {
+                if (!in_array($skyblock->getUuid(), $skyblocks, true) && $skyblock->getSetting(SkyblockSettingTypes::SETTING_VISIT)) {
                     $skyblocks[] = $skyblock->getUuid();
                 }
             }
@@ -64,14 +70,16 @@ class VisitSubCommand extends BaseSubCommand {
             if (!isset($skyblocks[$data])) return;
 
             $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($skyblocks[$data]);
-            $player->teleport($plugin->getServer()->getWorldManager()->getWorldByName($skyblock->getWorld())->getSpawnLocation());
+            if(!$skyblock instanceof SkyBlock) return;
+
             $player->teleport($skyblock->getSpawn());
         });
         $formConfig = new Config($plugin->getDataFolder() . "forms.yml", Config::YAML);
-        $form->setTitle(TextFormat::colorize($formConfig->getNested('visit.title')));
+        $form->setTitle(TextFormat::colorize((string)$formConfig->getNested('visit.title')));
         foreach ($skyblocks as $uuid) {
             $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($uuid);
-            $form->addButton(TextFormat::colorize(str_replace('{NAME}', $skyblock->getLeader() , $formConfig->getNested('visit.buttons', '&l&a{NAME} SkyBlock'))));
+            if(!$skyblock instanceof SkyBlock) continue;
+            $form->addButton(TextFormat::colorize(str_replace('{NAME}', $skyblock->getLeader(), (string)$formConfig->getNested('visit.buttons', '&l&a{NAME} SkyBlock'))));
         }
         $sender->sendForm($form);
     }

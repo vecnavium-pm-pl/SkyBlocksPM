@@ -91,7 +91,6 @@ class SkyBlocksPM extends PluginBase {
     public function checkUpdate(): void {
         $this->getServer()->getAsyncPool()->submitTask(new CheckUpdateTask($this->getDescription()->getName(), $this->getDescription()->getVersion()));
     }
-
     
     /**
      * @return DataConnector

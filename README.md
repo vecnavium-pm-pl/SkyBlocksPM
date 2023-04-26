@@ -35,9 +35,8 @@ SkyBlocksPM developed by: KressentHosting
 
 # Planned features
 
-- [ ] Scoreboard support. (Maybe, slight chance)
-- [ ] UI Support (Such as creating, modifying isalnds and etc)
-- [ ] Private Island chat with chat format (Not officially decided yet)
+- [ ] Scoreboard support. (Maybe)
+- [ ] UI Support (Creating and Modifying islands, etc.)
 
 And possibly few more that isn't listed as it's in development.
 

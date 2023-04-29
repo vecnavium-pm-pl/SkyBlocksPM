@@ -13,6 +13,7 @@ use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use function array_search;
 use function in_array;
+use function strval;
 
 class KickSubCommand extends BaseSubCommand {
 
@@ -33,7 +34,7 @@ class KickSubCommand extends BaseSubCommand {
         
         if (!$sender instanceof P) return;
 
-        $toKickPlayer = $plugin->getPlayerManager()->getPlayer(($args['player'] instanceof P ? $args['player']->getName() : (string)$args['player']));
+        $toKickPlayer = $plugin->getPlayerManager()->getPlayer(($args['player'] instanceof P ? $args['player']->getName() : strval($args['player'])));
         $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($sender->getName());
         if(!$skyblockPlayer instanceof Player) return;
 
@@ -65,7 +66,7 @@ class KickSubCommand extends BaseSubCommand {
                 $mbr = $plugin->getServer()->getPlayerExact($member);
                 if ($mbr instanceof P) {
                     $mbr->sendMessage($plugin->getMessages()->getMessage('member-kicked', [
-                        "{PLAYER}" => $toKickPlayer->getName()
+                        '{PLAYER}' => $toKickPlayer->getName()
                     ]));
                 }
             }

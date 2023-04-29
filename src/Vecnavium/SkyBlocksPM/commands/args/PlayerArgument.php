@@ -25,7 +25,7 @@ class PlayerArgument extends BaseArgument {
      */
     public function canParse(string $testString, CommandSender $sender): bool {
         // PM player username validity regex
-        return (bool)preg_match("/^(?!rcon|console)[a-zA-Z0-9_ ]{1,16}$/i", $testString);
+        return (bool)preg_match('/^(?!rcon|console)[a-zA-Z0-9_ ]{1,16}$/i', $testString);
     }
 
     /**
@@ -45,6 +45,6 @@ class PlayerArgument extends BaseArgument {
      * @return string
      */
     public function getTypeName(): string{
-        return "player";
+        return 'player';
     }
 }

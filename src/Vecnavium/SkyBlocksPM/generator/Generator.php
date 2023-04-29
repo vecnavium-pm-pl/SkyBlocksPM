@@ -33,7 +33,7 @@ class Generator {
         if(!$defaultWorld instanceof World) return;
 
         $world->setSpawnLocation($player->getPosition());
-        $worldPath = $this->plugin->getServer()->getDataPath() . "worlds" . DIRECTORY_SEPARATOR . $world->getFolderName();
+        $worldPath = $this->plugin->getServer()->getDataPath() . 'worlds' . DIRECTORY_SEPARATOR . $world->getFolderName();
 
         if ($world->getDisplayName() === $defaultWorld->getDisplayName()) {
             $player->sendMessage($this->plugin->getMessages()->getMessage('default-world'));
@@ -51,8 +51,8 @@ class Generator {
 
             $filePath = $file->getPath() . DIRECTORY_SEPARATOR . $file->getBasename();
             $localPath = substr($filePath, strlen($this->plugin->getServer()->getDataPath() . 'worlds' . DIRECTORY_SEPARATOR . $world->getFolderName()));
-            @mkdir($this->plugin->getDataFolder() . "cache/island/db");
-            copy($filePath, $this->plugin->getDataFolder() . "cache/island/" . $localPath);
+            @mkdir($this->plugin->getDataFolder() . 'cache/island/db');
+            copy($filePath, $this->plugin->getDataFolder() . 'cache/island/' . $localPath);
         }
 
     }
@@ -65,12 +65,12 @@ class Generator {
      * Thanks SkyWars by GamakCZ
      */
     public function generateIsland(P $player, string $folderName, string $name): void{
-        $path = $this->plugin->getDataFolder() . "cache/island";
+        $path = $this->plugin->getDataFolder() . 'cache/island';
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator((string)realpath($path)), RecursiveIteratorIterator::LEAVES_ONLY);
 
-        $path = $this->plugin->getServer()->getDataPath() . "worlds" . DIRECTORY_SEPARATOR . $folderName;
+        $path = $this->plugin->getServer()->getDataPath() . 'worlds' . DIRECTORY_SEPARATOR . $folderName;
         @mkdir($path);
-        @mkdir($path . "/db");
+        @mkdir($path . '/db');
 
         /** @var SplFileInfo $file */
         foreach ($files as $file) {

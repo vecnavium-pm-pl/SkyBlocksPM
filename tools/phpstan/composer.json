@@ -42,6 +42,7 @@
         "phpstan/phpstan-strict-rules": "^1.0",
         "phpstan/extension-installer": "^1.0",
         "duoincure/commando": "^1.0",
+        "sylvrs/libmarshal": "^1.4.3",
         "sof3/libasynql": "*",
         "sof3/infoapi": "*"
     },

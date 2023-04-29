@@ -24,6 +24,7 @@ use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\skyblock\SkyblockSettingTypes;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use function in_array;
+use function strval;
 
 class EventListener implements Listener {
 
@@ -66,7 +67,7 @@ class EventListener implements Listener {
             return;
         }
 
-        if ((bool)$this->plugin->getConfig()->getNested('settings.autoinv.enabled', true)) {
+        if ($this->plugin->getNewConfig()->settings->autoinv->enabled) {
             $drops = [];
             foreach ($event->getDrops() as $drop) {
                 if (!$player->getInventory()->canAddItem($drop)) {
@@ -76,11 +77,11 @@ class EventListener implements Listener {
                 }
             }
             $event->setDrops([]);
-            if ((bool)$this->plugin->getConfig()->getNested('settings.autoinv.drop-when-full')) {
+            if ($this->plugin->getNewConfig()->settings->autoinv->dropWhenFull) {
                 $event->setDrops($drops);
             }
         }
-        if ((bool)$this->plugin->getConfig()->getNested('settings.autoxp', true)) {
+        if ($this->plugin->getNewConfig()->settings->autoxp) {
             $player->getXpManager()->addXp($event->getXpDropAmount());
             $event->setXpDropAmount(0);
         }
@@ -136,19 +137,17 @@ class EventListener implements Listener {
 
         if ($event instanceof EntityDamageByEntityEvent && $skyblock->getSetting(SkyblockSettingTypes::SETTING_PVP)) return;
 
-        $type = match ($event->getCause()) {
-            EntityDamageEvent::CAUSE_LAVA => 'lava',
-            EntityDamageEvent::CAUSE_DROWNING => 'drown',
-            EntityDamageEvent::CAUSE_FALL => 'fall',
-            EntityDamageEvent::CAUSE_PROJECTILE => 'projectile',
-            EntityDamageEvent::CAUSE_FIRE => 'fire',
-            EntityDamageEvent::CAUSE_VOID => 'void',
-            EntityDamageEvent::CAUSE_STARVATION => 'hunger',
-            default => 'default'
+        $shouldCancel = match ($event->getCause()) {
+            EntityDamageEvent::CAUSE_LAVA => $this->plugin->getNewConfig()->settings->damage->lava,
+            EntityDamageEvent::CAUSE_DROWNING => $this->plugin->getNewConfig()->settings->damage->drown,
+            EntityDamageEvent::CAUSE_FALL => $this->plugin->getNewConfig()->settings->damage->fall,
+            EntityDamageEvent::CAUSE_PROJECTILE => $this->plugin->getNewConfig()->settings->damage->projectile,
+            EntityDamageEvent::CAUSE_FIRE => $this->plugin->getNewConfig()->settings->damage->fire,
+            EntityDamageEvent::CAUSE_VOID => $this->plugin->getNewConfig()->settings->damage->void,
+            EntityDamageEvent::CAUSE_STARVATION => $this->plugin->getNewConfig()->settings->damage->hunger,
+            default => $this->plugin->getNewConfig()->settings->damage->default
         };
-        if ((bool)$this->plugin->getConfig()->getNested("settings.damage.$type", true)) {
-            $event->cancel();
-        }
+        if ($shouldCancel) $event->cancel();
     }
 
     /**
@@ -171,7 +170,7 @@ class EventListener implements Listener {
         foreach ($skyBlock->getMembers() as $member) {
             $m = $this->plugin->getServer()->getPlayerExact($member);
             if (!$m instanceof P) continue;
-            $m->sendMessage(str_replace(['{PLAYER}', '{MSG}'], [$player->getName(), $event->getMessage()], TextFormat::colorize((string)$this->plugin->getMessages()->getMessageConfig()->get('skyblock-chat', '&d[SkyBlocksPM] &e[{PLAYER}] &6=> {MSG}'))));
+            $m->sendMessage(str_replace(['{PLAYER}', '{MSG}'], [$player->getName(), $event->getMessage()], TextFormat::colorize(strval($this->plugin->getMessages()->getMessageConfig()->get('skyblock-chat', '&d[SkyBlocksPM] &e[{PLAYER}] &6=> {MSG}')))));
         }
         $event->cancel();
     }

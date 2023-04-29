@@ -5,5 +5,3 @@ parameters:
     excludePaths:
         - ../../src/Vecnavium/SkyBlocksPM/libs
         - ../../src/Vecnavium/SkyBlocksPM/CheckUpdateTask.php
-    ignoreErrors:
-        - '#Cannot cast mixed to string.#'

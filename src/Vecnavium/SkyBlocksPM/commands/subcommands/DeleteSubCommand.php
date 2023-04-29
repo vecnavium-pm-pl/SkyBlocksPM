@@ -14,6 +14,7 @@ use pocketmine\world\World;
 use Vecnavium\SkyBlocksPM\player\Player;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
+use function strval;
 
 class DeleteSubCommand extends BaseSubCommand {
     
@@ -32,7 +33,7 @@ class DeleteSubCommand extends BaseSubCommand {
         /** @var SkyBlocksPM $plugin */
         $plugin = $this->getOwningPlugin();
         
-        $name = (string)$args['name'];
+        $name = strval($args['name']);
         if ($name !== $sender->getName() && !$sender->hasPermission('skyblockspm.deleteothers')) {
             $sender->sendMessage($plugin->getMessages()->getMessage('no-perms-delete'));
             return;
@@ -77,7 +78,7 @@ class DeleteSubCommand extends BaseSubCommand {
             }
         }
         $sender->sendMessage($plugin->getMessages()->getMessage('deleted-sb', [
-            "{NAME}" => $skyblockPlayer->getName()
+            '{NAME}' => $skyblockPlayer->getName()
         ]));
     }
 }

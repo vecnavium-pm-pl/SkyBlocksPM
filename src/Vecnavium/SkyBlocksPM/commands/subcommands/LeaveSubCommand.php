@@ -51,7 +51,7 @@ class LeaveSubCommand extends BaseSubCommand {
                 $mbr = $plugin->getServer()->getPlayerExact($member);
                 if ($mbr instanceof P) {
                     $mbr->sendMessage($plugin->getMessages()->getMessage('member-left', [
-                        "{PLAYER}" => $sender->getName()
+                        '{PLAYER}' => $sender->getName()
                     ]));
                 }
             }

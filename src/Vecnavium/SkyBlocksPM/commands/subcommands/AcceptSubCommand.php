@@ -12,6 +12,7 @@ use Vecnavium\SkyBlocksPM\invites\Invite;
 use Vecnavium\SkyBlocksPM\player\Player;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
+use function strval;
 
 class AcceptSubCommand extends BaseSubCommand {
 
@@ -30,7 +31,7 @@ class AcceptSubCommand extends BaseSubCommand {
         /** @var SkyBlocksPM $plugin */
         $plugin = $this->getOwningPlugin();
         
-        $invite = $plugin->getInviteManager()->getPlayerInvites(($args['player'] instanceof P ? $args['player']->getName() : (string)$args['player']));
+        $invite = $plugin->getInviteManager()->getPlayerInvites(($args['player'] instanceof P ? $args['player']->getName() : strval($args['player'])));
 
         if (!$invite instanceof Invite) return;
         if (!$invite->handleInvite()) return;
@@ -50,7 +51,7 @@ class AcceptSubCommand extends BaseSubCommand {
                     $mbr = $plugin->getServer()->getPlayerExact($member);
                     if ($mbr instanceof P) {
                         $mbr->sendMessage($plugin->getMessages()->getMessage('invite-accepted', [
-                            "{PLAYER}" => $sender->getName()
+                            '{PLAYER}' => $sender->getName()
                         ]));
                     }
                 }

@@ -16,6 +16,7 @@ use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\skyblock\SkyblockSettingTypes;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use function in_array;
+use function strval;
 
 class VisitSubCommand extends BaseSubCommand {
 
@@ -37,7 +38,7 @@ class VisitSubCommand extends BaseSubCommand {
         if (!($sender instanceof P)) return;
 
         if (isset($args['name'])) {
-            $p = $plugin->getPlayerManager()->getPlayer((string)$args['name']);
+            $p = $plugin->getPlayerManager()->getPlayer(strval($args['name']));
             if (!$p instanceof Player) {
                 $sender->sendMessage($plugin->getMessages()->getMessage('player-not-online'));
                 return;
@@ -74,12 +75,12 @@ class VisitSubCommand extends BaseSubCommand {
 
             $player->teleport($skyblock->getSpawn());
         });
-        $formConfig = new Config($plugin->getDataFolder() . "forms.yml", Config::YAML);
-        $form->setTitle(TextFormat::colorize((string)$formConfig->getNested('visit.title')));
+        $formConfig = new Config($plugin->getDataFolder() . 'forms.yml', Config::YAML);
+        $form->setTitle(TextFormat::colorize(strval($formConfig->getNested('visit.title'))));
         foreach ($skyblocks as $uuid) {
             $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($uuid);
             if(!$skyblock instanceof SkyBlock) continue;
-            $form->addButton(TextFormat::colorize(str_replace('{NAME}', $skyblock->getLeader(), (string)$formConfig->getNested('visit.buttons', '&l&a{NAME} SkyBlock'))));
+            $form->addButton(TextFormat::colorize(str_replace('{NAME}', $skyblock->getLeader(), strval($formConfig->getNested('visit.buttons', '&l&a{NAME} SkyBlock')))));
         }
         $sender->sendForm($form);
     }

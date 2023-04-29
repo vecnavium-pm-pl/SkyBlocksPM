@@ -11,7 +11,7 @@ use function in_array;
 class ChatSubCommand extends BaseSubCommand {
 
     protected function prepare(): void {
-        $this->setPermission("skyblockspm.chat");
+        $this->setPermission('skyblockspm.chat');
     }
 
     /**
@@ -29,7 +29,7 @@ class ChatSubCommand extends BaseSubCommand {
         $chatStatus = in_array($sender->getName(), $plugin->getChat(), true);
         $plugin->setPlayerChat($sender, !$chatStatus);
 
-        $sender->sendMessage($plugin->getMessages()->getMessage("toggle-chat"));
+        $sender->sendMessage($plugin->getMessages()->getMessage('toggle-chat'));
     }
 
 }

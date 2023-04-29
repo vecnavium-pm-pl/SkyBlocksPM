@@ -32,7 +32,7 @@ class SkyBlockManager {
                 $spawn = (array)json_decode($row['spawn'], true);
                 /** @var array<string,bool> $settings */
                 $settings = (array)json_decode($row['settings'], true);
-                $this->SkyBlocks[$row['uuid']] = new SkyBlock($row['uuid'], $row['name'], $row['leader'], explode(',', $row['members']), $row['world'], $settings, new Vector3($spawn["x"], $spawn["y"], $spawn['z']));
+                $this->SkyBlocks[$row['uuid']] = new SkyBlock($row['uuid'], $row['name'], $row['leader'], explode(',', $row['members']), $row['world'], $settings, new Vector3($spawn['x'], $spawn['y'], $spawn['z']));
                 $this->plugin->getServer()->getWorldManager()->loadWorld($row['world']);
                 $this->worlds[] = $row['world'];
             }

@@ -12,6 +12,7 @@ use pocketmine\utils\Utils;
 use Ramsey\Uuid\Uuid;
 use Vecnavium\SkyBlocksPM\player\Player;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
+use function strval;
 
 class CreateSubCommand extends BaseSubCommand {
 
@@ -39,14 +40,14 @@ class CreateSubCommand extends BaseSubCommand {
             $sender->sendMessage($plugin->getMessages()->getMessage('have-sb'));
             return;
         }
-        if (count(array_diff(Utils::assumeNotFalse(scandir($plugin->getDataFolder() . 'cache/island')), ['..', "."])) == 0) {
-            $sender->sendMessage($plugin->getMessages()->getMessage("no-default-island"));
+        if (count(array_diff(Utils::assumeNotFalse(scandir($plugin->getDataFolder() . 'cache/island')), ['..', '.'])) == 0) {
+            $sender->sendMessage($plugin->getMessages()->getMessage('no-default-island'));
             return;
         }
         $sender->sendMessage($plugin->getMessages()->getMessage('skyblock-creating'));
         $id = Uuid::uuid4()->toString();
         $player->setSkyBlock($id);
-        $plugin->getGenerator()->generateIsland($sender, $id, (string)$args['name']); // Name validation?
+        $plugin->getGenerator()->generateIsland($sender, $id, strval($args['name'])); // Name validation?
     }
 
 }

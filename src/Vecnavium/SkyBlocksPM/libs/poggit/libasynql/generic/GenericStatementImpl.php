@@ -205,7 +205,7 @@ abstract class GenericStatementImpl implements GenericStatement, JsonSerializabl
 
 	protected abstract function formatVariable(GenericVariable $variable, $value, ?string $placeHolder, array &$outArgs) : string;
 
-	public function jsonSerialize(){
+	public function jsonSerialize(): mixed {
 		return [
 			"name" => $this->name,
 			"query" => $this->query,

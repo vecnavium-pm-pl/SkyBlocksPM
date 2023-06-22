@@ -25,8 +25,10 @@ class KickSubCommand extends BaseSubCommand {
     /**
      * @param CommandSender $sender
      * @param string $aliasUsed
-     * @param array<string,mixed> $args
+     * @param array $args
      * @return void
+     *
+     * @phpstan-ignore-next-line
      */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
         /** @var SkyBlocksPM $plugin */

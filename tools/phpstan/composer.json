@@ -1,50 +1,28 @@
 {
     "name": "vecnavium/skyblockspm",
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "sof3/libasynql",
-                "version": "4.1.1",
-                "source": {
-                    "url": "https://github.com/alvin0319/libasynql.git",
-                    "type": "git",
-                    "reference": "pm5"
-                },
-                "autoload": {
-                    "psr-0": {
-                        "poggit\\libasynql\\": "libasynql/src/"
-                    }
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "sof3/infoapi",
-                "version": "1.3.0",
-                "source": {
-                    "url": "https://github.com/DuoIncure/InfoAPI.git",
-                    "type": "git",
-                    "reference": "master"
-                },
-                "autoload": {
-                    "psr-0": {
-                        "SOFe\\InfoAPI\\": "src/"
-                    }
-                }
+    "repositories": [{
+        "type": "package",
+        "package": {
+            "name": "paroxity/commando",
+            "version": "3.0.0",
+            "source": {
+                "url": "https://github.com/Paroxity/Commando.git",
+                "type": "git",
+                "reference": "master"
+            },
+            "autoload": {
+                "classmap": ["src/"]
             }
         }
-    ],
+    }],
     "require": {
         "phpstan/phpstan": "1.4.6",
-        "pocketmine/pocketmine-mp": "5.0.0-BETA2",
+        "pocketmine/pocketmine-mp": "5.1.2",
         "phpstan/phpstan-strict-rules": "^1.0",
         "phpstan/extension-installer": "^1.0",
-        "duoincure/commando": "^1.0",
+        "paroxity/commando": "^3.0.0",
         "sylvrs/libmarshal": "^1.4.3",
-        "sof3/libasynql": "*",
-        "sof3/infoapi": "*"
+        "sof3/libasynql": "dev-master"
     },
     "autoload": {
         "psr-0": {

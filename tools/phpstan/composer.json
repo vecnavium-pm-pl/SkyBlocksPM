@@ -22,7 +22,7 @@
         "phpstan/extension-installer": "^1.0",
         "paroxity/commando": "^3.0.0",
         "sylvrs/libmarshal": "^1.4.3",
-        "sof3/libasynql": "dev-master"
+        "sof3/libasynql": "4.2.0"
     },
     "autoload": {
         "psr-0": {

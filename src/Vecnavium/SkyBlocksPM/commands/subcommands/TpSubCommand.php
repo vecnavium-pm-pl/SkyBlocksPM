@@ -8,6 +8,7 @@ use CortexPE\Commando\BaseSubCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player as P;
 use pocketmine\world\Position;
+use pocketmine\world\World;
 use Vecnavium\SkyBlocksPM\player\Player;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
@@ -39,7 +40,9 @@ class TpSubCommand extends BaseSubCommand {
         }
         $skyblockIsland = $plugin->getSkyBlockManager()->getSkyBlockByUuid($skyblockPlayer->getSkyBlock());
         if(!$skyblockIsland instanceof SkyBlock) return;
+        $skyblockWorld = $plugin->getServer()->getWorldManager()->getWorldByName($skyblockIsland->getWorld());
+        if(!$skyblockWorld instanceof World) return;
 
-        $sender->teleport(Position::fromObject($skyblockIsland->getSpawn()->up(), $plugin->getServer()->getWorldManager()->getWorldByName($skyblockIsland->getWorld())));
+        $sender->teleport(Position::fromObject($skyblockIsland->getSpawn()->up(), $skyblockWorld));
     }
 }

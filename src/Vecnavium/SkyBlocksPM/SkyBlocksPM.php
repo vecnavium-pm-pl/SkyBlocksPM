@@ -37,6 +37,7 @@ class SkyBlocksPM extends PluginBase {
 
     use SingletonTrait;
 
+    const CFG_VER = '1';
     const MSG_VER = '1';
     const FORM_VER = '1';
 
@@ -176,6 +177,14 @@ class SkyBlocksPM extends PluginBase {
     }
 
     public function checkConfigs(): void {
+        if(version_compare(strval($this->getConfig()->get('version', '0')), self::CFG_VER, '<>')) {
+            $this->getLogger()->error('Your config file is outdated. SkyBlocksPM will automatically create a new config.');
+            $this->getLogger()->error('The old config file can be found at "config.old.yml"');
+            rename($this->getDataFolder() . 'config.yml', $this->getDataFolder() . 'config.old.yml');
+            $this->saveDefaultConfig();
+            $this->getConfig()->reload();
+        }
+
         $messagesCfg = new PMConfig($this->getDataFolder() . 'messages.yml', PMConfig::YAML);
         if(version_compare(strval($messagesCfg->get('version', '0')), self::MSG_VER, '<>')) {
             $this->getLogger()->error('Your message files are outdated. SkyBlocksPM will automatically create a new config.');

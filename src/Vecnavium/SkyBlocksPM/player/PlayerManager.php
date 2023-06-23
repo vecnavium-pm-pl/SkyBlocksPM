@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\player;
 
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use pocketmine\player\Player as P;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
 class PlayerManager {
 
     /** @var Player[] */
     private array $players = [];
-    private SkyBlocksPM $plugin;
     
-    public function __construct(SkyBlocksPM $plugin) {
-        $this->plugin = $plugin;
-    }
+    public function __construct(private SkyBlocksPM $plugin) {}
 
-    public function loadPlayer(P $player) {
+    public function loadPlayer(P $player): void{
         $this->plugin->getDataBase()->executeSelect(
             'skyblockspm.player.load',
             [
@@ -30,17 +27,24 @@ class PlayerManager {
                 }
                 $name = $player->getName();
                 $this->players[$name] = new Player($rows[0]['uuid'], $rows[0]['name'], $rows[0]['skyblock']);
-                if ($name !== $rows[0]['name'])
-                    $this->getPlayer($player)->setName($name);
+                if ($name !== $rows[0]['name']) {
+                    $this->getPlayer($name)?->setName($name);
+                }
                 $this->plugin->getSkyBlockManager()->loadSkyblock($rows[0]['skyblock']);
             }
         );
     }
 
-    public function unloadPlayer(P $player) {
-        $this->plugin->getSkyBlockManager()->unloadSkyBlock($this->getPlayerByPrefix($player->getName())->getSkyBlock());
-        if(isset($this->players[$player->getName()]))
+    public function unloadPlayer(P $player): void{
+        $skyBlockPlayer = $this->getPlayer($player->getName());
+
+        if($skyBlockPlayer instanceof Player) {
+            $this->plugin->getSkyBlockManager()->unloadSkyBlock($skyBlockPlayer->getSkyBlock());
+        }
+
+        if(isset($this->players[$player->getName()])) {
             unset($this->players[$player->getName()]);
+        }
     }
 
     public function createPlayer(P $player): void {
@@ -53,11 +57,12 @@ class PlayerManager {
         $this->players[$player->getName()] = new Player($player->getUniqueId()->toString(), $player->getName(), '');
     }
 
-    public function getPlayer(P $player): ?Player {
-        return $this->players[$player->getName()] ?? null;
-    }
-
-    public function getPlayerByPrefix(string $name): ?Player {
+    /**
+     * @param string $name
+     * @return Player|null
+     * @phpstan-return Player|null
+     */
+    public function getPlayer(string $name): ?Player {
         return $this->players[$name] ?? null;
     }
 

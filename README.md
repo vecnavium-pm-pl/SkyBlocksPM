@@ -1,5 +1,5 @@
 <p align="center">
-    <b>A SkyBlocks plugin for PocketMine-MP, with many features to offer.
+    <b>A SkyBlocks plugin for PocketMine-MP, with many features to offer.</b>
   
   <p align="center">
 SkyBlocksPM developed by: KressentHosting  
@@ -19,12 +19,12 @@ SkyBlocksPM developed by: KressentHosting
 - [x] Custom Island support
 - [x] SQLITe3 & MYSQL Storage
 - [x] Configurable messages
-- [x] Island Settings
 - [x] Island Members
 - [x] Configurable visit UI
 - [x] Island visit support
 - [x] Starting Skyblock Chests (The chests will have the same contents from the ones which were present and as well as NPCs while using the `/is setworld` command)
-- [x] Settings (Such as Interact, Pickup, Place Blocks, etc.)
+- [x] Island Settings (Such as Interact, Pickup, Place Blocks, etc.)
+- [x] Private Island Chat
 
 # Setup 
 
@@ -35,9 +35,8 @@ SkyBlocksPM developed by: KressentHosting
 
 # Planned features
 
-- [ ] Scoreboard support. (Maybe, slight chance)
-- [ ] UI Support (Such as creating, modifying isalnds and etc)
-- [ ] Private Island chat with chat format (Not officially decided yet)
+- [ ] Scoreboard support. (Maybe)
+- [ ] UI Support (Creating and Modifying islands, etc.)
 
 And possibly few more that isn't listed as it's in development.
 

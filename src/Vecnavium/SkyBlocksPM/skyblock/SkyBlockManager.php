@@ -1,24 +1,22 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\skyblock;
 
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
-use Vecnavium\SkyBlocksPM\player\Player;
 use pocketmine\math\Vector3;
 use pocketmine\world\World;
+use Vecnavium\SkyBlocksPM\player\Player;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
+use function json_decode;
 
 class SkyBlockManager {
 
-    /**@var SkyBlock[]*/
+    /** @var SkyBlock[] */
     private array $SkyBlocks = [];
+    /** @var string[] */
     private array $worlds = [];
-    private SkyBlocksPM $plugin;
 
-    public function __construct(SkyBlocksPM $plugin) {
-        $this->plugin = $plugin;
-    }
+    public function __construct(private SkyBlocksPM $plugin) {}
 
     public function loadSkyblock(string $uuid): void {
         $this->plugin->getDataBase()->executeSelect(
@@ -30,27 +28,36 @@ class SkyBlockManager {
                 if (count($rows) == 0) return;
                 $row = $rows[0];
                 if(isset($this->SkyBlocks[$row['uuid']])) return;
-                $spawn = (array)json_decode($row['spawn']);
-                $this->SkyBlocks[$row['uuid']] = new SkyBlock($row['uuid'], $row['name'], $row['leader'], explode(',', $row['members']), $row['world'], (array)json_decode($row['settings']), new Vector3($spawn["x"], $spawn["y"], $spawn['z']));
+                /** @var array<string,int|float> $spawn */
+                $spawn = (array)json_decode($row['spawn'], true);
+                /** @var array<string,bool> $settings */
+                $settings = (array)json_decode($row['settings'], true);
+                $this->SkyBlocks[$row['uuid']] = new SkyBlock($row['uuid'], $row['name'], $row['leader'], explode(',', $row['members']), $row['world'], $settings, new Vector3($spawn['x'], $spawn['y'], $spawn['z']));
                 $this->plugin->getServer()->getWorldManager()->loadWorld($row['world']);
                 $this->worlds[] = $row['world'];
             }
         );
     }
 
-    public function unloadSkyBlock(string $uuid) {
+    public function unloadSkyBlock(string $uuid): void{
         $skyblock = $this->getSkyBlockByUuid($uuid);
-        if (!$skyblock instanceof SkyBlock)
-            return;
-        foreach ($this->getSkyBlockByUuid($uuid)->getMembers() as $member) {
-            if ($this->plugin->getPlayerManager()->getPlayerByPrefix($member) instanceof Player)
-                return;
+        if (!$skyblock instanceof SkyBlock) return;
+
+        foreach ($skyblock->getMembers() as $member) {
+            if ($this->plugin->getPlayerManager()->getPlayer($member) instanceof Player) return;
         }
-        $this->plugin->getServer()->getWorldManager()->unloadWorld($this->plugin->getServer()->getWorldManager()->getWorldByName($this->getSkyBlockByUuid($uuid)->getWorld()));
+
+        $world = $this->plugin->getServer()->getWorldManager()->getWorldByName($skyblock->getWorld());
+        if(!$world instanceof World) return;
+        $this->plugin->getServer()->getWorldManager()->unloadWorld($world);
+
         unset($this->SkyBlocks[$uuid]);
     }
 
     public function createSkyBlock(string $uuid, Player $player, string $name, World $world): void {
+        $skyBlockPlayer = $this->plugin->getPlayerManager()->getPlayer($player->getName());
+        if(!$skyBlockPlayer instanceof Player) return;
+
         $spawn = $world->getSpawnLocation();
         $SkyBlock = new SkyBlock($uuid, $name, $player->getName(), [$player->getName()], $world->getFolderName(), ['visit' => true, 'pvp' => false, 'interact_chest' => false, 'interact_door' => false,'pickup' => false, 'break' => false, 'place' => false], $spawn);
         $this->SkyBlocks[$uuid] = $SkyBlock;
@@ -68,15 +75,22 @@ class SkyBlockManager {
                 'z' => $spawn->getZ()
             ])
         ]);
-        $skyBlockPlayer = $this->plugin->getPlayerManager()->getPlayerByPrefix($player->getName());
         $skyBlockPlayer->setSkyBlock($uuid);
         $SkyBlock->save();
     }
 
+    /**
+     * @param string $uuid
+     * @return SkyBlock|null
+     */
     public function getSkyBlockByUuid(string $uuid): ?SkyBlock {
         return $this->SkyBlocks[$uuid] ?? null;
     }
 
+    /**
+     * @param string $name
+     * @return SkyBlock|null
+     */
     public function getSkyBlock(string $name): ?SkyBlock {
         foreach ($this->SkyBlocks as $SkyBlock) {
             if ($SkyBlock->getName() == $name) return $SkyBlock;
@@ -84,6 +98,10 @@ class SkyBlockManager {
         return null;
     }
 
+    /**
+     * @param World $world
+     * @return SkyBlock|null
+     */
     public function getSkyBlockByWorld(World $world): ?SkyBlock {
         foreach ($this->SkyBlocks as $SkyBlock) {
             if ($SkyBlock->getWorld() == $world->getFolderName()) return $SkyBlock;
@@ -91,8 +109,12 @@ class SkyBlockManager {
         return null;
     }
 
+    /**
+     * @param string $world
+     * @return bool
+     */
     public function isSkyBlockWorld(string $world): bool {
-        if (in_array($world, $this->worlds)) return true;
+        if (in_array($world, $this->worlds, true)) return true;
         return false;
     }
 

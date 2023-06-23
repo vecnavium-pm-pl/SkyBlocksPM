@@ -1,0 +1,7 @@
+parameters:
+    level: 9
+    paths:
+        - ../../src
+    excludePaths:
+        - ../../src/Vecnavium/SkyBlocksPM/libs
+        - ../../src/Vecnavium/SkyBlocksPM/CheckUpdateTask.php

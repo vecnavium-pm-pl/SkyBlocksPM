@@ -20,7 +20,6 @@ messages:
   player-not-online: "The player you have specified is currently not online or doesnt exist."
   have-sb: "You already own a SkyBlock Island"
   no-sb: "You do not have a SkyBlock Island to use the command."
-  not-registered: "The player you have specified does not exist."
   no-island: "The specified player does not own an island."
   no-default-island: "The default island has not been set, please ask the server staff to use the '/sb setworld' command to set the island world"
   no-sb-go: "You do not own a SkyBlock island"

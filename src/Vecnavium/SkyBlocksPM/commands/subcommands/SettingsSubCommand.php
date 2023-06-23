@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
+use CortexPE\Commando\BaseSubCommand;
+use pocketmine\command\CommandSender;
+use pocketmine\player\Player as P;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseSubCommand;
 use Vecnavium\SkyBlocksPM\libs\jojoe77777\FormAPI\CustomForm;
+use Vecnavium\SkyBlocksPM\player\Player;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\skyblock\SkyblockSettingTypes;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
-use Vecnavium\SkyBlocksPM\player\Player;
-use pocketmine\player\Player as P;
-use pocketmine\command\CommandSender;
 use function array_shift;
+use function strval;
 
 class SettingsSubCommand extends BaseSubCommand {
 
@@ -22,13 +23,21 @@ class SettingsSubCommand extends BaseSubCommand {
         $this->setPermission('skyblockspm.settings');
     }
 
+    /**
+     * @param CommandSender $sender
+     * @param string $aliasUsed
+     * @param array $args
+     * @return void
+     *
+     * @phpstan-ignore-next-line
+     */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
         /** @var SkyBlocksPM $plugin */
         $plugin = $this->getOwningPlugin();
         
         if (!$sender instanceof P) return;
 
-        $skyblockPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
+        $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($sender->getName());
         if (!$skyblockPlayer instanceof Player) return;
 
         if ($skyblockPlayer->getSkyBlock() == '') {
@@ -59,16 +68,16 @@ class SettingsSubCommand extends BaseSubCommand {
                 $player->sendMessage($plugin->getMessages()->getMessage('updated-settings'));
             });
             $formConfig = new Config($plugin->getDataFolder() . 'forms.yml', Config::YAML);
-            $settingsForm->setTitle(TextFormat::colorize($formConfig->getNested('settings.title')));
-            $settingsForm->addLabel(TextFormat::colorize($formConfig->getNested('settings.text')));
+            $settingsForm->setTitle(TextFormat::colorize(strval($formConfig->getNested('settings.title'))));
+            $settingsForm->addLabel(TextFormat::colorize(strval($formConfig->getNested('settings.text'))));
 
-            $settingsForm->addToggle("Open for Visiting", $skyblock->getSetting(SkyblockSettingTypes::SETTING_VISIT));
-            $settingsForm->addToggle("PvP", $skyblock->getSetting(SkyblockSettingTypes::SETTING_PVP));
-            $settingsForm->addToggle("Open Chests", $skyblock->getSetting(SkyblockSettingTypes::SETTING_INTERACT_CHEST));
-            $settingsForm->addToggle("Open Doors", $skyblock->getSetting(SkyblockSettingTypes::SETTING_INTERACT_DOOR));
-            $settingsForm->addToggle("Pickup Items", $skyblock->getSetting(SkyblockSettingTypes::SETTING_PICKUP));
-            $settingsForm->addToggle("Break Blocks", $skyblock->getSetting(SkyblockSettingTypes::SETTING_BREAK));
-            $settingsForm->addToggle("Place Blocks", $skyblock->getSetting(SkyblockSettingTypes::SETTING_PLACE));
+            $settingsForm->addToggle('Open for Visiting', $skyblock->getSetting(SkyblockSettingTypes::SETTING_VISIT));
+            $settingsForm->addToggle('PvP', $skyblock->getSetting(SkyblockSettingTypes::SETTING_PVP));
+            $settingsForm->addToggle('Open Chests', $skyblock->getSetting(SkyblockSettingTypes::SETTING_INTERACT_CHEST));
+            $settingsForm->addToggle('Open Doors', $skyblock->getSetting(SkyblockSettingTypes::SETTING_INTERACT_DOOR));
+            $settingsForm->addToggle('Pickup Items', $skyblock->getSetting(SkyblockSettingTypes::SETTING_PICKUP));
+            $settingsForm->addToggle('Break Blocks', $skyblock->getSetting(SkyblockSettingTypes::SETTING_BREAK));
+            $settingsForm->addToggle('Place Blocks', $skyblock->getSetting(SkyblockSettingTypes::SETTING_PLACE));
 
             $sender->sendForm($settingsForm);
         }

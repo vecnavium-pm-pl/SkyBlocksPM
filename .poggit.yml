@@ -2,9 +2,16 @@
 build-by-default: true
 branches:
 - stable
-- dev
-- sbchat
+- pm5
 projects:
   SkyBlocksPM:
     path: ""
+    libs:
+      - src: Paroxity/Commando/Commando
+        version: ^3.0.0
+      - src: poggit/libasynql/libasynql
+        version: ^4.1.6
+      - src: sylvrs/libMarshal/libMarshal
+        version: ^1.4.3
+        branch: "feature/virion"
 ...

@@ -2,28 +2,36 @@
 
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseSubCommand;
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
-use pocketmine\player\Player as P;
+use CortexPE\Commando\BaseSubCommand;
 use pocketmine\command\CommandSender;
+use pocketmine\player\Player as P;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
+use function in_array;
 
 class ChatSubCommand extends BaseSubCommand {
 
     protected function prepare(): void {
-        $this->setPermission("skyblockspm.chat");
+        $this->setPermission('skyblockspm.chat');
     }
 
+    /**
+     * @param CommandSender $sender
+     * @param string $aliasUsed
+     * @param array $args
+     * @return void
+     *
+     * @phpstan-ignore-next-line
+     */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
         /** @var SkyBlocksPM $plugin */
         $plugin = $this->getOwningPlugin();
         
         if (!$sender instanceof P) return;
 
-        if (!in_array($sender->getName(), $plugin->getChat()))
-            $plugin->addPlayerToChat($sender);
-        else
-            $plugin->removePlayerFromChat($sender);
-        $sender->sendMessage($plugin->getMessages()->getMessage("toggle-chat"));
+        $chatStatus = in_array($sender->getName(), $plugin->getChat(), true);
+        $plugin->setPlayerChat($sender, !$chatStatus);
+
+        $sender->sendMessage($plugin->getMessages()->getMessage('toggle-chat'));
     }
 
 }

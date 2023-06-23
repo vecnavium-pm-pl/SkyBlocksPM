@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\commands\subcommands;
 
-use Vecnavium\SkyBlocksPM\libs\CortexPE\Commando\BaseSubCommand;
+use CortexPE\Commando\BaseSubCommand;
+use pocketmine\command\CommandSender;
+use pocketmine\player\Player as P;
+use Vecnavium\SkyBlocksPM\player\Player;
 use Vecnavium\SkyBlocksPM\skyblock\SkyBlock;
 use Vecnavium\SkyBlocksPM\SkyBlocksPM;
-use Vecnavium\SkyBlocksPM\player\Player;
-use pocketmine\player\Player as P;
-use pocketmine\command\CommandSender;
 use function array_search;
 
 class LeaveSubCommand extends BaseSubCommand {
@@ -18,13 +18,21 @@ class LeaveSubCommand extends BaseSubCommand {
         $this->setPermission('skyblockspm.leave');
     }
 
+    /**
+     * @param CommandSender $sender
+     * @param string $aliasUsed
+     * @param array $args
+     * @return void
+     *
+     * @phpstan-ignore-next-line
+     */
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void {
         /** @var SkyBlocksPM $plugin */
         $plugin = $this->getOwningPlugin();
         
         if (!$sender instanceof P) return;
 
-        $skyblockPlayer = $plugin->getPlayerManager()->getPlayerByPrefix($sender->getName());
+        $skyblockPlayer = $plugin->getPlayerManager()->getPlayer($sender->getName());
         if (!$skyblockPlayer instanceof Player) return;
 
         if ($skyblockPlayer->getSkyBlock() == '') {
@@ -39,14 +47,15 @@ class LeaveSubCommand extends BaseSubCommand {
             }
             $skyblockPlayer->setSkyBlock('');
             $members = $skyblock->getMembers();
-            unset($members[array_search($sender->getName(), $members)]);
+            unset($members[array_search($sender->getName(), $members, true)]);
             $skyblock->setMembers($members);
             foreach ($skyblock->getMembers() as $member) {
-                $mbr = $plugin->getServer()->getPlayerByPrefix($member);
-                if ($mbr instanceof P)
+                $mbr = $plugin->getServer()->getPlayerExact($member);
+                if ($mbr instanceof P) {
                     $mbr->sendMessage($plugin->getMessages()->getMessage('member-left', [
-                        "{PLAYER}" => $sender->getName()
+                        '{PLAYER}' => $sender->getName()
                     ]));
+                }
             }
         }
     }

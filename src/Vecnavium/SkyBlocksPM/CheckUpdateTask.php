@@ -13,24 +13,25 @@ use function vsprintf;
 
 class CheckUpdateTask extends AsyncTask {
 
-    private const POGGIT_RELEASES_URL = "https://poggit.pmmp.io/releases.min.json?name=";
+    private const POGGIT_RELEASES_URL = 'https://poggit.pmmp.io/releases.min.json?name=';
 
-    public function __construct(private string $pluginName, private string $pluginVersion) {
-    }
+    public function __construct(private string $pluginName, private string $pluginVersion) {}
 
     public function onRun() : void {
         $json = Internet::getURL(self::POGGIT_RELEASES_URL . $this->pluginName, 10, [], $err);
         $highestVersion = $this->pluginVersion;
-        $artifactUrl = "";
-        $api = "";
+        $artifactUrl = '';
+        $api = '';
         if($json !== null) {
             $releases = json_decode($json->getBody(), true);
-            foreach($releases as $release) {
-                if(version_compare($highestVersion, $release["version"], ">=")) continue;
+            if($releases !== null) {
+                foreach ($releases as $release) {
+                    if (version_compare($highestVersion, $release['version'], '>=')) continue;
 
-                $highestVersion = $release["version"];
-                $artifactUrl = $release["artifact_url"];
-                $api = $release["api"][0]["from"] . " - " . $release["api"][0]["to"];
+                    $highestVersion = $release['version'];
+                    $artifactUrl = $release['artifact_url'];
+                    $api = $release['api'][0]['from'] . ' - ' . $release['api'][0]['to'];
+                }
             }
         }
 
@@ -50,8 +51,8 @@ class CheckUpdateTask extends AsyncTask {
         }
 
         if($highestVersion !== $this->pluginVersion) {
-            $artifactUrl = $artifactUrl . "/" . $this->pluginName . "_" . $highestVersion . ".phar";
-            $plugin->getLogger()->notice(vsprintf("SkyBlocksPM %s has been released for API %s. Download the new update at %s", [$highestVersion, $api, $artifactUrl]));
+            $artifactUrl = $artifactUrl . '/' . $this->pluginName . '_' . $highestVersion . '.phar';
+            $plugin->getLogger()->notice(vsprintf('SkyBlocksPM %s has been released for API %s. Download the new update at %s', [$highestVersion, $api, $artifactUrl]));
         }
     }
 }

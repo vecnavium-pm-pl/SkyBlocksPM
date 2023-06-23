@@ -1,0 +1,37 @@
+{
+    "name": "vecnavium/skyblockspm",
+    "repositories": [{
+        "type": "package",
+        "package": {
+            "name": "paroxity/commando",
+            "version": "3.0.0",
+            "source": {
+                "url": "https://github.com/Paroxity/Commando.git",
+                "type": "git",
+                "reference": "master"
+            },
+            "autoload": {
+                "classmap": ["src/"]
+            }
+        }
+    }],
+    "require": {
+        "phpstan/phpstan": "1.4.6",
+        "pocketmine/pocketmine-mp": "5.1.2",
+        "phpstan/phpstan-strict-rules": "^1.0",
+        "phpstan/extension-installer": "^1.0",
+        "paroxity/commando": "^3.0.0",
+        "sylvrs/libmarshal": "^1.4.3",
+        "sof3/libasynql": "4.2.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Vecnavium\\SkyBlocksPM\\": "../../src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
+    }
+}

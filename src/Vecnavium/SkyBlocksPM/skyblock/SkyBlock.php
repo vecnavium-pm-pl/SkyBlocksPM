@@ -4,24 +4,29 @@ declare(strict_types=1);
 
 namespace Vecnavium\SkyBlocksPM\skyblock;
 
-use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 use pocketmine\math\Vector3;
+use Vecnavium\SkyBlocksPM\SkyBlocksPM;
 
 class SkyBlock {
 
-    private string $uuid, $name, $leader, $world;
-    private array $members, $settings;
-    private Vector3 $spawn;
-
-    public function __construct(string $uuid, string $name, string $leader, array $members, string $world, array $settings, Vector3 $spawn) {
-        $this->uuid = $uuid;
-        $this->name = $name;
-        $this->leader = $leader;
-        $this->members = $members;
-        $this->world = $world;
-        $this->settings = $settings;
-        $this->spawn = $spawn;
-    }
+    /**
+     * @param string $uuid
+     * @param string $name
+     * @param string $leader
+     * @param string[] $members
+     * @param string $world
+     * @param array<string,bool> $settings
+     * @param Vector3 $spawn
+     */
+    public function __construct(
+        private string $uuid,
+        private string $name,
+        private string $leader,
+        private array $members,
+        private string $world,
+        private array $settings,
+        private Vector3 $spawn
+    ) {}
 
     /**
      * @return string
@@ -61,14 +66,14 @@ class SkyBlock {
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getMembers(): array {
         return $this->members;
     }
 
     /**
-     * @param array $members
+     * @param string[] $members
      */
     public function setMembers(array $members): void {
         $this->members = $members;
@@ -91,18 +96,22 @@ class SkyBlock {
     }
 
     /**
-     * @return array
+     * @return array<string,bool>
      */
     public function getSettings(): array {
         return $this->settings;
     }
 
+    /**
+     * @param string $setting
+     * @return bool
+     */
     public function getSetting(string $setting): bool {
-        return isset($this->settings[$setting]) && $this->settings[$setting];
+        return (isset($this->settings[$setting]) && $this->settings[$setting]);
     }
 
     /**
-     * @param array $settings
+     * @param array<string,bool> $settings
      */
     public function updateSettings(array $settings): void {
         $this->settings = $settings;

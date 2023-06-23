@@ -193,7 +193,7 @@ class GenericVariable implements JsonSerializable{
 		return true;
 	}
 
-	public function jsonSerialize(): mixed {
+	public function jsonSerialize(){
 		return [
 			"name" => $this->name,
 			"isList" => $this->list,

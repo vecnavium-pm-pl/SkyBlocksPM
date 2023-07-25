@@ -4,7 +4,7 @@
         "type": "package",
         "package": {
             "name": "paroxity/commando",
-            "version": "3.0.0",
+            "version": "3.1.0",
             "source": {
                 "url": "https://github.com/Paroxity/Commando.git",
                 "type": "git",
@@ -20,7 +20,7 @@
         "pocketmine/pocketmine-mp": "5.1.2",
         "phpstan/phpstan-strict-rules": "^1.0",
         "phpstan/extension-installer": "^1.0",
-        "paroxity/commando": "^3.0.0",
+        "paroxity/commando": "^3.1.0",
         "sylvrs/libmarshal": "^1.4.3",
         "sof3/libasynql": "4.2.0"
     },

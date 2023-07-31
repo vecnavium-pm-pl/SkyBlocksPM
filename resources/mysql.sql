@@ -6,7 +6,7 @@
 -- # { init
 CREATE TABLE IF NOT EXISTS skyblockspm_player
 (
-    uuid VARCHAR(32) PRIMARY KEY,
+    uuid VARCHAR(36) PRIMARY KEY,
     name VARCHAR(32),
     skyblock TEXT DEFAULT ''
 );
@@ -44,7 +44,7 @@ WHERE uuid=:uuid;
 -- # { init
 CREATE TABLE IF NOT EXISTS skyblockspm_sb
 (
-    uuid VARCHAR(32) PRIMARY KEY,
+    uuid VARCHAR(36) PRIMARY KEY,
     name VARCHAR(32),
     leader VARCHAR(32),
     members TEXT,

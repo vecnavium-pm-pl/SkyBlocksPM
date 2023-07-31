@@ -59,16 +59,16 @@ class Generator {
 
     /**
      * @param P $player
-     * @param string $folderName
+     * @param string $uuid
      * @param string $name
      *
      * Thanks SkyWars by GamakCZ
      */
-    public function generateIsland(P $player, string $folderName, string $name): void{
+    public function generateIsland(P $player, string $uuid, string $name): void{
         $path = $this->plugin->getDataFolder() . 'cache/island';
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator((string)realpath($path)), RecursiveIteratorIterator::LEAVES_ONLY);
 
-        $path = $this->plugin->getServer()->getDataPath() . 'worlds' . DIRECTORY_SEPARATOR . $folderName;
+        $path = $this->plugin->getServer()->getDataPath() . 'worlds' . DIRECTORY_SEPARATOR . $uuid;
         @mkdir($path);
         @mkdir($path . '/db');
 
@@ -83,12 +83,12 @@ class Generator {
             copy($filePath,  $path . DIRECTORY_SEPARATOR . $localPath);
         }
 
-        $this->plugin->getServer()->getWorldManager()->loadWorld($folderName);
-        $world = $this->plugin->getServer()->getWorldManager()->getWorldByName($folderName);
+        $this->plugin->getServer()->getWorldManager()->loadWorld($uuid);
+        $world = $this->plugin->getServer()->getWorldManager()->getWorldByName($uuid);
         $skyBlockPlayer = $this->plugin->getPlayerManager()->getPlayer($player->getName());
         if($world instanceof World && $skyBlockPlayer instanceof Player) {
             $player->teleport(Position::fromObject($world->getSpawnLocation(), $world));
-            $this->plugin->getSkyBlockManager()->createSkyBlock($world->getFolderName(), $skyBlockPlayer, $name, $world);
+            $this->plugin->getSkyBlockManager()->createSkyBlock($uuid, $skyBlockPlayer, $name, $world);
         }
     }
 

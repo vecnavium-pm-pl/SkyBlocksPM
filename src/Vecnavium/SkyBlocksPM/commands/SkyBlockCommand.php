@@ -28,17 +28,17 @@ class SkyBlockCommand extends BaseCommand {
 
     public function prepare(): void {
         $this->setPermission('skyblockspm.command');
-        $this->registerSubCommand(new AcceptSubCommand($this->plugin, 'accept', 'Accept the incoming invite to a SkyBlock Island'));
-        $this->registerSubCommand(new ChatSubCommand($this->plugin, 'chat', 'Chat with your SkyBlock Island members'));
-        $this->registerSubCommand(new CreateSubCommand($this->plugin, 'create', 'Create your own SkyBlock Island'));
-        $this->registerSubCommand(new DeleteSubCommand($this->plugin, 'delete', 'Delete a users SkyBlock Island', ['disband']));
-        $this->registerSubCommand(new KickSubCommand($this->plugin, 'kick', 'Kick a member from your SkyBlock Island'));
-        $this->registerSubCommand(new LeaveSubCommand($this->plugin, 'leave', 'Leave your current SkyBlock Island'));
-        $this->registerSubCommand(new SettingsSubCommand($this->plugin, 'settings', 'Edit your SkyBlock Island settings'));
-        $this->registerSubCommand(new SetWorldCommand($this->plugin, 'setworld', 'Sets the current world as the SkyBlock World which will be copied to newer worlds upon Island creation'));
-        $this->registerSubCommand(new TpSubCommand($this->plugin, 'tp', 'Teleport to a users SkyBlock Island', ['go', 'home']));
-        $this->registerSubCommand(new InviteSubCommand($this->plugin, 'invite', 'Invites the player to your SkyBlock Island'));
-        $this->registerSubCommand(new VisitSubCommand($this->plugin, 'visit', 'Visit a players SkyBlock Island'));
+        $this->registerSubCommand(new AcceptSubCommand($this->getOwningPlugin(), 'accept', 'Accept the incoming invite to a SkyBlock Island'));
+        $this->registerSubCommand(new ChatSubCommand($this->getOwningPlugin(), 'chat', 'Chat with your SkyBlock Island members'));
+        $this->registerSubCommand(new CreateSubCommand($this->getOwningPlugin(), 'create', 'Create your own SkyBlock Island'));
+        $this->registerSubCommand(new DeleteSubCommand($this->getOwningPlugin(), 'delete', 'Delete a users SkyBlock Island', ['disband']));
+        $this->registerSubCommand(new KickSubCommand($this->getOwningPlugin(), 'kick', 'Kick a member from your SkyBlock Island'));
+        $this->registerSubCommand(new LeaveSubCommand($this->getOwningPlugin(), 'leave', 'Leave your current SkyBlock Island'));
+        $this->registerSubCommand(new SettingsSubCommand($this->getOwningPlugin(), 'settings', 'Edit your SkyBlock Island settings'));
+        $this->registerSubCommand(new SetWorldCommand($this->getOwningPlugin(), 'setworld', 'Sets the current world as the SkyBlock World which will be copied to newer worlds upon Island creation'));
+        $this->registerSubCommand(new TpSubCommand($this->getOwningPlugin(), 'tp', 'Teleport to a users SkyBlock Island', ['go', 'home']));
+        $this->registerSubCommand(new InviteSubCommand($this->getOwningPlugin(), 'invite', 'Invites the player to your SkyBlock Island'));
+        $this->registerSubCommand(new VisitSubCommand($this->getOwningPlugin(), 'visit', 'Visit a players SkyBlock Island'));
     }
 
     /**

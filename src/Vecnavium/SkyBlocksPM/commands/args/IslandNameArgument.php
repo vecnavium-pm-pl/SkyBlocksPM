@@ -32,7 +32,7 @@ class IslandNameArgument extends BaseArgument {
      * @param CommandSender $sender
      * @return mixed
      */
-    public function parse(string $argument, CommandSender $sender): string {
+    public function parse(string $argument, CommandSender $sender): mixed {
         return $argument;
     }
 

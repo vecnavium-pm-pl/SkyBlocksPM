@@ -62,7 +62,7 @@ class EventListener implements Listener {
         $skyblock = $this->plugin->getSkyBlockManager()->getSkyBlockByWorld($event->getBlock()->getPosition()->getWorld());
         if(!$skyblock instanceof SkyBlock) return;
 
-        if (!in_array($player->getName(), $skyblock->getMembers(), true) && !$skyblock->getSetting(SkyblockSettingTypes::SETTING_BREAK)) {
+        if (!in_array($player->getName(), $skyblock->getMembers(), true) && !$skyblock->getSetting(SkyblockSettingTypes::BREAK)) {
             $event->cancel();
             return;
         }
@@ -95,7 +95,7 @@ class EventListener implements Listener {
         $skyblock = $this->plugin->getSkyBlockManager()->getSkyBlockByWorld($event->getPlayer()->getPosition()->getWorld());
         if(!$skyblock instanceof SkyBlock) return;
 
-        if (!in_array($event->getPlayer()->getName(), $skyblock->getMembers(), true) && !$skyblock->getSetting(SkyblockSettingTypes::SETTING_PLACE)) {
+        if (!in_array($event->getPlayer()->getName(), $skyblock->getMembers(), true) && !$skyblock->getSetting(SkyblockSettingTypes::PLACE)) {
             $event->cancel();
         }
     }
@@ -112,11 +112,11 @@ class EventListener implements Listener {
 
         if (!in_array($player->getName(), $skyblock->getMembers(), true)) {
             if ($event->getBlock() instanceof Chest) {
-                if (!$skyblock->getSetting(SkyblockSettingTypes::SETTING_INTERACT_CHEST)) {
+                if (!$skyblock->getSetting(SkyblockSettingTypes::INTERACT_CHEST)) {
                     $event->cancel();
                 }
             } elseif ($event->getBlock() instanceof Door) {
-                if (!$skyblock->getSetting(SkyblockSettingTypes::SETTING_INTERACT_DOOR)) {
+                if (!$skyblock->getSetting(SkyblockSettingTypes::INTERACT_DOOR)) {
                     $event->cancel();
                 }
             } else {
@@ -135,7 +135,7 @@ class EventListener implements Listener {
         $skyblock = $this->plugin->getSkyBlockManager()->getSkyBlockByWorld($entity->getWorld());
         if (!$skyblock instanceof SkyBlock) return;
 
-        if ($event instanceof EntityDamageByEntityEvent && $skyblock->getSetting(SkyblockSettingTypes::SETTING_PVP)) return;
+        if ($event instanceof EntityDamageByEntityEvent && $skyblock->getSetting(SkyblockSettingTypes::PVP)) return;
 
         $shouldCancel = match ($event->getCause()) {
             EntityDamageEvent::CAUSE_LAVA => $this->plugin->getNewConfig()->settings->damage->lava,
@@ -182,7 +182,7 @@ class EventListener implements Listener {
         $skyblock = $this->plugin->getSkyBlockManager()->getSkyBlockByWorld($entity->getWorld());
         if (!$skyblock instanceof SkyBlock) return;
 
-        if(!in_array($entity->getName(), $skyblock->getMembers(), true) && !$skyblock->getSetting(SkyblockSettingTypes::SETTING_PICKUP)) {
+        if(!in_array($entity->getName(), $skyblock->getMembers(), true) && !$skyblock->getSetting(SkyblockSettingTypes::PICKUP)) {
             $event->cancel();
         }
     }

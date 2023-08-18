@@ -56,13 +56,13 @@ class SettingsSubCommand extends BaseSubCommand {
                 array_shift($data);
 
                 $newSettings = [];
-                $newSettings[SkyblockSettingTypes::SETTING_VISIT] = (bool)$data[0];
-                $newSettings[SkyblockSettingTypes::SETTING_PVP] = (bool)$data[1];
-                $newSettings[SkyblockSettingTypes::SETTING_INTERACT_CHEST] = (bool)$data[2];
-                $newSettings[SkyblockSettingTypes::SETTING_INTERACT_DOOR] = (bool)$data[3];
-                $newSettings[SkyblockSettingTypes::SETTING_PICKUP] = (bool)$data[4];
-                $newSettings[SkyblockSettingTypes::SETTING_BREAK] = (bool)$data[5];
-                $newSettings[SkyblockSettingTypes::SETTING_PLACE] = (bool)$data[6];
+                $newSettings[SkyblockSettingTypes::VISIT] = (bool)$data[0];
+                $newSettings[SkyblockSettingTypes::PVP] = (bool)$data[1];
+                $newSettings[SkyblockSettingTypes::INTERACT_CHEST] = (bool)$data[2];
+                $newSettings[SkyblockSettingTypes::INTERACT_DOOR] = (bool)$data[3];
+                $newSettings[SkyblockSettingTypes::PICKUP] = (bool)$data[4];
+                $newSettings[SkyblockSettingTypes::BREAK] = (bool)$data[5];
+                $newSettings[SkyblockSettingTypes::PLACE] = (bool)$data[6];
 
                 $skyblock->updateSettings($newSettings);
                 $player->sendMessage($plugin->getMessages()->getMessage('updated-settings'));
@@ -71,13 +71,13 @@ class SettingsSubCommand extends BaseSubCommand {
             $settingsForm->setTitle(TextFormat::colorize(strval($formConfig->getNested('settings.title'))));
             $settingsForm->addLabel(TextFormat::colorize(strval($formConfig->getNested('settings.text'))));
 
-            $settingsForm->addToggle('Open for Visiting', $skyblock->getSetting(SkyblockSettingTypes::SETTING_VISIT));
-            $settingsForm->addToggle('PvP', $skyblock->getSetting(SkyblockSettingTypes::SETTING_PVP));
-            $settingsForm->addToggle('Open Chests', $skyblock->getSetting(SkyblockSettingTypes::SETTING_INTERACT_CHEST));
-            $settingsForm->addToggle('Open Doors', $skyblock->getSetting(SkyblockSettingTypes::SETTING_INTERACT_DOOR));
-            $settingsForm->addToggle('Pickup Items', $skyblock->getSetting(SkyblockSettingTypes::SETTING_PICKUP));
-            $settingsForm->addToggle('Break Blocks', $skyblock->getSetting(SkyblockSettingTypes::SETTING_BREAK));
-            $settingsForm->addToggle('Place Blocks', $skyblock->getSetting(SkyblockSettingTypes::SETTING_PLACE));
+            $settingsForm->addToggle('Open for Visiting', $skyblock->getSetting(SkyblockSettingTypes::VISIT));
+            $settingsForm->addToggle('PvP', $skyblock->getSetting(SkyblockSettingTypes::PVP));
+            $settingsForm->addToggle('Open Chests', $skyblock->getSetting(SkyblockSettingTypes::INTERACT_CHEST));
+            $settingsForm->addToggle('Open Doors', $skyblock->getSetting(SkyblockSettingTypes::INTERACT_DOOR));
+            $settingsForm->addToggle('Pickup Items', $skyblock->getSetting(SkyblockSettingTypes::PICKUP));
+            $settingsForm->addToggle('Break Blocks', $skyblock->getSetting(SkyblockSettingTypes::BREAK));
+            $settingsForm->addToggle('Place Blocks', $skyblock->getSetting(SkyblockSettingTypes::PLACE));
 
             $sender->sendForm($settingsForm);
         }

@@ -4,11 +4,11 @@ namespace Vecnavium\SkyBlocksPM\skyblock;
 
 final class SkyblockSettingTypes{
 
-    const SETTING_VISIT = 'visit';
-    const SETTING_PVP = 'pvp';
-    const SETTING_INTERACT_CHEST = 'interact_chest';
-    const SETTING_INTERACT_DOOR = 'interact_door';
-    const SETTING_PICKUP = 'pickup';
-    const SETTING_BREAK = 'break';
-    const SETTING_PLACE = 'place';
+    const VISIT = 'visit';
+    const PVP = 'pvp';
+    const INTERACT_CHEST = 'interact_chest';
+    const INTERACT_DOOR = 'interact_door';
+    const PICKUP = 'pickup';
+    const BREAK = 'break';
+    const PLACE = 'place';
 }

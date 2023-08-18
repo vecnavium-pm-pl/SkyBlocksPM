@@ -50,7 +50,7 @@ class VisitSubCommand extends BaseSubCommand {
                 $sender->sendMessage($plugin->getMessages()->getMessage('no-island'));
                 return;
             }
-            if(!$skyblock->getSetting(SkyblockSettingTypes::SETTING_VISIT)) {
+            if(!$skyblock->getSetting(SkyblockSettingTypes::VISIT)) {
                 $sender->sendMessage($plugin->getMessages()->getMessage('island-not-open'));
                 return;
             }
@@ -63,7 +63,7 @@ class VisitSubCommand extends BaseSubCommand {
             if(!$sbPlayer instanceof Player) continue;
             $skyblock = $plugin->getSkyBlockManager()->getSkyBlockByUuid($sbPlayer->getSkyBlock());
             if ($skyblock instanceof SkyBlock) {
-                if (!in_array($skyblock->getUuid(), $skyblocks, true) && $skyblock->getSetting(SkyblockSettingTypes::SETTING_VISIT)) {
+                if (!in_array($skyblock->getUuid(), $skyblocks, true) && $skyblock->getSetting(SkyblockSettingTypes::VISIT)) {
                     $skyblocks[] = $skyblock->getUuid();
                 }
             }
